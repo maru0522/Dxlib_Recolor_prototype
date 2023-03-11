@@ -17,4 +17,4 @@ void BasicBlock::Draw(void)
         GetPos().x - GetSize().x / 2, GetPos().y - GetSize().y / 2, // x1,y1
         GetPos().x + GetSize().x / 2, GetPos().y + GetSize().y / 2, // x2,y2
         0xffffff, false);
-}
+} 
