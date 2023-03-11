@@ -13,10 +13,66 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ヘッダー ファイル\other">
+      <UniqueIdentifier>{c99990f3-6059-4e94-9f5d-22714d27cbb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\other">
+      <UniqueIdentifier>{8da37212-8dbc-438c-a444-d5fc6c5b4e09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\block">
+      <UniqueIdentifier>{09ac2c6f-bfa5-4c09-80e4-32aff9a7c467}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\block">
+      <UniqueIdentifier>{a4efc497-0611-4c6e-b981-314de3a4d5bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="StageManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector4.cpp">
+      <Filter>ソース ファイル\other</Filter>
+    </ClCompile>
+    <ClCompile Include="Util.cpp">
+      <Filter>ソース ファイル\other</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>ソース ファイル\other</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>ソース ファイル\other</Filter>
+    </ClCompile>
+    <ClCompile Include="IBlock.cpp">
+      <Filter>ソース ファイル\block</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneBlock.cpp">
+      <Filter>ソース ファイル\block</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StageManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector4.h">
+      <Filter>ヘッダー ファイル\other</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>ヘッダー ファイル\other</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>ヘッダー ファイル\other</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>ヘッダー ファイル\other</Filter>
+    </ClInclude>
+    <ClInclude Include="IBlock.h">
+      <Filter>ヘッダー ファイル\block</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneBlock.h">
+      <Filter>ヘッダー ファイル\block</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

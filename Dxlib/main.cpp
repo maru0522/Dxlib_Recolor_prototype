@@ -1,13 +1,15 @@
 #include "DxLib.h"
+#include <memory>
+#include "StageManager.h"
 
 // ウィンドウのタイトルに表示する文字列
-const char TITLE[] = "LC1B_00_テラオカヨシヒコ: タイトル";
+const char TITLE[] = "aaa: タイトル";
 
 // ウィンドウ横幅
-const int WIN_WIDTH = 600;
+const int WIN_WIDTH = 960;
 
 // ウィンドウ縦幅
-const int WIN_HEIGHT = 400;
+const int WIN_HEIGHT = 540;
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
                    _In_ int nCmdShow) {
@@ -40,7 +42,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 	// ゲームループで使う変数の宣言
+    std::unique_ptr<StageManager> stM{ std::make_unique<StageManager>() };
+    std::unique_ptr<Stage> stage1{ std::make_unique<Stage>() };
 
+    StageManager::LoadCSV(stage1.get(), "Resources/test.csv");
 
 	// 最新のキーボード情報用
 	char keys[256] = {0};
@@ -59,10 +64,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//---------  ここからプログラムを記述  ----------//
 
 		// 更新処理
-
+        stage1->Update();
 
 		// 描画処理
-        DrawBox(50, 50, 250, 250, 0xffffff, true);
+        stage1->Draw();
 
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
