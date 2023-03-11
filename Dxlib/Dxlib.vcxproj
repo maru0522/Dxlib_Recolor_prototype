@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="IBlock.cpp" />
     <ClCompile Include="IColorBlock.cpp" />
+    <ClCompile Include="IEntity.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="BasicBlock.cpp" />
@@ -141,6 +142,7 @@
   <ItemGroup>
     <ClInclude Include="IBlock.h" />
     <ClInclude Include="IColorBlock.h" />
+    <ClInclude Include="IEntity.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="BasicBlock.h" />
     <ClInclude Include="StoneBlock.h" />

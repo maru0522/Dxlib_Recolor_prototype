@@ -25,6 +25,12 @@
     <Filter Include="ソース ファイル\block">
       <UniqueIdentifier>{a4efc497-0611-4c6e-b981-314de3a4d5bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Entity">
+      <UniqueIdentifier>{31f9f641-3d7d-41ee-98b4-7d0cb1573e27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\IEntity">
+      <UniqueIdentifier>{acdb9bdd-6610-4959-82d5-f672467a533e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -57,6 +63,9 @@
     <ClCompile Include="StoneBlock.cpp">
       <Filter>ソース ファイル\block</Filter>
     </ClCompile>
+    <ClCompile Include="IEntity.cpp">
+      <Filter>ソース ファイル\IEntity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StageManager.h">
@@ -85,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="StoneBlock.h">
       <Filter>ヘッダー ファイル\block</Filter>
+    </ClInclude>
+    <ClInclude Include="IEntity.h">
+      <Filter>ヘッダー ファイル\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

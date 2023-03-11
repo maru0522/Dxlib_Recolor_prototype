@@ -15,6 +15,8 @@ public:
     };
 
     // ä÷êî
+    virtual ~IColorBlock(void) = default;
+
     inline void SetColor(Color color) { color_ = color; }
     inline Color GetColor(void) { return color_; }
     uint32_t GetColorValue(void);
