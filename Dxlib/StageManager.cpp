@@ -3,6 +3,7 @@
 #include <sstream>
 #include <DxLib.h>
 #include "BasicBlock.h"
+#include "StoneBlock.h"
 
 void StageManager::LoadCSV(Stage* ins, std::string csvPath)
 {
@@ -21,11 +22,20 @@ void StageManager::LoadCSV(Stage* ins, std::string csvPath)
             case 0: // IBlock::Type::NONE
                 break;;
 
-            case 1: // IBlock::Type::STONE
-                ins->Register(new BasicBlock{ 
+            case 1: // IBlock::Type::BASIC
+                ins->Register(new BasicBlock{
                     {(float)loopX * blockDistance_ + defaultBlockPosOffset_,(float)loopY * blockDistance_ + defaultBlockPosOffset_}, // pos
                     {defaultBlockSize_,defaultBlockSize_} } // size
                 );
+                break;
+
+            case 2: // IBlock::Type::STONE
+                ins->Register(new StoneBlock{
+                {(float)loopX * blockDistance_ + defaultBlockPosOffset_,(float)loopY * blockDistance_ + defaultBlockPosOffset_}, // pos
+                {defaultBlockSize_,defaultBlockSize_}, // size
+                Color::RED } // color
+                );
+                break;
 
             default:
                 break;

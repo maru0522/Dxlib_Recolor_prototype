@@ -31,4 +31,8 @@ public:
     static void LoadCSV(Stage* ins, std::string csvPath);
 };
 
+#ifndef NON_USING_NAMESPACE_STAGE
+
 using Stage = StageManager::Stage;
+
+#endif // !NON_USING_NAMESPACE_STAGE

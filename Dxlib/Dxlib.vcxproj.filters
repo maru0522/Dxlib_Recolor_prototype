@@ -51,6 +51,12 @@
     <ClCompile Include="BasicBlock.cpp">
       <Filter>ソース ファイル\block</Filter>
     </ClCompile>
+    <ClCompile Include="IColorBlock.cpp">
+      <Filter>ソース ファイル\block</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneBlock.cpp">
+      <Filter>ソース ファイル\block</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StageManager.h">
@@ -72,6 +78,12 @@
       <Filter>ヘッダー ファイル\block</Filter>
     </ClInclude>
     <ClInclude Include="BasicBlock.h">
+      <Filter>ヘッダー ファイル\block</Filter>
+    </ClInclude>
+    <ClInclude Include="IColorBlock.h">
+      <Filter>ヘッダー ファイル\block</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneBlock.h">
       <Filter>ヘッダー ファイル\block</Filter>
     </ClInclude>
   </ItemGroup>
