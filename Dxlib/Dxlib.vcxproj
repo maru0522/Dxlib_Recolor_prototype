@@ -128,9 +128,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="IBlock.cpp" />
-    <ClCompile Include="IColorBlock.cpp" />
+    <ClCompile Include="IColor.cpp" />
     <ClCompile Include="IEntity.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="BasicBlock.cpp" />
     <ClCompile Include="StoneBlock.cpp" />
@@ -141,8 +142,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IBlock.h" />
-    <ClInclude Include="IColorBlock.h" />
+    <ClInclude Include="IColor.h" />
     <ClInclude Include="IEntity.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="BasicBlock.h" />
     <ClInclude Include="StoneBlock.h" />

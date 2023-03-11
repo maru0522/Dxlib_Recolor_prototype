@@ -1,6 +1,6 @@
 #pragma once
 #include "IBlock.h"
-class IColorBlock
+class IColor
 {
 public:
     // íËã`
@@ -15,7 +15,7 @@ public:
     };
 
     // ä÷êî
-    virtual ~IColorBlock(void) = default;
+    virtual ~IColor(void) = default;
 
     inline void SetColor(Color color) { color_ = color; }
     inline Color GetColor(void) { return color_; }
@@ -27,6 +27,6 @@ private:
 
 #ifndef NON_USING_NAMESPACE_COLOR
 
-using Color = IColorBlock::Color;
+using Color = IColor::Color;
 
 #endif // !NON_USING_NAMESPACE_COLOR

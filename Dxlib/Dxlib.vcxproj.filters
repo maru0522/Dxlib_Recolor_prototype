@@ -57,7 +57,7 @@
     <ClCompile Include="BasicBlock.cpp">
       <Filter>ソース ファイル\block</Filter>
     </ClCompile>
-    <ClCompile Include="IColorBlock.cpp">
+    <ClCompile Include="IColor.cpp">
       <Filter>ソース ファイル\block</Filter>
     </ClCompile>
     <ClCompile Include="StoneBlock.cpp">
@@ -65,6 +65,9 @@
     </ClCompile>
     <ClCompile Include="IEntity.cpp">
       <Filter>ソース ファイル\IEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,7 +92,7 @@
     <ClInclude Include="BasicBlock.h">
       <Filter>ヘッダー ファイル\block</Filter>
     </ClInclude>
-    <ClInclude Include="IColorBlock.h">
+    <ClInclude Include="IColor.h">
       <Filter>ヘッダー ファイル\block</Filter>
     </ClInclude>
     <ClInclude Include="StoneBlock.h">
@@ -97,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="IEntity.h">
       <Filter>ヘッダー ファイル\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

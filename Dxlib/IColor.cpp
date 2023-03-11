@@ -1,30 +1,30 @@
-#include "IColorBlock.h"
+#include "IColor.h"
 
-uint32_t IColorBlock::GetColorValue(void)
+uint32_t IColor::GetColorValue(void)
 {
     switch (color_)
     {
-    case IColorBlock::Color::RED:
+    case IColor::Color::RED:
         return 0xff0000;
         break;
 
-    case IColorBlock::Color::BLUE:
+    case IColor::Color::BLUE:
         return 0x0000ff;
         break;
 
-    case IColorBlock::Color::GREEN:
+    case IColor::Color::GREEN:
         return 0x00ff00;
         break;
 
-    case IColorBlock::Color::YELLOW:
+    case IColor::Color::YELLOW:
         return 0xffff00;
         break;
 
-    case IColorBlock::Color::MAGENTA:
+    case IColor::Color::MAGENTA:
         return 0xff00ff;
         break;
 
-    case IColorBlock::Color::CYAN:
+    case IColor::Color::CYAN:
         return 0x00ffff;
         break;
 
