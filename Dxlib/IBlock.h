@@ -9,8 +9,8 @@ public:
     enum class Type
     {
         NONE,
+        BASIC,
         STONE,
-        COLORED,
     };
 
     // ä÷êî

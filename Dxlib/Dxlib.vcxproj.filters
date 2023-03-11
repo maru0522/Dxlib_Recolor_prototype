@@ -48,7 +48,7 @@
     <ClCompile Include="IBlock.cpp">
       <Filter>ソース ファイル\block</Filter>
     </ClCompile>
-    <ClCompile Include="StoneBlock.cpp">
+    <ClCompile Include="BasicBlock.cpp">
       <Filter>ソース ファイル\block</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,7 +71,7 @@
     <ClInclude Include="IBlock.h">
       <Filter>ヘッダー ファイル\block</Filter>
     </ClInclude>
-    <ClInclude Include="StoneBlock.h">
+    <ClInclude Include="BasicBlock.h">
       <Filter>ヘッダー ファイル\block</Filter>
     </ClInclude>
   </ItemGroup>

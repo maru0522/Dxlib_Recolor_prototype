@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <DxLib.h>
-#include "StoneBlock.h"
+#include "BasicBlock.h"
 
 void StageManager::LoadCSV(Stage* ins, std::string csvPath)
 {
@@ -22,7 +22,7 @@ void StageManager::LoadCSV(Stage* ins, std::string csvPath)
                 break;;
 
             case 1: // IBlock::Type::STONE
-                ins->Register(new StoneBlock{ 
+                ins->Register(new BasicBlock{ 
                     {(float)loopX * blockDistance_ + defaultBlockPosOffset_,(float)loopY * blockDistance_ + defaultBlockPosOffset_}, // pos
                     {defaultBlockSize_,defaultBlockSize_} } // size
                 );
