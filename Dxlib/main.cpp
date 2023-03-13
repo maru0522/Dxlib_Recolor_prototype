@@ -1,6 +1,8 @@
 #include "DxLib.h"
 #include <memory>
 #include "StageManager.h"
+#include "staging/ParticleManager.h"
+#include "staging/MathUtillity.h"
 #include "Input.h"
 
 // ウィンドウのタイトルに表示する文字列
@@ -47,10 +49,29 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     StageManager::LoadCSV(stage1.get(), "Resources/test.csv");
 
+	// 乱数生成
+	YMath::Srand();
+
+	// パーティクル
+	std::unique_ptr<ParticleManager> particleMan = std::make_unique<ParticleManager>();
+	particleMan->Initialize();
+
+
+	// 最新のキーボード情報用
+	char keys[256] = {0};
+
+	// 1ループ(フレーム)前のキーボード情報
+	char oldkeys[256] = {0};
+
 	// ゲームループ
 	while (true) {
-        // KeyBoard更新
-        Input::Keyboard::Update();
+		// 最新のキーボード情報だったものは1フレーム前のキーボード情報として保存
+		for (int i = 0; i < 256; i++)
+		{
+			oldkeys[i] = keys[i];
+		}
+		// 最新のキーボード情報を取得
+		GetHitKeyStateAll(keys);
 
 		// 画面クリア
 		ClearDrawScreen();
@@ -59,8 +80,20 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 更新処理
         stage1->Update();
 
+		// お試しウェーブ (SPACEキー)
+		if (oldkeys[KEY_INPUT_SPACE] == false && keys[KEY_INPUT_SPACE] == true)
+		{
+			particleMan->EmitWave({WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f});
+		}
+
+		// パーティクル更新
+		particleMan->Update();
+
 		// 描画処理
         stage1->Draw();
+
+		// パーティクル描画
+		particleMan->Draw();
 
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
