@@ -4,7 +4,7 @@
 #include "Input.h"
 
 // ウィンドウのタイトルに表示する文字列
-const char TITLE[] = "aaa: タイトル";
+const char TITLE[] = "aaa: Recolor";
 
 // ウィンドウ横幅
 const int WIN_WIDTH = 960;
@@ -40,7 +40,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	// 画像などのリソースデータの変数宣言と読み込み
-
 
 	// ゲームループで使う変数の宣言
     std::unique_ptr<StageManager> stM{ std::make_unique<StageManager>() };
