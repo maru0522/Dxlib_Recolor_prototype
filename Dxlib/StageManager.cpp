@@ -66,4 +66,9 @@ void StageManager::Stage::Draw(void)
     }
 }
 
+std::list<std::unique_ptr<IBlock>> StageManager::Stage::getblocks_()
+{
+    return blocks_;
+}
+
 

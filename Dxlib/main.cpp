@@ -51,7 +51,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	//player.blocks_ = stage1->getblocks_();
 
-	//play->SetBlock(stage1->getblocks_());
+	//play->blocks_ = stage1->blocks_;
 
 	// 最新のキーボード情報用
 	char keys[256] = { 0 };
