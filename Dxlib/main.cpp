@@ -40,7 +40,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// 画像などのリソースデータの変数宣言と読み込み
 
-
 	// ゲームループで使う変数の宣言
     std::unique_ptr<StageManager> stM{ std::make_unique<StageManager>() };
     std::unique_ptr<Stage> stage1{ std::make_unique<Stage>() };
