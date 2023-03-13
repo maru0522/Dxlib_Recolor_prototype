@@ -65,3 +65,5 @@ void StageManager::Stage::Draw(void)
         i->Draw();
     }
 }
+
+

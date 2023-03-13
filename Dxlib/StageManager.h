@@ -18,6 +18,8 @@ public:
         void Update(void);
         void Draw(void);
 
+       // std::list<std::unique_ptr<IBlock>> getblocks_();
+
     private:
         // \‘¢‘Ì•Ï”
         std::list<std::unique_ptr<IBlock>> blocks_;

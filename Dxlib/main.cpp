@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include <memory>
 #include "StageManager.h"
+#include "Player.h"
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "aaa: タイトル";
@@ -12,7 +13,7 @@ const int WIN_WIDTH = 960;
 const int WIN_HEIGHT = 540;
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
-                   _In_ int nCmdShow) {
+	_In_ int nCmdShow) {
 	// ウィンドウモードに設定
 	ChangeWindowMode(TRUE);
 
@@ -30,7 +31,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	SetWindowSizeExtendRate(1.0);
 
 	// 画面の背景色を設定する
-	SetBackgroundColor(0x00, 0x00, 0x00);
+	SetBackgroundColor(0x11, 0x11, 0x11);
 
 	// DXlibの初期化
 	if (DxLib_Init() == -1) { return -1; }
@@ -40,18 +41,23 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// 画像などのリソースデータの変数宣言と読み込み
 
-
 	// ゲームループで使う変数の宣言
-    std::unique_ptr<StageManager> stM{ std::make_unique<StageManager>() };
-    std::unique_ptr<Stage> stage1{ std::make_unique<Stage>() };
+	std::unique_ptr<StageManager> stM{ std::make_unique<StageManager>() };
+	std::unique_ptr<Stage> stage1{ std::make_unique<Stage>() };
+	std::unique_ptr<Player> play{};
+	Player player;
 
-    StageManager::LoadCSV(stage1.get(), "Resources/test.csv");
+	StageManager::LoadCSV(stage1.get(), "Resources/test.csv");
+
+	//player.blocks_ = stage1->getblocks_();
+
+	//play->SetBlock(stage1->getblocks_());
 
 	// 最新のキーボード情報用
-	char keys[256] = {0};
+	char keys[256] = { 0 };
 
 	// 1ループ(フレーム)前のキーボード情報
-	char oldkeys[256] = {0};
+	char oldkeys[256] = { 0 };
 
 	// ゲームループ
 	while (true) {
@@ -64,10 +70,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//---------  ここからプログラムを記述  ----------//
 
 		// 更新処理
-        stage1->Update();
+		stage1->Update();
+		player.Update();
 
 		// 描画処理
-        stage1->Draw();
+		stage1->Draw();
+		player.Draw();
 
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
