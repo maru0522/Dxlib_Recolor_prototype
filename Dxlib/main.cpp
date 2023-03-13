@@ -3,7 +3,7 @@
 #include "StageManager.h"
 
 // ウィンドウのタイトルに表示する文字列
-const char TITLE[] = "aaa: タイトル";
+const char TITLE[] = "aaa: Recolor";
 
 // ウィンドウ横幅
 const int WIN_WIDTH = 960;
