@@ -16,7 +16,9 @@ public:
 	// ï`âÊ
 	void Draw();
 public:
-	// îgê∂ê¨
-	void EmitWave(const YMath::Vec2& pos, const int color = 0xFFFFFF);
+	// îg(â~)ê∂ê¨
+	void EmitCircleWave(const bool isRecede, const YMath::Vec2& pos, const int color = 0xFFFFFF);
+	// îg(ãÈå`)ê∂ê¨
+	void EmitRectWave(const bool isRecede, const YMath::Vec2& pos, const YMath::Vec2& ratio, const int color = 0xFFFFFF);
 };
 

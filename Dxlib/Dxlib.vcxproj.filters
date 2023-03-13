@@ -102,6 +102,9 @@
     <ClCompile Include="Input.cpp">
       <Filter>ソース ファイル\other</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerDrawer.cpp">
+      <Filter>ソース ファイル\staging</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StageManager.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>ヘッダー ファイル\other</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDrawer.h">
+      <Filter>ヘッダー ファイル\staging</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -62,6 +62,4 @@ namespace YMath
 	{
 		return { v.x_ / s, v.y_ / s, v.z_ / s };
 	}
-
-	using Vec3 = Vec3;
 }

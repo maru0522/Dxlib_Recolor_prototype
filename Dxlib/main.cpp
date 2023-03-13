@@ -3,6 +3,7 @@
 #include "StageManager.h"
 #include "staging/ParticleManager.h"
 #include "staging/MathUtillity.h"
+#include "PlayerDrawer.h"
 #include "Input.h"
 
 // ウィンドウのタイトルに表示する文字列
@@ -52,6 +53,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// 乱数生成
 	YMath::Srand();
 
+	Vector2 pos = {};
+	PlayerDrawer drawer;
+	drawer.Initialize(&pos, {}, 0xFFFFFF);
+	bool isSwitch = false;
+
 	// パーティクル
 	std::unique_ptr<ParticleManager> particleMan = std::make_unique<ParticleManager>();
 	particleMan->Initialize();
@@ -81,16 +87,21 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         stage1->Update();
 
 		// お試しウェーブ (SPACEキー)
-		if (oldkeys[KEY_INPUT_SPACE] == false && keys[KEY_INPUT_SPACE] == true)
+		if (oldkeys[KEY_INPUT_SPACE] == FALSE && keys[KEY_INPUT_SPACE] == TRUE)
 		{
-			particleMan->EmitWave({WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f});
+			drawer.Switch(isSwitch);
+			isSwitch = !isSwitch;
 		}
+
+		drawer.Update();
 
 		// パーティクル更新
 		particleMan->Update();
 
 		// 描画処理
         stage1->Draw();
+
+		drawer.Draw();
 
 		// パーティクル描画
 		particleMan->Draw();

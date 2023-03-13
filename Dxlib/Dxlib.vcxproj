@@ -137,6 +137,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerDrawer.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="BasicBlock.cpp" />
     <ClCompile Include="staging\Lerp.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="IEntity.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerDrawer.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="BasicBlock.h" />
     <ClInclude Include="staging\Lerp.h" />
