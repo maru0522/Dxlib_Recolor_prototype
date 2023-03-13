@@ -3,7 +3,8 @@
 #include "StageManager.h"
 #include "staging/ParticleManager.h"
 #include "staging/MathUtillity.h"
-#include "PlayerDrawer.h"
+#include "staging/PlayerDrawer.h"
+#include "staging/FillterDrawer.h"
 #include "Input.h"
 
 // ウィンドウのタイトルに表示する文字列
@@ -53,15 +54,21 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// 乱数生成
 	YMath::Srand();
 
-	Vector2 pos = {};
-	PlayerDrawer drawer;
-	drawer.Initialize(&pos, {}, 0xFFFFFF);
-	bool isSwitch = false;
-
 	// パーティクル
 	std::unique_ptr<ParticleManager> particleMan = std::make_unique<ParticleManager>();
 	particleMan->Initialize();
+	PlayerDrawer::StaticInitialze(particleMan.get());
+	FillterDrawer::StaticInitialze(particleMan.get());
 
+	//PlayerDrawer plaDra;
+	//Vector2 plaPos = {WIN_WIDTH/ 2.0f - 150, WIN_HEIGHT/ 2.0f};
+	//plaDra.Initialize(&plaPos, { 64,64 }, 0xFFFFFF);
+	//
+	//FillterDrawer filDra;
+	//Vector2 filPos = {WIN_WIDTH/ 2.0f + 150, WIN_HEIGHT/ 2.0f};
+	//filDra.Initialize(&filPos, { 128,64 }, 0xFF0000);
+
+	//bool isSwitch = false;
 
 	// 最新のキーボード情報用
 	char keys[256] = {0};
@@ -86,14 +93,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 更新処理
         stage1->Update();
 
-		// お試しウェーブ (SPACEキー)
-		if (oldkeys[KEY_INPUT_SPACE] == FALSE && keys[KEY_INPUT_SPACE] == TRUE)
-		{
-			drawer.Switch(isSwitch);
-			isSwitch = !isSwitch;
-		}
+		//// お試しウェーブ (SPACEキー)
+		//if (oldkeys[KEY_INPUT_SPACE] == FALSE && keys[KEY_INPUT_SPACE] == TRUE)
+		//{
+		//	plaDra.Switch(isSwitch);
+		//	filDra.Switch(!isSwitch);
+		//	isSwitch = !isSwitch;
+		//}
 
-		drawer.Update();
+		//plaDra.Update();
+		//filDra.Update();
 
 		// パーティクル更新
 		particleMan->Update();
@@ -101,7 +110,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 描画処理
         stage1->Draw();
 
-		drawer.Draw();
+		//plaDra.Draw();
+		//filDra.Draw();
 
 		// パーティクル描画
 		particleMan->Draw();

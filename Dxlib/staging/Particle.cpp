@@ -14,7 +14,7 @@ void CircleWave::Emit(const int frame, const bool isRecede, const YMath::Vec2& p
 	else
 	{
 		scaleEas_.Initialize(0.0f, 100.0f, 3.0f);
-		alphaEas_.Initialize(255, 0, 2.0f);
+		alphaEas_.Initialize(255, 100, 2.0f);
 	}
 
 	scaleTim_.Initialize(frame);
@@ -34,7 +34,7 @@ void CircleWave::Update()
 	scaleTim_.Update();
 	if (scaleTim_.IsEnd()) { isAlive_ = false; }
 
-	scale_.x_ += scaleEas_.In(scaleTim_.Ratio());
+	scale_.x_ = scaleEas_.In(scaleTim_.Ratio());
 	alpha_ = alphaEas_.In(scaleTim_.Ratio());
 }
 
@@ -51,15 +51,15 @@ void RectWave::Emit(const int frame, const bool isRecede, const YMath::Vec2& pos
 {
 	if (isRecede)
 	{
-		Vec2 end = ratio * 100.0f;
+		Vec2 end = ratio * 300.0f;
 		scaleEas_.Initialize(end, {}, 3.0f);
 		alphaEas_.Initialize(0, 255, 2.0f);
 	}
 	else
 	{
-		Vec2 end = ratio * 100.0f;
+		Vec2 end = ratio * 300.0f;
 		scaleEas_.Initialize({}, end, 3.0f);
-		alphaEas_.Initialize(255, 0, 2.0f);
+		alphaEas_.Initialize(255, 100, 2.0f);
 	}
 
 	scaleTim_.Initialize(frame);
@@ -79,7 +79,7 @@ void RectWave::Update()
 	scaleTim_.Update();
 	if (scaleTim_.IsEnd()) { isAlive_ = false; }
 
-	scale_ += scaleEas_.In(scaleTim_.Ratio());
+	scale_ = scaleEas_.In(scaleTim_.Ratio());
 	alpha_ = alphaEas_.In(scaleTim_.Ratio());
 }
 

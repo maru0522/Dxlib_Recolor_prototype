@@ -1,6 +1,6 @@
 #pragma once
-#include "Vector2.h"
-#include "staging/ParticleManager.h"
+#include "../Vector2.h"
+#include "ParticleManager.h"
 
 class PlayerDrawer
 {

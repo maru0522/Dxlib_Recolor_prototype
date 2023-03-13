@@ -1,13 +1,16 @@
-#include "PlayerDrawer.h"
+#include "FillterDrawer.h"
 #include "DxLib.h"
 #include <cassert>
 
-ParticleManager* PlayerDrawer::spParticleMan_ = nullptr;
+ParticleManager* FillterDrawer::spParticleMan_ = nullptr;
 
 static const int IntervalTime = 5;
-static const int MaxBeaconCount = 5;
+static const int MaxBeaconCount = 3;
 
-void PlayerDrawer::Initialize(Vector2* pPos, const Vector2& size, const int color)
+static const int MaxAlpha = 200;
+static const int StopAlpha = 100;
+
+void FillterDrawer::Initialize(Vector2* pPos, const Vector2& size, const int color)
 {
 	assert(pPos);
 	pPos_ = pPos;
@@ -19,23 +22,24 @@ void PlayerDrawer::Initialize(Vector2* pPos, const Vector2& size, const int colo
 	Reset();
 }
 
-void PlayerDrawer::Reset()
+void FillterDrawer::Reset()
 {
-	isMove_ = true;
+	isMove_ = false;
 	isBeaconAct_ = false;
 	intervalTim_.Reset(false);
 	beaconCounter_ = 0;
 	isSign_ = false;
 }
 
-void PlayerDrawer::Switch(const bool isMove)
+void FillterDrawer::Switch(const bool isMove)
 {
 	Reset();
 	isMove_ = isMove;
 	intervalTim_.SetActive(true);
+	isBeaconAct_ = true;
 }
 
-void PlayerDrawer::Update()
+void FillterDrawer::Update()
 {
 	// ビーコンが動作していないなら更新しない
 	if (isBeaconAct_ == false) { return; }
@@ -53,7 +57,7 @@ void PlayerDrawer::Update()
 
 		// カウントが最大値なら
 		beaconCounter_++;
-		if(beaconCounter_ >= MaxBeaconCount)
+		if (beaconCounter_ >= MaxBeaconCount)
 		{
 			// 終了
 			isAgain = false;
@@ -70,16 +74,21 @@ void PlayerDrawer::Update()
 	// 発信するなら
 	if (isSign_)
 	{
+		// 比率を計算 (X基準)
+		Vector2 ratio;
+		ratio.x = 1.0f;
+		ratio.y = size_.y / size_.x;
+
 		// 自分の位置にパーティクル発生 (動く → 押す波)
-		spParticleMan_->EmitCircleWave(!isMove_, { pPos_->x, pPos_->y }, color_);
+		spParticleMan_->EmitRectWave(!isMove_, { pPos_->x, pPos_->y }, { ratio.x, ratio.y }, color_);
 	}
 }
 
-void PlayerDrawer::Draw()
+void FillterDrawer::Draw()
 {
 	// 動かないなら透ける
-	int alpha = 255;
-	if (isMove_) { alpha = 150; }
+	int alpha = MaxAlpha;
+	if (isMove_ == false) { alpha = StopAlpha; }
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 
@@ -90,7 +99,7 @@ void PlayerDrawer::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
-void PlayerDrawer::StaticInitialze(ParticleManager* pParticleMan)
+void FillterDrawer::StaticInitialze(ParticleManager* pParticleMan)
 {
 	assert(pParticleMan);
 	spParticleMan_ = pParticleMan;
