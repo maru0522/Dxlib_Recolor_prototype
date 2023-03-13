@@ -130,6 +130,7 @@
     <ClCompile Include="IBlock.cpp" />
     <ClCompile Include="IColor.cpp" />
     <ClCompile Include="IEntity.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="StageManager.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="IBlock.h" />
     <ClInclude Include="IColor.h" />
     <ClInclude Include="IEntity.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="BasicBlock.h" />

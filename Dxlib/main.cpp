@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include <memory>
 #include "StageManager.h"
+#include "Input.h"
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "aaa: タイトル";
@@ -47,17 +48,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     StageManager::LoadCSV(stage1.get(), "Resources/test.csv");
 
-	// 最新のキーボード情報用
-	char keys[256] = {0};
-
-	// 1ループ(フレーム)前のキーボード情報
-	char oldkeys[256] = {0};
-
 	// ゲームループ
 	while (true) {
-		// 最新のキーボード情報だったものは1フレーム前のキーボード情報として保存
-		// 最新のキーボード情報を取得
-		GetHitKeyStateAll(keys);
+        // KeyBoard更新
+        Input::Keyboard::Update();
 
 		// 画面クリア
 		ClearDrawScreen();
