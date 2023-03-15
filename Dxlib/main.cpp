@@ -8,6 +8,7 @@
 #include "staging/GateDrawer.h"
 #include "Input.h"
 #include "Player.h"
+#include "Filter.h"
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "aaa: Recolor";
@@ -55,6 +56,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     StageManager::SetStage(stage1);
 
     Player player{ {250,50,},{Player::defaultSizeX_,Player::defaultSizeY_},Color::BLUE };
+    Filter filter{ {250,50},{Filter::defaultSizeX_,Filter::defaultSizeY_ },Color::GREEN };
 
 	// 乱数生成
 	YMath::Srand();
@@ -77,6 +79,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		// 更新処理
         player.Update();
+        filter.Update();
         stM->Update();
 
 		// パーティクル更新
@@ -84,6 +87,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		// 描画処理
         player.Draw();
+        filter.Draw();
         stM->Draw();
 
 		// パーティクル描画

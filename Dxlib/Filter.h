@@ -8,8 +8,8 @@ class Filter :
 {
 public:
     // ’è”
-    static constexpr float defaultSizeX_{ 80 };
-    static constexpr float defaultSizeY_{ 320 };
+    static constexpr float defaultSizeX_{ 160 };
+    static constexpr float defaultSizeY_{ 80 };
     static constexpr float moveSpeed_{ 3.f };
 
     // ŠÖ”
