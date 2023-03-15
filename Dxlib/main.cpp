@@ -1,6 +1,10 @@
 #include "DxLib.h"
 #include <memory>
 #include "StageManager.h"
+#include "staging/ParticleManager.h"
+#include "staging/MathUtillity.h"
+#include "staging/PlayerDrawer.h"
+#include "staging/FillterDrawer.h"
 #include "Input.h"
 
 // ウィンドウのタイトルに表示する文字列
@@ -48,10 +52,40 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     StageManager::LoadCSV(stage1.get(), "Resources/test.csv");
     StageManager::SetStage(stage1);
 
+	// 乱数生成
+	YMath::Srand();
+
+	// パーティクル
+	std::unique_ptr<ParticleManager> particleMan = std::make_unique<ParticleManager>();
+	particleMan->Initialize();
+	PlayerDrawer::StaticInitialze(particleMan.get());
+	FillterDrawer::StaticInitialze(particleMan.get());
+
+	//PlayerDrawer plaDra;
+	//Vector2 plaPos = {WIN_WIDTH/ 2.0f - 150, WIN_HEIGHT/ 2.0f};
+	//plaDra.Initialize(&plaPos, { 64,64 }, 0xFFFFFF);
+	//
+	//FillterDrawer filDra;
+	//Vector2 filPos = {WIN_WIDTH/ 2.0f + 150, WIN_HEIGHT/ 2.0f};
+	//filDra.Initialize(&filPos, { 128,64 }, 0xFF0000);
+
+	//bool isSwitch = false;
+
+	// 最新のキーボード情報用
+	char keys[256] = {0};
+
+	// 1ループ(フレーム)前のキーボード情報
+	char oldkeys[256] = {0};
+
 	// ゲームループ
 	while (true) {
-        // KeyBoard更新
-        Input::Keyboard::Update();
+		// 最新のキーボード情報だったものは1フレーム前のキーボード情報として保存
+		for (int i = 0; i < 256; i++)
+		{
+			oldkeys[i] = keys[i];
+		}
+		// 最新のキーボード情報を取得
+		GetHitKeyStateAll(keys);
 
 		// 画面クリア
 		ClearDrawScreen();
@@ -60,8 +94,28 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 更新処理
         stM->Update();
 
+		//// お試しウェーブ (SPACEキー)
+		//if (oldkeys[KEY_INPUT_SPACE] == FALSE && keys[KEY_INPUT_SPACE] == TRUE)
+		//{
+		//	plaDra.Switch(isSwitch);
+		//	filDra.Switch(!isSwitch);
+		//	isSwitch = !isSwitch;
+		//}
+
+		//plaDra.Update();
+		//filDra.Update();
+
+		// パーティクル更新
+		particleMan->Update();
+
 		// 描画処理
         stM->Draw();
+
+		//plaDra.Draw();
+		//filDra.Draw();
+
+		// パーティクル描画
+		particleMan->Draw();
 
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面

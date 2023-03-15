@@ -31,6 +31,18 @@
     <Filter Include="ソース ファイル\IEntity">
       <UniqueIdentifier>{acdb9bdd-6610-4959-82d5-f672467a533e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\staging">
+      <UniqueIdentifier>{561738d8-26eb-4854-aea6-eccfb89fedb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\staging">
+      <UniqueIdentifier>{602e0365-c673-4dd9-a5ec-faa225e9c0d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\staging\Math">
+      <UniqueIdentifier>{229b5056-9bac-4d4c-8c38-125de66f7d01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\staging\Math">
+      <UniqueIdentifier>{bee4eb70-35dd-41d9-88ef-b3548a48414c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -69,8 +81,38 @@
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="staging\Particle.cpp">
+      <Filter>ソース ファイル\staging</Filter>
+    </ClCompile>
+    <ClCompile Include="staging\ParticleManager.cpp">
+      <Filter>ソース ファイル\staging</Filter>
+    </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>ソース ファイル\other</Filter>
+    </ClCompile>
+    <ClCompile Include="staging\PlayerDrawer.cpp">
+      <Filter>ソース ファイル\staging</Filter>
+    </ClCompile>
+    <ClCompile Include="staging\FillterDrawer.cpp">
+      <Filter>ソース ファイル\staging</Filter>
+    </ClCompile>
+    <ClCompile Include="staging\transform\Vec2.cpp">
+      <Filter>ソース ファイル\staging\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="staging\transform\Vec3.cpp">
+      <Filter>ソース ファイル\staging\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="staging\Timer.cpp">
+      <Filter>ソース ファイル\staging\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="staging\Power.cpp">
+      <Filter>ソース ファイル\staging\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="staging\Lerp.cpp">
+      <Filter>ソース ファイル\staging\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="staging\MathUtillity.cpp">
+      <Filter>ソース ファイル\staging\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -107,8 +149,38 @@
     <ClInclude Include="Player.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="staging\Particle.h">
+      <Filter>ヘッダー ファイル\staging</Filter>
+    </ClInclude>
+    <ClInclude Include="staging\ParticleManager.h">
+      <Filter>ヘッダー ファイル\staging</Filter>
+    </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>ヘッダー ファイル\other</Filter>
+    </ClInclude>
+    <ClInclude Include="staging\PlayerDrawer.h">
+      <Filter>ヘッダー ファイル\staging</Filter>
+    </ClInclude>
+    <ClInclude Include="staging\FillterDrawer.h">
+      <Filter>ヘッダー ファイル\staging</Filter>
+    </ClInclude>
+    <ClInclude Include="staging\Lerp.h">
+      <Filter>ヘッダー ファイル\staging\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="staging\Power.h">
+      <Filter>ヘッダー ファイル\staging\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="staging\Timer.h">
+      <Filter>ヘッダー ファイル\staging\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="staging\transform\Vec2.h">
+      <Filter>ヘッダー ファイル\staging\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="staging\transform\Vec3.h">
+      <Filter>ヘッダー ファイル\staging\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="staging\MathUtillity.h">
+      <Filter>ヘッダー ファイル\staging\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

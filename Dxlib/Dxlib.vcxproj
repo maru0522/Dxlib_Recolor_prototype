@@ -89,9 +89,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,11 +121,13 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -135,6 +139,16 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="BasicBlock.cpp" />
+    <ClCompile Include="staging\FillterDrawer.cpp" />
+    <ClCompile Include="staging\Lerp.cpp" />
+    <ClCompile Include="staging\MathUtillity.cpp" />
+    <ClCompile Include="staging\Particle.cpp" />
+    <ClCompile Include="staging\ParticleManager.cpp" />
+    <ClCompile Include="staging\PlayerDrawer.cpp" />
+    <ClCompile Include="staging\Power.cpp" />
+    <ClCompile Include="staging\Timer.cpp" />
+    <ClCompile Include="staging\transform\Vec2.cpp" />
+    <ClCompile Include="staging\transform\Vec3.cpp" />
     <ClCompile Include="StoneBlock.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Vector2.cpp" />
@@ -149,6 +163,16 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="BasicBlock.h" />
+    <ClInclude Include="staging\FillterDrawer.h" />
+    <ClInclude Include="staging\Lerp.h" />
+    <ClInclude Include="staging\MathUtillity.h" />
+    <ClInclude Include="staging\Particle.h" />
+    <ClInclude Include="staging\ParticleManager.h" />
+    <ClInclude Include="staging\PlayerDrawer.h" />
+    <ClInclude Include="staging\Power.h" />
+    <ClInclude Include="staging\Timer.h" />
+    <ClInclude Include="staging\transform\Vec2.h" />
+    <ClInclude Include="staging\transform\Vec3.h" />
     <ClInclude Include="StoneBlock.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Vector2.h" />
