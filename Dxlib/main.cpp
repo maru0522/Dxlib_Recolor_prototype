@@ -54,7 +54,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     StageManager::LoadCSV(stage1.get(), "Resources/test.csv");
     StageManager::SetStage(stage1);
 
-    Player player{ {250,50,},{Player::defaultWidth_,Player::defaultHeight_},Color::BLUE };
+    Player player{ {250,50,},{Player::defaultSizeX_,Player::defaultSizeY_},Color::BLUE };
 
 	// óêêîê∂ê¨
 	YMath::Srand();

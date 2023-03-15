@@ -7,7 +7,7 @@
 using namespace Util::Math;
 using KEY = Input::Keyboard;
 
-Player::Player(const Vector2 pos, const Vector2 size, const Color color)
+Player::Player(const Vector2& pos, const Vector2& size, const Color& color)
 {
     SetPos(pos);
     SetSize(size);
@@ -60,6 +60,8 @@ void Player::Move(void)
     // 移動量補正
     Collision(vel);
 
+    //if (vel.y <= 0.f) isJump_ = false;
+
     // 補正済の移動量をposに加算
     Vector2 pos{ GetPos() + vel };
     SetPos(pos);
@@ -80,9 +82,6 @@ void Player::Jump(Vector2& vel)
     if (jumpValue > 0.f) {
         jumpValue -= fallValue_;
     }
-    else if (jumpValue <= 0.f) {
-        isJump_ = false;
-    }
 
     // 0未満の値にならない。
     jumpValue = (std::max)(jumpValue, 0.f);
@@ -91,7 +90,7 @@ void Player::Jump(Vector2& vel)
 void Player::Collision(Vector2& vel)
 {
     for (std::unique_ptr<IBlock>& i : StageManager::GetStage()->blocks_) {
-        if (std::abs(i->GetPos().x - GetPos().x) > StageManager::defaultBlockSize_ * 2) {
+        if (std::abs(i->GetPos().x - GetPos().x) > StageManager::defaultBlockSize_ * 3) {
             continue;
         }
 
@@ -100,7 +99,9 @@ void Player::Collision(Vector2& vel)
         // y軸方向
         if (CheckHit(GetPos().x, GetSize().x, 0, i->GetPos().x, i->GetSize().x)) {
             if (CheckHit(GetPos().y, GetSize().y, vel.y, i->GetPos().y, i->GetSize().y, surplus)) {
-                isPositive<float>(vel.y) ? vel.y += surplus : vel.y -= surplus;
+                // めり込んでいる場合、めり込んでいる量だけ移動量を減らす。場合によっては押し出す。
+                isPositive<float>(vel.y) ? vel.y += surplus, isJump_ = false : vel.y -= surplus;
+                // ※重力方向が"+"だが、参照渡しをしている"surplus"に入る値はめり込んでいる状態なら"-"値が入るので"true = + surplus"で問題ない
             }
         }
 

@@ -120,6 +120,9 @@
     <ClCompile Include="staging\BeaconDrawer.cpp">
       <Filter>ソース ファイル\staging</Filter>
     </ClCompile>
+    <ClCompile Include="Filter.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StageManager.h">
@@ -193,6 +196,9 @@
     </ClInclude>
     <ClInclude Include="staging\BeaconDrawer.h">
       <Filter>ヘッダー ファイル\staging</Filter>
+    </ClInclude>
+    <ClInclude Include="Filter.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
