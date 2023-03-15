@@ -1,7 +1,5 @@
 #pragma once
-#pragma once
-#include "../Vector2.h"
-#include "ParticleManager.h"
+#include "BeaconDrawer.h"
 
 class FillterDrawer
 {
@@ -15,15 +13,8 @@ private:
 	// 動いているかフラグ
 	bool isMove_ = false;
 
-	// ビーコン動作フラグ
-	bool isBeaconAct_ = false;
-	// ビーコン演出インターバルタイマー
-	YMath::Timer intervalTim_;
-	// 発信カウンタ
-	int beaconCounter_ = 0;
-	// 発信フラグ
-	bool isSign_ = false;
-
+	// ビーコン描画クラス
+	BeaconDrawer beaconDra_;
 public:
 	// 初期化 (位置ポインタ取得)
 	void Initialize(Vector2* pPos, const Vector2& size, const int color);

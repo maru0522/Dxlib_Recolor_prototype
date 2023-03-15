@@ -139,7 +139,9 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="BasicBlock.cpp" />
+    <ClCompile Include="staging\BeaconDrawer.cpp" />
     <ClCompile Include="staging\FillterDrawer.cpp" />
+    <ClCompile Include="staging\GateDrawer.cpp" />
     <ClCompile Include="staging\Lerp.cpp" />
     <ClCompile Include="staging\MathUtillity.cpp" />
     <ClCompile Include="staging\Particle.cpp" />
@@ -163,7 +165,9 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="BasicBlock.h" />
+    <ClInclude Include="staging\BeaconDrawer.h" />
     <ClInclude Include="staging\FillterDrawer.h" />
+    <ClInclude Include="staging\GateDrawer.h" />
     <ClInclude Include="staging\Lerp.h" />
     <ClInclude Include="staging\MathUtillity.h" />
     <ClInclude Include="staging\Particle.h" />

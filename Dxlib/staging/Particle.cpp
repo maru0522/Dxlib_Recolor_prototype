@@ -79,8 +79,8 @@ void RectWave::Update()
 	scaleTim_.Update();
 	if (scaleTim_.IsEnd()) { isAlive_ = false; }
 
-	scale_ = scaleEas_.In(scaleTim_.Ratio());
-	alpha_ = alphaEas_.In(scaleTim_.Ratio());
+	scale_ = scaleEas_.Out(scaleTim_.Ratio());
+	alpha_ = alphaEas_.Out(scaleTim_.Ratio());
 }
 
 void RectWave::Draw()

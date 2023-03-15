@@ -114,6 +114,12 @@
     <ClCompile Include="staging\MathUtillity.cpp">
       <Filter>ソース ファイル\staging\Math</Filter>
     </ClCompile>
+    <ClCompile Include="staging\GateDrawer.cpp">
+      <Filter>ソース ファイル\staging</Filter>
+    </ClCompile>
+    <ClCompile Include="staging\BeaconDrawer.cpp">
+      <Filter>ソース ファイル\staging</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StageManager.h">
@@ -181,6 +187,12 @@
     </ClInclude>
     <ClInclude Include="staging\MathUtillity.h">
       <Filter>ヘッダー ファイル\staging\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="staging\GateDrawer.h">
+      <Filter>ヘッダー ファイル\staging</Filter>
+    </ClInclude>
+    <ClInclude Include="staging\BeaconDrawer.h">
+      <Filter>ヘッダー ファイル\staging</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

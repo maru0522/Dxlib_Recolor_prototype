@@ -5,6 +5,7 @@
 #include "staging/MathUtillity.h"
 #include "staging/PlayerDrawer.h"
 #include "staging/FillterDrawer.h"
+#include "staging/GateDrawer.h"
 #include "Input.h"
 #include "Player.h"
 
@@ -61,8 +62,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// パーティクル
 	std::unique_ptr<ParticleManager> particleMan = std::make_unique<ParticleManager>();
 	particleMan->Initialize();
+	BeaconDrawer::StaticInitialze(particleMan.get());
 	PlayerDrawer::StaticInitialze(particleMan.get());
 	FillterDrawer::StaticInitialze(particleMan.get());
+	GateDrawer::StaticInitialze(particleMan.get());
+
 
 	// 最新のキーボード情報用
 	char keys[256] = {0};

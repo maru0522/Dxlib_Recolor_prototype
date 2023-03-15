@@ -1,7 +1,7 @@
 #pragma once
 #include "BeaconDrawer.h"
 
-class PlayerDrawer
+class GateDrawer
 {
 private:
 	// 位置ポインタ
@@ -10,22 +10,22 @@ private:
 	Vector2 size_;
 	// 色
 	int color_ = 0xFFFFFF;
-	// 動いているかフラグ
-	bool isMove_ = true;
+	// 現在の回数ポインタ
+	int* pCount_ = nullptr;
 
 	// ビーコン描画クラス
 	BeaconDrawer beaconDra_;
 public:
 	// 初期化 (位置ポインタ取得)
 	void Initialize(Vector2* pPos, const Vector2& size, const int color);
+	// 初期化 (位置ポインタ取得, 回数制限があるか)
+	void Initialize(int* pCount, Vector2* pPos, const Vector2& size, const int color);
 	void Reset();
 	void Update();
 	void Draw();
 public:
-	// 色変えたときの演出
-	void ChangeColor(const int color);
-	// 操作切り替えたときの演出 (動くならtrue)
-	void Switch(const bool isMove);
+	// くぐったときの演出
+	void Pass();
 private:
 	// 静的パーティクルマネージャーポインタ
 	static ParticleManager* spParticleMan_;

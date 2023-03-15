@@ -33,18 +33,18 @@ void ParticleManager::Draw()
 	}
 }
 
-void ParticleManager::EmitCircleWave(const bool isRecede, const YMath::Vec2& pos, const int color)
+void ParticleManager::EmitCircleWave(const int frame, const bool isRecede, const YMath::Vec2& pos, const int color)
 {
 	std::unique_ptr<CircleWave> newParticle = std::make_unique<CircleWave>();
 
-	newParticle->Emit(20, isRecede, pos, color, false);
+	newParticle->Emit(frame, isRecede, pos, color, false);
 	particles_.push_back(std::move(newParticle));
 }
 
-void ParticleManager::EmitRectWave(const bool isRecede, const YMath::Vec2& pos, const YMath::Vec2& ratio, const int color)
+void ParticleManager::EmitRectWave(const int frame, const bool isRecede, const YMath::Vec2& pos, const YMath::Vec2& ratio, const int color)
 {
 	std::unique_ptr<RectWave> newParticle = std::make_unique<RectWave>();
 
-	newParticle->Emit(20, isRecede, pos, ratio, color, false);
+	newParticle->Emit(frame, isRecede, pos, ratio, color, false);
 	particles_.push_back(std::move(newParticle));
 }
