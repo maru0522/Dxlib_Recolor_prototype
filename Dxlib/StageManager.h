@@ -18,7 +18,6 @@ public:
         void Update(void);
         void Draw(void);
 
-    private:
         // \‘¢‘Ì•Ï”
         std::list<std::unique_ptr<IBlock>> blocks_;
     };
@@ -29,6 +28,16 @@ public:
 
     // Ã“IŠÖ”
     static void LoadCSV(Stage* ins, std::string csvPath);
+
+    static void Update(void);
+    static void Draw(void);
+
+    static inline void SetStage(std::unique_ptr<Stage>& ins) { current_ = std::move(ins); }
+    static inline Stage* GetStage(void) { return current_.get(); }
+
+private:
+    // Ã“I•Ï”
+    static std::unique_ptr<Stage> current_;
 };
 
 #ifndef NON_USING_NAMESPACE_STAGE

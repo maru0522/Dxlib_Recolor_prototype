@@ -46,6 +46,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     std::unique_ptr<Stage> stage1{ std::make_unique<Stage>() };
 
     StageManager::LoadCSV(stage1.get(), "Resources/test.csv");
+    StageManager::SetStage(stage1);
 
 	// ゲームループ
 	while (true) {
@@ -57,10 +58,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//---------  ここからプログラムを記述  ----------//
 
 		// 更新処理
-        stage1->Update();
+        stM->Update();
 
 		// 描画処理
-        stage1->Draw();
+        stM->Draw();
 
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面

@@ -5,6 +5,8 @@
 #include "BasicBlock.h"
 #include "StoneBlock.h"
 
+std::unique_ptr<Stage> StageManager::current_{ nullptr };
+
 void StageManager::LoadCSV(Stage* ins, std::string csvPath)
 {
     std::ifstream ifs{ csvPath };
@@ -45,6 +47,16 @@ void StageManager::LoadCSV(Stage* ins, std::string csvPath)
         }
         loopY++;
     }
+}
+
+void StageManager::Update(void)
+{
+    current_->Update();
+}
+
+void StageManager::Draw(void)
+{
+    current_->Draw();
 }
 
 void StageManager::Stage::Register(IBlock* p_block)

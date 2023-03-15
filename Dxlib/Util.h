@@ -12,6 +12,18 @@ static std::mt19937 engine(seed_gen());
 
 namespace Util {
 
+    struct Direct4 {
+        union iorb
+        {
+            int32_t i;
+            bool b;
+        };
+        iorb top;
+        iorb bottom;
+        iorb left;
+        iorb right;
+    };
+
     namespace Math {
 
         constexpr float PI{ 3.14159265f };
@@ -35,6 +47,11 @@ namespace Util {
             else {
                 return value;
             }
+        }
+
+        template<typename T>
+        inline bool isPositive(T v) {
+            return v > 0;
         }
     }
 
