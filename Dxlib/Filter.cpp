@@ -20,7 +20,6 @@ void Filter::Update(void)
 
 void Filter::Draw(void)
 {
-    Draw();
     drawer_.Draw();
 }
 
