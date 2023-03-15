@@ -36,7 +36,8 @@ void Player::Draw(void)
 void Player::DisplayDebug(void)
 {
     DrawFormatString(0, 0, 0xffffff, "player_pos: (%f,%f)", GetPos().x, GetPos().y);
-    DrawFormatString(0, 40, 0xffffff, "player_size: (%f,%f)", GetSize().x, GetSize().y);
+    DrawFormatString(0, 20, 0xffffff, "player_size: (%f,%f)", GetSize().x, GetSize().y);
+    DrawFormatString(0, 40, 0xffffff, isJump_ ? "player_isJump: true" : "player_isJump: false");
 }
 
 void Player::Move(void)
@@ -62,8 +63,6 @@ void Player::Move(void)
     // •â³Ï‚ÌˆÚ“®—Ê‚ðpos‚É‰ÁŽZ
     Vector2 pos{ GetPos() + vel };
     SetPos(pos);
-
-    DrawFormatString(0, 20, 0xffffff, "player_vel: (%f,%f)", vel.x, vel.y);
 }
 
 void Player::Jump(Vector2& vel)
@@ -77,7 +76,7 @@ void Player::Jump(Vector2& vel)
     }
 
     // vel‚ÉƒWƒƒƒ“ƒv—Ê(yŽ²ˆÚ“®—Ê)‚ð‰ÁŽZ
-    vel.y += jumpValue;
+    vel.y -= jumpValue;
     if (jumpValue > 0.f) {
         jumpValue -= fallValue_;
     }
@@ -104,15 +103,13 @@ void Player::Collision(Vector2& vel)
                 isPositive<float>(vel.y) ? vel.y += surplus : vel.y -= surplus;
             }
         }
-        
+
         // xŽ²•ûŒü
         if (CheckHit(GetPos().y, GetSize().y, 0, i->GetPos().y, i->GetSize().y)) {
             if (CheckHit(GetPos().x, GetSize().x, vel.x, i->GetPos().x, i->GetSize().x, surplus)) {
                 isPositive<float>(vel.x) ? vel.x += surplus : vel.x -= surplus;
             }
         }
-
-
     }
 }
 
