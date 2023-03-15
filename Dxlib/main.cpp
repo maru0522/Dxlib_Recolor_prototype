@@ -67,13 +67,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	FillterDrawer::StaticInitialze(particleMan.get());
 	GateDrawer::StaticInitialze(particleMan.get());
 
-
-	// 最新のキーボード情報用
-	char keys[256] = {0};
-
-	// 1ループ(フレーム)前のキーボード情報
-	char oldkeys[256] = {0};
-
 	// ゲームループ
 	while (true) {
         Input::Keyboard::Update();

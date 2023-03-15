@@ -1,6 +1,7 @@
 #pragma once
 #include "IEntity.h"
 #include "IColor.h"
+#include "staging/FillterDrawer.h"
 
 class Filter :
     public IEntity, public IColor
@@ -9,6 +10,7 @@ public:
     // íËêî
     static constexpr float defaultSizeX_{ 80 };
     static constexpr float defaultSizeY_{ 320 };
+    static constexpr float moveSpeed_{ 3.f };
 
     // ä÷êî
     Filter(const Vector2& pos, const Vector2& size, const Color& color);
@@ -17,5 +19,11 @@ public:
     void Draw(void) override;
 
     void DisplayDebug(void);
+
+private:
+    void Move(void);
+
+    // ïœêî
+    FillterDrawer drawer_{};
 };
 
