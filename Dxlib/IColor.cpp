@@ -1,6 +1,6 @@
 #include "IColor.h"
 
-uint32_t IColor::GetColorValue(void)
+int32_t IColor::GetColorValue(void)
 {
     switch (color_)
     {

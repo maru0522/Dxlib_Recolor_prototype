@@ -19,7 +19,7 @@ public:
 
     inline void SetColor(Color color) { color_ = color; }
     inline Color GetColor(void) { return color_; }
-    uint32_t GetColorValue(void);
+    int32_t GetColorValue(void);
 
 private:
     Color color_{ Color::RED };

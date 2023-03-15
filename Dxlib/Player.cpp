@@ -9,14 +9,34 @@ using KEY = Input::Keyboard;
 
 Player::Player(const Vector2 pos, const Vector2 size, const Color color)
 {
+    SetPos(pos);
+    SetSize(size);
+    SetColor(color);
+    drawer_.Initialize(GetPosPtr(), GetSize(), GetColorValue());
 }
 
 void Player::Update(void)
 {
+    Move();
+    drawer_.Update();
 }
 
 void Player::Draw(void)
 {
+    drawer_.Draw();
+
+    DrawBox(GetPos().x - GetSize().x / 2, GetPos().y - GetSize().y / 2, GetPos().x + GetSize().x / 2, GetPos().y + GetSize().y / 2, 0xffffff, true);
+    DrawCircle(GetPos().x, GetPos().y, 10, 0xff0000, 1, 1.f);
+
+#ifdef _DEBUG
+    DisplayDebug();
+#endif // _DEBUG
+}
+
+void Player::DisplayDebug(void)
+{
+    DrawFormatString(0, 0, 0xffffff, "player_pos: (%f,%f)", GetPos().x, GetPos().y);
+    DrawFormatString(0, 40, 0xffffff, "player_size: (%f,%f)", GetSize().x, GetSize().y);
 }
 
 void Player::Move(void)
@@ -32,7 +52,9 @@ void Player::Move(void)
     // ジャンプ処理
     Jump(vel);
     // 重力
-    vel.y -= gravity_;
+    vel.y += gravity_;
+
+    //vel = vel.normalize();
 
     // 移動量補正
     Collision(vel);
@@ -41,6 +63,7 @@ void Player::Move(void)
     Vector2 pos{ GetPos() + vel };
     SetPos(pos);
 
+    DrawFormatString(0, 20, 0xffffff, "player_vel: (%f,%f)", vel.x, vel.y);
 }
 
 void Player::Jump(Vector2& vel)
@@ -69,25 +92,39 @@ void Player::Jump(Vector2& vel)
 void Player::Collision(Vector2& vel)
 {
     for (std::unique_ptr<IBlock>& i : StageManager::GetStage()->blocks_) {
-        if (std::abs(i->GetPos().x - GetPos().x) > 5) continue;
+        if (std::abs(i->GetPos().x - GetPos().x) > StageManager::defaultBlockSize_ * 2) {
+            continue;
+        }
 
         float surplus{};
 
+        // y軸方向
+        if (CheckHit(GetPos().x, GetSize().x, 0, i->GetPos().x, i->GetSize().x)) {
+            if (CheckHit(GetPos().y, GetSize().y, vel.y, i->GetPos().y, i->GetSize().y, surplus)) {
+                isPositive<float>(vel.y) ? vel.y += surplus : vel.y -= surplus;
+            }
+        }
+        
         // x軸方向
-        if (CheckHit(GetPos().x, GetSize().x, vel.x, i->GetPos().x, i->GetSize().x, surplus)) {
-            isPositive<float>(vel.x) ? vel.x + surplus : vel.x - surplus;
+        if (CheckHit(GetPos().y, GetSize().y, 0, i->GetPos().y, i->GetSize().y)) {
+            if (CheckHit(GetPos().x, GetSize().x, vel.x, i->GetPos().x, i->GetSize().x, surplus)) {
+                isPositive<float>(vel.x) ? vel.x += surplus : vel.x -= surplus;
+            }
         }
 
-        // y軸方向
-        if (CheckHit(GetPos().y, GetSize().y, vel.y, i->GetPos().y, i->GetSize().y, surplus)) {
-            isPositive<float>(vel.y) ? vel.y + surplus : vel.y - surplus;
-        }
+
     }
+}
+
+bool Player::CheckHit(float pos, float size, float vel, float blockpos, float blocksize)
+{
+    // 値が0未満ならめり込んでる。
+    return std::abs(pos - blockpos + vel) - (size / 2 + blocksize / 2) < 0;
 }
 
 bool Player::CheckHit(float pos, float size, float vel, float blockpos, float blocksize, float& surplus)
 {
-    surplus = std::abs(pos - blockpos + vel) - size / 2 + blocksize / 2;
+    surplus = std::abs(pos - blockpos + vel) - (size / 2 + blocksize / 2);
 
     // 値が0未満ならめり込んでる。
     return surplus < 0;

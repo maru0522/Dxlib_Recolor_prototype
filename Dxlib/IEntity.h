@@ -15,6 +15,7 @@ public:
 
     inline const Vector2& GetPos(void) { return pos_; }
     inline const Vector2& GetSize(void) { return size_; }
+    inline Vector2* GetPosPtr(void) { return &pos_; }
 
 private:
     // •Ï”
