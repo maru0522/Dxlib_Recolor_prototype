@@ -25,8 +25,8 @@ void Player::Draw(void)
 {
     drawer_.Draw();
 
-    DrawBox(GetPos().x - GetSize().x / 2, GetPos().y - GetSize().y / 2, GetPos().x + GetSize().x / 2, GetPos().y + GetSize().y / 2, 0xffffff, true);
-    DrawCircle(GetPos().x, GetPos().y, 10, 0xff0000, 1, 1.f);
+    DrawBoxAA(GetPos().x - GetSize().x / 2, GetPos().y - GetSize().y / 2, GetPos().x + GetSize().x / 2, GetPos().y + GetSize().y / 2, 0xffffff, true);
+    DrawCircle((int)GetPos().x, (int)GetPos().y, 10, 0xff0000, 1, 1);
 
 #ifdef _DEBUG
     DisplayDebug();
