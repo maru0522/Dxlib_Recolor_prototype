@@ -35,6 +35,11 @@ void User::Draw(void)
 {
     player_->Draw();
     filter_->Draw();
+
+#ifdef _DEBUG
+    DisplayDebug();
+#endif // _DEBUG
+
 }
 
 void User::DisplayDebug(void)
