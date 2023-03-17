@@ -15,7 +15,10 @@ User::User(std::string UserCsv)
 
 void User::Update(void)
 {
-    if (KEY::IsTrigger(KEY_INPUT_G)) isControllPlayer_ ? isControllPlayer_ = false : isControllPlayer_ = true;
+    if (KEY::IsTrigger(KEY_INPUT_G)) {
+        isControllPlayer_ ? isControllPlayer_ = false : isControllPlayer_ = true;
+        fpsCounter_ = 0;
+    }
 
     if (isControllPlayer_) {
         player_->Update(true);
