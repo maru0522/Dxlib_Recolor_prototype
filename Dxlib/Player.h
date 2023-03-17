@@ -31,6 +31,7 @@ private:
     // •Ï”
     PlayerDrawer drawer_{};
     bool isJump_{ true };
+    //bool isJumpValue_{ false };
 
     float moveSpeed_{ 3.f };       // ˆÚ“®‘¬“x
     float jumpPower_{ 7.f };       // ƒWƒƒƒ“ƒv—Í

@@ -86,14 +86,23 @@ void Player::Jump(Vector2& vel)
     static float jumpValue{ 0.f };
 
     // トリガーでジャンプ
-    if (KEY::IsTrigger(KEY_INPUT_SPACE) && isJump_ == false) {
+    if (KEY::IsTrigger(KEY_INPUT_SPACE) && isJump_ == false) { // トリガー && ジャンプフラグがOFF
+        // まだ上方向への移動量が残っている（0.fより大きい）場合は無くす
+        if (jumpValue > 0.f) jumpValue = 0.f; // ハイジャンプ（バグ）の無効化
+
+        // ジャンプフラグON
         isJump_ = true;
+
+        // 上方向への移動量を加算
         jumpValue += jumpPower_;
     }
 
     // velにジャンプ量(y軸移動量)を加算
     vel.y -= jumpValue;
+
+    // 上方向への移動量が残っている（0.fより大きい）場合
     if (jumpValue > 0.f) {
+        // 移動量を減衰量だけ減算
         jumpValue -= fallValue_;
     }
 
