@@ -12,9 +12,18 @@ Filter::Filter(const Vector2& pos, const Vector2& size, const Color& color)
     drawer_.Initialize(GetPosPtr(), GetSize(), GetColorValue());
 }
 
-void Filter::Update(void)
+Filter::Filter(const Vector2& pos, const Vector2& size, float moveSpeed, const Color& color)
 {
-    Move();
+    SetPos(pos);
+    SetSize(size);
+    moveSpeed_ = moveSpeed;
+    SetColor(color);
+    drawer_.Initialize(GetPosPtr(), GetSize(), GetColorValue());
+}
+
+void Filter::Update(bool isInput)
+{
+    Move(isInput);
     drawer_.Update();
 }
 
@@ -33,15 +42,17 @@ void Filter::DisplayDebug(void)
     DrawFormatString(500, 20, 0xffffff, "filter_size: (%f,%f)", GetSize().x, GetSize().y);
 }
 
-void Filter::Move(void)
+void Filter::Move(bool isInput)
 {
     // ˆÚ“®—Ê
     Vector2 vel{};
 
-    // ¶‰E“ü—Í‚Ì”»’è‚ÆˆÚ“®—Ê‰ÁZ
-    vel.x += (KEY::IsDown(KEY_INPUT_D) - KEY::IsDown(KEY_INPUT_A));
-    // ã‰º“ü—Í‚Ì”»’è‚ÆˆÚ“®—Ê‰ÁZ
-    vel.y += (KEY::IsDown(KEY_INPUT_S) - KEY::IsDown(KEY_INPUT_W));
+    if (isInput) {
+        // ¶‰E“ü—Í‚Ì”»’è‚ÆˆÚ“®—Ê‰ÁZ
+        vel.x += (KEY::IsDown(KEY_INPUT_D) - KEY::IsDown(KEY_INPUT_A));
+        // ã‰º“ü—Í‚Ì”»’è‚ÆˆÚ“®—Ê‰ÁZ
+        vel.y += (KEY::IsDown(KEY_INPUT_S) - KEY::IsDown(KEY_INPUT_W));
+    }
 
     // ³‹K‰»
     vel = vel.normalize();
@@ -52,5 +63,5 @@ void Filter::Move(void)
     Vector2 pos{ GetPos() + vel };
 
     // ”½‰f
-    SetPos(pos);;
+    SetPos(pos);
 }

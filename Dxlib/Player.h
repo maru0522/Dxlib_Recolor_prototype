@@ -10,21 +10,18 @@ public:
     // 定数
     static constexpr uint32_t defaultSizeX_{ 16 };
     static constexpr uint32_t defaultSizeY_{ 64 };
-    static constexpr float moveSpeed_{ 3.f };       // 移動速度
-    static constexpr float jumpPower_{ 7.f };       // ジャンプ力
-    static constexpr float fallValue_{ 0.2f };      // ジャンプ力の減衰
-    static constexpr float gravity_{ 3.5f };      // 重力
 
     // 関数
     Player(const Vector2& pos, const Vector2& size, const Color& color);
+    Player(const Vector2& pos, const Vector2& size, float moveSpeed, float jumpPower, float fallValue, float gravity, const Color& color);
 
-    void Update(void) override;
+    void Update(bool isInput);
     void Draw(void) override;
 
     void DisplayDebug(void);
 
 private:
-    void Move(void);
+    void Move(bool isInput);
     void Jump(Vector2& vel);
 
     void Collision(Vector2& vel);
@@ -32,6 +29,11 @@ private:
     bool CheckHit(float pos, float size, float vel, float blockpos, float blocksize, float& surplus);
 
     // 変数
-    bool isJump_{ true };
     PlayerDrawer drawer_{};
+    bool isJump_{ true };
+
+    float moveSpeed_{ 3.f };       // 移動速度
+    float jumpPower_{ 7.f };       // ジャンプ力
+    float fallValue_{ 0.2f };      // ジャンプ力の減衰
+    float gravity_{ 3.5f };        // 重力
 };

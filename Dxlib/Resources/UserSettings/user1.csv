@@ -1,0 +1,16 @@
+UserInfomation
+
+=====player=====
+pos :100,150
+size :16,64
+moveSpeed :3
+jumpPower :7
+fallValue :0.2
+gravity :3.5
+color :red
+
+=====filter=====
+pos :100,150
+size :160,80
+moveSpeed :3
+color :red

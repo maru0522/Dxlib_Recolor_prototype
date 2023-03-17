@@ -7,8 +7,8 @@ public:
     // ä÷êî
     virtual ~IEntity(void) = default;
 
-    virtual void Update(void) = 0;
-    virtual void Draw(void) = 0;
+    virtual void Update(void) {};
+    virtual void Draw(void) {};
 
     inline void SetPos(const Vector2& pos) { pos_ = pos; };
     inline void SetSize(const Vector2& size) { size_ = size; };

@@ -15,9 +15,21 @@ Player::Player(const Vector2& pos, const Vector2& size, const Color& color)
     drawer_.Initialize(GetPosPtr(), GetSize(), GetColorValue());
 }
 
-void Player::Update(void)
+Player::Player(const Vector2& pos, const Vector2& size, float moveSpeed, float jumpPower, float fallValue, float gravity, const Color& color)
 {
-    Move();
+    SetPos(pos);
+    SetSize(size);
+    moveSpeed_ = moveSpeed;
+    jumpPower_ = jumpPower;
+    fallValue_ = fallValue;
+    gravity_ = gravity;
+    SetColor(color);
+    drawer_.Initialize(GetPosPtr(), GetSize(), GetColorValue());
+}
+
+void Player::Update(bool isInput)
+{
+    Move(isInput);
     drawer_.Update();
 }
 
@@ -40,18 +52,20 @@ void Player::DisplayDebug(void)
     DrawFormatString(0, 40, 0xffffff, isJump_ ? "player_isJump: true" : "player_isJump: false");
 }
 
-void Player::Move(void)
+void Player::Move(bool isInput)
 {
     // 移動量
     Vector2 vel{};
 
     // x軸
     // 左右入力の判定と移動量加算
-    vel.x += (KEY::IsDown(KEY_INPUT_D) - KEY::IsDown(KEY_INPUT_A)) * moveSpeed_;
+    if (isInput) {
+        vel.x += (KEY::IsDown(KEY_INPUT_D) - KEY::IsDown(KEY_INPUT_A)) * moveSpeed_;
 
-    // y軸
-    // ジャンプ処理
-    Jump(vel);
+        // y軸
+        // ジャンプ処理
+        Jump(vel);
+    }
     // 重力
     vel.y += gravity_;
 
