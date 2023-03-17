@@ -37,6 +37,13 @@ void User::Draw(void)
     filter_->Draw();
 }
 
+void User::DisplayDebug(void)
+{
+    DrawFormatString(0, 400, 0xffffff, "WASD‚ÅˆÚ“®");
+    DrawFormatString(0, 420, 0xffffff, "SPACE‚ÅƒWƒƒƒ“ƒv");
+    DrawFormatString(0, 440, 0xffffff, "G‚Å‘€ìØ‘Ö");
+}
+
 void User::LoadCsv(std::string UserCsv)
 {
     std::ifstream ifs{ UserCsv };

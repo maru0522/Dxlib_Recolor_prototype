@@ -53,7 +53,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     std::unique_ptr<StageManager> stM{ std::make_unique<StageManager>() };
     std::unique_ptr<Stage> stage1{ std::make_unique<Stage>() };
 
-    StageManager::LoadCSV(stage1.get(), "Resources/test.csv");
+    StageManager::LoadCSV(stage1.get(), "Resources/Stages/test.csv");
     StageManager::SetStage(stage1);
 
     User user{ "Resources/UserSettings/user1.csv" };

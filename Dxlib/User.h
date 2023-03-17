@@ -28,7 +28,7 @@ private:
     };
 
     // ’è”
-    static constexpr int32_t perFrame_{ 30 };
+    static constexpr int32_t perFrame_{ 60 };
 
 public:
     // ŠÖ”
@@ -37,6 +37,7 @@ public:
     void Update(void);
     void Draw(void);
 
+    void DisplayDebug(void);
 private:
     // UserCsv
     void LoadCsv(std::string UserCsv);
