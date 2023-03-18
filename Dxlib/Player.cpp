@@ -117,6 +117,11 @@ void Player::Collision(Vector2& vel)
             continue;
         }
 
+        // プレイヤーがフィルター内にいるなら
+        if (isInsideFilter_) {
+            std::abs(GetPos().x + i->GetPos().x) - (GetSize().x / 2 + i->GetSize().x / 2);
+        }
+
         float surplus{};
 
         // y軸方向

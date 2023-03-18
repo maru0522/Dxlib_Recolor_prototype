@@ -53,6 +53,11 @@ namespace Util {
         inline bool isPositive(T v) {
             return v > 0;
         }
+
+        template<typename T>
+        inline bool isNegative(T v) {
+            return v < 0;
+        }
     }
 
     namespace Convert {

@@ -39,6 +39,8 @@ public:
 
     void DisplayDebug(void);
 private:
+    void CheckPlayerInsideFilter(void);
+
     // UserCsv
     void LoadCsv(std::string UserCsv);
 
@@ -48,7 +50,10 @@ private:
     std::unique_ptr<Player> player_{ nullptr };
     std::unique_ptr<Filter> filter_{ nullptr };
 
+    // 現在の操作対象はプレイヤーか
     bool isControllPlayer_{ true };
+    // プレイヤーがフィルター内にいるか
+    bool isPlayerInsideFilter_{ false };
 
     int32_t fpsCounter_{};
 };

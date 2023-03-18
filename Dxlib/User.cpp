@@ -5,8 +5,10 @@
 #include "Input.h"
 #include "Player.h"
 #include "Filter.h"
+#include "Util.h"
 
 using KEY = Input::Keyboard;
+using namespace Util::Math;
 
 User::User(std::string UserCsv)
 {
@@ -15,21 +17,38 @@ User::User(std::string UserCsv)
 
 void User::Update(void)
 {
+    // "G"で操作対象をスイッチ
     if (KEY::IsTrigger(KEY_INPUT_G)) {
-        isControllPlayer_ ? isControllPlayer_ = false : isControllPlayer_ = true;
+        // player.Update()が想定よりも早く実行されないようにするため初期化。
         fpsCounter_ = 0;
+        // 操作対象変更の条件
+        if (isControllPlayer_ == false) {
+            // フィルター => プレイヤー
+            isControllPlayer_ = true;
+        }
+        else if (isPlayerInsideFilter_ == false) { // プレイヤーがフィルターの内側にいない事が条件
+            // プレイヤー => フィルター
+            isControllPlayer_ = false;
+        }
     }
 
+    // どちらの操作を行うかの判定
     if (isControllPlayer_) {
+        // プレイヤーの操作を行う
         player_->Update(true);
         filter_->Update(false);
     }
     else {
+        // フィルターの操作を行う。
+        filter_->Update(true);
         // player は [1 / perFrame] でしか Update() が実行されない
         if (fpsCounter_ % perFrame_ == 0) player_->Update(false);
-        filter_->Update(true);
     }
 
+    // プレイヤーがフィルター内にいるかどうか監視
+    CheckPlayerInsideFilter();
+
+    // その他の処理
     fpsCounter_++;
     if (fpsCounter_ >= 100000000) fpsCounter_ = 0; // 1,0000,0000 == 1億
 }
@@ -42,7 +61,6 @@ void User::Draw(void)
 #ifdef _DEBUG
     DisplayDebug();
 #endif // _DEBUG
-
 }
 
 void User::DisplayDebug(void)
@@ -50,6 +68,16 @@ void User::DisplayDebug(void)
     DrawFormatString(0, 400, 0xffffff, "WASDで移動");
     DrawFormatString(0, 420, 0xffffff, "SPACEでジャンプ");
     DrawFormatString(0, 440, 0xffffff, "Gで操作切替");
+}
+
+void User::CheckPlayerInsideFilter(void)
+{
+    if (isNegative<float>(std::abs(player_->GetPos().x - filter_->GetPos().x) - (player_->GetSize().x / 2 + filter_->GetSize().x / 2)) ||
+        isNegative<float>(std::abs(player_->GetPos().y - filter_->GetPos().y) - (player_->GetSize().y / 2 + filter_->GetSize().y / 2))) {
+        // プレイヤーがフィルター内にいるかどうか
+        isPlayerInsideFilter_ = true;
+    }
+    else isPlayerInsideFilter_ = false;
 }
 
 void User::LoadCsv(std::string UserCsv)
@@ -150,6 +178,8 @@ void User::LoadCsv(std::string UserCsv)
 
     player_ = std::make_unique<Player>(pInfo.pos, pInfo.size, pInfo.moveSpeed, pInfo.jumpPower, pInfo.fallValue, pInfo.gravity, pInfo.color);
     filter_ = std::make_unique<Filter>(fInfo.pos, fInfo.size, fInfo.moveSpeed, fInfo.color);
+
+    player_->SetFilterPtr(filter_.get());
 }
 
 Color User::CheckColor(std::string string)

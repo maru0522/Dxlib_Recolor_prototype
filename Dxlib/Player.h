@@ -3,6 +3,7 @@
 #include "IColor.h"
 #include "StageManager.h"
 #include "staging/PlayerDrawer.h"
+#include "Filter.h"
 
 class Player : public IEntity, public IColor
 {
@@ -20,6 +21,7 @@ public:
 
     void DisplayDebug(void);
 
+    inline void SetFilterPtr(Filter* p_filter) { p_filter_ = p_filter; }
 private:
     void Move(bool isInput);
     void Jump(Vector2& vel);
@@ -30,8 +32,10 @@ private:
 
     // •Ï”
     PlayerDrawer drawer_{};
+    Filter* p_filter_{ nullptr };
+
     bool isJump_{ true };
-    //bool isJumpValue_{ false };
+    bool isInsideFilter_{ false };
 
     float moveSpeed_{ 3.f };       // ˆÚ“®‘¬“x
     float jumpPower_{ 7.f };       // ƒWƒƒƒ“ƒv—Í
