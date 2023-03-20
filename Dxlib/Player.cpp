@@ -171,7 +171,7 @@ void Player::CheckFilterDistance(void)
     if (isNegative<float>(std::abs(GetPos().y - p_filter_->GetPos().y) - (GetSize().y / 2 + p_filter_->GetSize().y / 2))) {
         if (isNegative<float>(intrusion)) {
             // playerÇ©ÇÁå©ÇΩfilterÇÃà íu ? âE : ç∂
-            isNegative<float>(comparePos) ? sizeX_.right += intrusion : sizeX_.left += intrusion; // sizeX.value += intrusion(-value)
+            isNegative<float>(comparePos) ? sizeX_.right = GetSize().x / 2 + intrusion : sizeX_.left = GetSize().x / 2 + intrusion; // sizeX.value += intrusion(-value)
 
             if (isNegative<float>(sizeX_.right)) sizeX_.left += sizeX_.right;
             if (isNegative<float>(sizeX_.left)) sizeX_.right += sizeX_.left;
@@ -198,7 +198,7 @@ void Player::CheckFilterDistance(void)
     if (isNegative<float>(std::abs(GetPos().x - p_filter_->GetPos().x) - (GetSize().x / 2 + p_filter_->GetSize().x / 2))) {
         if (isNegative<float>(intrusion)) {
             // playerÇ©ÇÁå©ÇΩfilterÇÃà íu ? â∫ : è„
-            isNegative<float>(comparePos) ? sizeY_.bottom += intrusion : sizeY_.top += intrusion;
+            isNegative<float>(comparePos) ? sizeY_.bottom = GetSize().y / 2 +  intrusion : sizeY_.top = GetSize().y / 2 + intrusion;
 
             if (isNegative<float>(sizeY_.bottom)) sizeY_.top += sizeY_.bottom;
             if (isNegative<float>(sizeY_.top)) sizeY_.bottom += sizeY_.top;

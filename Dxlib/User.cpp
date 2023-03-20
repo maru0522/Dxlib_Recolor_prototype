@@ -73,7 +73,7 @@ void User::DisplayDebug(void)
 
 void User::CheckPlayerInsideFilter(void)
 {
-    if (isNegative<float>(std::abs(player_->GetPos().x - filter_->GetPos().x) - (player_->GetSize().x / 2 + filter_->GetSize().x / 2)) ||
+    if (isNegative<float>(std::abs(player_->GetPos().x - filter_->GetPos().x) - (player_->GetSize().x / 2 + filter_->GetSize().x / 2)) &&
         isNegative<float>(std::abs(player_->GetPos().y - filter_->GetPos().y) - (player_->GetSize().y / 2 + filter_->GetSize().y / 2))) {
         // プレイヤーがフィルター内にいるかどうか
         isPlayerInsideFilter_ = true;
