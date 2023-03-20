@@ -9,16 +9,16 @@ class Player : public IEntity, public IColor
 {
 private:
     // 定義
-    struct SizeX_t
+    struct Width_t
     {
-        float left{};
-        float right{};
+        float fromL2R{}; // left => right
+        float fromR2L{}; // right => left
     };
 
-    struct SizeY_t
+    struct Height_t
     {
-        float top{};
-        float bottom{};
+        float fromT2B{}; // top => bottom
+        float fromB2T{}; // bottom => top
     };
 
 public:
@@ -57,6 +57,6 @@ private:
     float fallValue_{ 0.2f };      // ジャンプ力の減衰
     float gravity_{ 3.5f };        // 重力
     
-    SizeX_t sizeX_{};
-    SizeY_t sizeY_{};
+    Width_t width_{};
+    Height_t height_{};
 };

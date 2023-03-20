@@ -13,10 +13,10 @@ Player::Player(const Vector2& pos, const Vector2& size, const Color& color)
     SetSize(size);
     SetColor(color);
 
-    sizeX_.left = size.x / 2.f;
-    sizeX_.right = size.x / 2.f;
-    sizeY_.top = size.y / 2.f;
-    sizeY_.bottom = size.y / 2.f;
+    width_.fromL2R = size.x;
+    width_.fromR2L = size.x;
+    height_.fromT2B = size.y;
+    height_.fromB2T = size.y;
 
     drawer_.Initialize(GetPosPtr(), GetSize(), GetColorValue());
 }
@@ -31,10 +31,10 @@ Player::Player(const Vector2& pos, const Vector2& size, float moveSpeed, float j
     gravity_ = gravity;
     SetColor(color);
 
-    sizeX_.left = size.x / 2.f;
-    sizeX_.right = size.x / 2.f;
-    sizeY_.top = size.y / 2.f;
-    sizeY_.bottom = size.y / 2.f;
+    width_.fromL2R = size.x;
+    width_.fromR2L = size.x;
+    height_.fromT2B = size.y;
+    height_.fromB2T = size.y;
 
     drawer_.Initialize(GetPosPtr(), GetSize(), GetColorValue());
 }
@@ -62,8 +62,8 @@ void Player::DisplayDebug(void)
     DrawFormatString(0, 0, 0xffffff, "player_pos: (%f,%f)", GetPos().x, GetPos().y);
     DrawFormatString(0, 20, 0xffffff, "player_size: (%f,%f)", GetSize().x, GetSize().y);
     DrawFormatString(0, 40, 0xffffff, isJump_ ? "player_isJump: true" : "player_isJump: false");
-    DrawFormatString(0, 60, 0xffffff, "player_sizeX: (%f,%f)", sizeX_.left, sizeX_.right);
-    DrawFormatString(0, 80, 0xffffff, "player_sizeY: (%f,%f)", sizeY_.top, sizeY_.bottom);
+    DrawFormatString(0, 60, 0xffffff, "player_width: fL2R(%f,%f)fR2L", width_.fromL2R, width_.fromR2L);
+    DrawFormatString(0, 80, 0xffffff, "player_sizeY: fT2B(%f,%f)fB2T", height_.fromT2B, height_.fromB2T);
 }
 
 void Player::Move(bool isInput)
@@ -158,71 +158,69 @@ void Player::Collision(Vector2& vel)
 
 void Player::CheckFilterDistance(void)
 {
-    float comparePos{};
+    // player.size.x < filter.size.x / 2 が前提となっている計算式が数多く使用されていることを意識すること。
+
     float intrusion{};
 
     // --- x ---
-    comparePos = GetPos().x - p_filter_->GetPos().x;
+    /*comparePos = GetPos().x - p_filter_->GetPos().x;*/
     // どれくらいplayerにfilterがめり込んでいるか
-    intrusion = std::abs(comparePos) - (GetSize().x / 2 + p_filter_->GetSize().x / 2);
+    intrusion = std::abs(GetPos().x - p_filter_->GetPos().x) - (GetSize().x / 2.f + p_filter_->GetSize().x / 2.f);
 
     DrawFormatString(500, 400, 0xffffff, isNegative<float>(std::abs(GetPos().y - p_filter_->GetPos().y) - (GetSize().y / 2 + p_filter_->GetSize().y / 2)) ? "bool_y: (true)" : "bool_y: (false)");
+
     // 左右の重なりの前に上下がめり込んでるかだけ判定。 ※じゃないと全範囲になっちゃうもんね
-    if (isNegative<float>(std::abs(GetPos().y - p_filter_->GetPos().y) - (GetSize().y / 2 + p_filter_->GetSize().y / 2))) {
+    if (isNegative<float>(std::abs(GetPos().y - p_filter_->GetPos().y) - (GetSize().y / 2.f + p_filter_->GetSize().y / 2.f))) {
+        // 左右でめり込んでる場合
         if (isNegative<float>(intrusion)) {
-            // playerから見たfilterの位置 ? 右 : 左
-            isNegative<float>(comparePos) ? sizeX_.right = GetSize().x / 2 + intrusion : sizeX_.left = GetSize().x / 2 + intrusion; // sizeX.value += intrusion(-value)
+            // playerの左端(L2Rの原点 == R2Lの初期値)から見たとき、filterの中心が右にある場合、L2Rの値をめり込んでいる分だけ減らす
+            if (GetPos().x - GetSize().x / 2.f < p_filter_->GetPos().x) width_.fromL2R = GetSize().x + intrusion;
+            // playerの右端(R2Lの原点 == L2Rの初期値)から見たとき、filterの中心が左にある場合、R2Lの値をめり込んでいる分だけ減らす
+            if (GetPos().x + GetSize().x / 2.f > p_filter_->GetPos().x) width_.fromR2L = GetSize().x + intrusion;
 
-            if (isNegative<float>(sizeX_.right)) sizeX_.left += sizeX_.right;
-            if (isNegative<float>(sizeX_.left)) sizeX_.right += sizeX_.left;
-
-            // playerから見たfilterの位置
-            if (isNegative<float>(comparePos)) { // 右
-                sizeX_.right = GetSize().x / 2 + intrusion;
-
-                isNegative<float>(sizeX_.right) ? sizeX_.left = sizeX_.right;
-            }
-
-            sizeX_.right = (std::max)(sizeX_.right, 0.f);
-            sizeX_.left = (std::max)(sizeX_.left, 0.f);
+            // 常に値は0を下回らない。
+            width_.fromL2R = (std::max)(width_.fromL2R, 0.f);
+            width_.fromR2L = (std::max)(width_.fromR2L, 0.f);
         }
         else { // めり込んでいない場合、常にもとのsize値に補正
-            sizeX_.right = GetSize().x / 2;
-            sizeX_.left = GetSize().x / 2;
+            width_.fromL2R = GetSize().x;
+            width_.fromR2L = GetSize().x;
         }
     }
     else { // めり込んでいない場合、常にもとのsize値に補正
-        sizeX_.right = GetSize().x / 2;
-        sizeX_.left = GetSize().x / 2;
+        width_.fromL2R = GetSize().x;
+        width_.fromR2L = GetSize().x;
     }
 
     // --- y ---
-    comparePos = GetPos().y - p_filter_->GetPos().y;
-    intrusion = std::abs(comparePos) - (GetSize().y / 2 + p_filter_->GetSize().y / 2);
+    /*comparePos = GetPos().y - p_filter_->GetPos().y;*/
+    // どれくらいplayerにfilterがめり込んでいるか
+    intrusion = std::abs(GetPos().y - p_filter_->GetPos().y) - (GetSize().y / 2 + p_filter_->GetSize().y / 2);
 
     DrawFormatString(500, 420, 0xffffff, isNegative<float>(std::abs(GetPos().x - p_filter_->GetPos().x) - (GetSize().x / 2 + p_filter_->GetSize().x / 2)) ? "bool_x: (true)" : "bool_x: (false)");
+
     // 上下の重なりの前に左右がめり込んでるかだけ判定。 ※じゃないと全範囲になっちゃうもんね
     if (isNegative<float>(std::abs(GetPos().x - p_filter_->GetPos().x) - (GetSize().x / 2 + p_filter_->GetSize().x / 2))) {
+        // 上下でめり込んでいる場合。
         if (isNegative<float>(intrusion)) {
-            // playerから見たfilterの位置 ? 下 : 上
-            isNegative<float>(comparePos) ? sizeY_.bottom = GetSize().y / 2 +  intrusion : sizeY_.top = GetSize().y / 2 + intrusion, sizeY_.bottom = GetSize().y / 2;
+            // playerの上端(T2Bの原点 == B2Tの初期値)から見たとき、filterの中心が下にある場合、T2Bの値をめり込んでいる分だけ減らす
+            if (GetPos().y - GetSize().y / 2.f < p_filter_->GetPos().y) height_.fromT2B = GetSize().y + intrusion;
+            // playerの下端(B2Tの原点 == T2Bの初期値)から見たとき、filterの中心が上にある場合、B2Tの値をめり込んでいる分だけ減らす
+            if (GetPos().y + GetSize().y / 2.f > p_filter_->GetPos().y) height_.fromB2T = GetSize().y + intrusion;
 
-            if (isNegative<float>(sizeY_.bottom)) sizeY_.top += sizeY_.bottom;
-            //if (isNegative<float>(sizeY_.top)) sizeY_.bottom += sizeY_.top;
-
-            sizeY_.bottom = (std::max)(sizeY_.bottom, 0.f);
-            sizeY_.top = (std::max)(sizeY_.top, 0.f);
+            // 常に値は0を下回らない。
+            height_.fromT2B = (std::max)(height_.fromT2B, 0.f);
+            height_.fromB2T = (std::max)(height_.fromB2T, 0.f);
         }
         else { // めり込んでいない場合、常にもとのsize値に補正
-            sizeY_.bottom = GetSize().y / 2;
-            sizeY_.top = GetSize().y / 2;
+            height_.fromT2B = GetSize().x;
+            height_.fromB2T = GetSize().x;
         }
     }
     else { // めり込んでいない場合、常にもとのsize値に補正
-        sizeY_.bottom = GetSize().y / 2;
-        sizeY_.top = GetSize().y / 2;
+        height_.fromT2B = GetSize().x;
+        height_.fromB2T = GetSize().x;
     }
-
 }
 
 bool Player::CheckHit(float pos, const Vector2& size_tElem, float vel, float blockpos, float blocksize)
