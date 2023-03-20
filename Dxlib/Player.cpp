@@ -138,19 +138,19 @@ void Player::Collision(Vector2& vel)
 
         float surplus{};
 
+        // x軸方向
+        if (CheckHit(GetPos().y, { sizeY_.top,sizeY_.bottom }, 0, i->GetPos().y, i->GetSize().y)) {
+            if (CheckHit(GetPos().x, { sizeX_.left,sizeX_.right }, vel.x, i->GetPos().x, i->GetSize().x, surplus)) {
+                isPositive<float>(vel.x) ? vel.x += surplus : vel.x -= surplus;
+            }
+        }
+
         // y軸方向
         if (CheckHit(GetPos().x, { sizeX_.left,sizeX_.right }, 0, i->GetPos().x, i->GetSize().x)) {
             if (CheckHit(GetPos().y, { sizeY_.top,sizeY_.bottom }, vel.y, i->GetPos().y, i->GetSize().y, surplus)) {
                 // めり込んでいる場合、めり込んでいる量だけ移動量を減らす。場合によっては押し出す。
                 isPositive<float>(vel.y) ? vel.y += surplus, isJump_ = false : vel.y -= surplus;
                 // ※重力方向が"+"だが、参照渡しをしている"surplus"に入る値はめり込んでいる状態なら"-"値が入るので"true = + surplus"で問題ない
-            }
-        }
-
-        // x軸方向
-        if (CheckHit(GetPos().y, { sizeY_.top,sizeY_.bottom }, 0, i->GetPos().y, i->GetSize().y)) {
-            if (CheckHit(GetPos().x, { sizeX_.left,sizeX_.right }, vel.x, i->GetPos().x, i->GetSize().x, surplus)) {
-                isPositive<float>(vel.x) ? vel.x += surplus : vel.x -= surplus;
             }
         }
     }
@@ -176,6 +176,13 @@ void Player::CheckFilterDistance(void)
             if (isNegative<float>(sizeX_.right)) sizeX_.left += sizeX_.right;
             if (isNegative<float>(sizeX_.left)) sizeX_.right += sizeX_.left;
 
+            // playerから見たfilterの位置
+            if (isNegative<float>(comparePos)) { // 右
+                sizeX_.right = GetSize().x / 2 + intrusion;
+
+                isNegative<float>(sizeX_.right) ? sizeX_.left = sizeX_.right;
+            }
+
             sizeX_.right = (std::max)(sizeX_.right, 0.f);
             sizeX_.left = (std::max)(sizeX_.left, 0.f);
         }
@@ -198,10 +205,10 @@ void Player::CheckFilterDistance(void)
     if (isNegative<float>(std::abs(GetPos().x - p_filter_->GetPos().x) - (GetSize().x / 2 + p_filter_->GetSize().x / 2))) {
         if (isNegative<float>(intrusion)) {
             // playerから見たfilterの位置 ? 下 : 上
-            isNegative<float>(comparePos) ? sizeY_.bottom = GetSize().y / 2 +  intrusion : sizeY_.top = GetSize().y / 2 + intrusion;
+            isNegative<float>(comparePos) ? sizeY_.bottom = GetSize().y / 2 +  intrusion : sizeY_.top = GetSize().y / 2 + intrusion, sizeY_.bottom = GetSize().y / 2;
 
             if (isNegative<float>(sizeY_.bottom)) sizeY_.top += sizeY_.bottom;
-            if (isNegative<float>(sizeY_.top)) sizeY_.bottom += sizeY_.top;
+            //if (isNegative<float>(sizeY_.top)) sizeY_.bottom += sizeY_.top;
 
             sizeY_.bottom = (std::max)(sizeY_.bottom, 0.f);
             sizeY_.top = (std::max)(sizeY_.top, 0.f);
