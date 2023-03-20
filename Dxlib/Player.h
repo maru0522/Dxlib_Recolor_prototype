@@ -7,6 +7,20 @@
 
 class Player : public IEntity, public IColor
 {
+private:
+    // 定義
+    struct SizeX_t
+    {
+        float left{};
+        float right{};
+    };
+
+    struct SizeY_t
+    {
+        float top{};
+        float bottom{};
+    };
+
 public:
     // 定数
     static constexpr uint32_t defaultSizeX_{ 16 };
@@ -27,8 +41,9 @@ private:
     void Jump(Vector2& vel);
 
     void Collision(Vector2& vel);
-    bool CheckHit(float pos, float size, float vel, float blockpos, float blocksize);
-    bool CheckHit(float pos, float size, float vel, float blockpos, float blocksize, float& surplus);
+    void CheckFilterDistance(void);
+    bool CheckHit(float pos, const Vector2& size_tElem, float vel, float blockpos, float blocksize);
+    bool CheckHit(float pos, const Vector2& size_tElem, float vel, float blockpos, float blocksize, float& surplus);
 
     // 変数
     PlayerDrawer drawer_{};
@@ -41,4 +56,7 @@ private:
     float jumpPower_{ 7.f };       // ジャンプ力
     float fallValue_{ 0.2f };      // ジャンプ力の減衰
     float gravity_{ 3.5f };        // 重力
+    
+    SizeX_t sizeX_{};
+    SizeY_t sizeY_{};
 };

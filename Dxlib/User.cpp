@@ -41,8 +41,9 @@ void User::Update(void)
     else {
         // フィルターの操作を行う。
         filter_->Update(true);
+        player_->Update(false);
         // player は [1 / perFrame] でしか Update() が実行されない
-        if (fpsCounter_ % perFrame_ == 0) player_->Update(false);
+        //if (fpsCounter_ % perFrame_ == 0) 
     }
 
     // プレイヤーがフィルター内にいるかどうか監視
