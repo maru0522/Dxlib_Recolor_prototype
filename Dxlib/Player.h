@@ -41,9 +41,10 @@ private:
     void Jump(Vector2& vel);
 
     void Collision(Vector2& vel);
+    int32_t FilterQuadrantFromPlayer(void);
     void CheckFilterDistance(void);
-    bool CheckHit(float pos, const Vector2& size_tElem, float vel, float blockpos, float blocksize);
-    bool CheckHit(float pos, const Vector2& size_tElem, float vel, float blockpos, float blocksize, float& surplus);
+    bool CheckHit(float pos, float size, float vel, float blockpos, float blocksize);
+    bool CheckHit(float pos, float size, float vel, float blockpos, float blocksize, float& surplus);
 
     // ïœêî
     PlayerDrawer drawer_{};
