@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DetectBlock.cpp" />
     <ClCompile Include="Filter.cpp" />
     <ClCompile Include="IBlock.cpp" />
     <ClCompile Include="IColor.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="Vector4.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DetectBlock.h" />
     <ClInclude Include="Filter.h" />
     <ClInclude Include="IBlock.h" />
     <ClInclude Include="IColor.h" />

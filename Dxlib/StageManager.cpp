@@ -4,6 +4,7 @@
 #include <DxLib.h>
 #include "BasicBlock.h"
 #include "StoneBlock.h"
+#include "DetectBlock.h"
 
 std::unique_ptr<Stage> StageManager::current_{ nullptr };
 
@@ -22,7 +23,7 @@ void StageManager::LoadCSV(Stage* ins, std::string csvPath)
             switch (std::stoi(temp))
             {
             case 0: // IBlock::Type::NONE
-                break;;
+                break;
 
             case 1: // IBlock::Type::BASIC
                 ins->Register(new BasicBlock{
@@ -36,6 +37,13 @@ void StageManager::LoadCSV(Stage* ins, std::string csvPath)
                 {(float)loopX * blockDistance_ + defaultBlockPosOffset_,(float)loopY * blockDistance_ + defaultBlockPosOffset_}, // pos
                 {defaultBlockSize_,defaultBlockSize_}, // size
                 Color::RED } // color
+                );
+                break;
+
+            case 3: // IBlock::Type::detect
+                ins->Register(new DetectBlock{
+                {(float)loopX * blockDistance_ + defaultBlockPosOffset_,(float)loopY * blockDistance_ + defaultBlockPosOffset_}, // pos
+                {defaultBlockSize_,defaultBlockSize_} } // size
                 );
                 break;
 

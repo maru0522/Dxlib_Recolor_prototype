@@ -11,6 +11,7 @@ public:
         NONE,
         BASIC,
         STONE,
+        detect,
     };
 
     // ŠÖ”
@@ -20,6 +21,7 @@ public:
     inline void Draw(void) override {};
 
     inline void SetBlockType(Type id) { type_ = id; }
+    inline const Type& GetBlockType(void) { return type_; }
 
 private:
     // •Ï”

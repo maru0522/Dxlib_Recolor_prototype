@@ -43,8 +43,8 @@ private:
     void Collision(Vector2& vel);
     int32_t FilterQuadrantFromPlayer(void);
     void CheckFilterDistance(void);
-    bool CheckHit(float pos, float size, float vel, float blockpos, float blocksize);
-    bool CheckHit(float pos, float size, float vel, float blockpos, float blocksize, float& surplus);
+    bool CheckHit(float pos, float size, float vel, float blockpos, float blocksize, bool isFormer,float correct);
+    bool CheckHit(float pos, float size, float vel, float blockpos, float blocksize, float& surplus, bool isFormer, float correct);
 
     // ïœêî
     PlayerDrawer drawer_{};

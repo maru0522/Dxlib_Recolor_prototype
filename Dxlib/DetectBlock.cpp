@@ -1,21 +1,21 @@
-#include "BasicBlock.h"
+#include "DetectBlock.h"
 #include <DxLib.h>
 
-BasicBlock::BasicBlock(const Vector2& pos, const Vector2& size)
+DetectBlock::DetectBlock(const Vector2& pos, const Vector2& size)
 {
     SetPos(pos);
     SetSize(size);
-    SetBlockType(Type::BASIC);
+    SetBlockType(IBlock::Type::detect);
 }
 
-void BasicBlock::Update(void)
+void DetectBlock::Update(void)
 {
 }
 
-void BasicBlock::Draw(void)
+void DetectBlock::Draw(void)
 {
     DrawBoxAA(
         GetPos().x - GetSize().x / 2, GetPos().y - GetSize().y / 2, // x1,y1
         GetPos().x + GetSize().x / 2, GetPos().y + GetSize().y / 2, // x2,y2
-        0xffffff, false);
+        0x0000ff, false);
 }

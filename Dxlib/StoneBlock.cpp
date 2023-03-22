@@ -6,6 +6,7 @@ StoneBlock::StoneBlock(const Vector2& pos, const Vector2& size, Color color)
     SetPos(pos);
     SetSize(size);
     SetColor(color);
+    SetBlockType(IBlock::Type::STONE);
 }
 
 void StoneBlock::Update(void)

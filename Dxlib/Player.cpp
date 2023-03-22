@@ -131,128 +131,19 @@ void Player::Jump(Vector2& vel)
 
 void Player::Collision(Vector2& vel)
 {
-    switch (FilterQuadrantFromPlayer())
-    {
-    case 1: // 第1象限
-        for (std::unique_ptr<IBlock>& i : StageManager::GetStage()->blocks_) {
-            if (std::abs(i->GetPos().x - GetPos().x) > StageManager::defaultBlockSize_ * 3) {
-                continue;
-            }
-
-            float surplus{};
-
-            // x軸方向
-            if (CheckHit(GetPos().y, height_.fromB2T, 0, i->GetPos().y, i->GetSize().y)) {
-                if (CheckHit(GetPos().x, width_.fromL2R, vel.x, i->GetPos().x, i->GetSize().x, surplus)) {
-                    isPositive<float>(vel.x) ? vel.x += surplus : vel.x -= surplus;
-                }
-            }
-
-            // y軸方向
-            if (CheckHit(GetPos().x, width_.fromL2R, 0, i->GetPos().x, i->GetSize().x)) {
-                if (CheckHit(GetPos().y, height_.fromB2T, vel.y, i->GetPos().y, i->GetSize().y, surplus)) {
-                    // めり込んでいる場合、めり込んでいる量だけ移動量を減らす。場合によっては押し出す。
-                    isPositive<float>(vel.y) ? vel.y += surplus, isJump_ = false : vel.y -= surplus;
-                    // ※重力方向が"+"だが、参照渡しをしている"surplus"に入る値はめり込んでいる状態なら"-"値が入るので"true = + surplus"で問題ない
-                }
-            }
-        }
-        break;
-
-    case 2: // 第2象限
-        for (std::unique_ptr<IBlock>& i : StageManager::GetStage()->blocks_) {
-            if (std::abs(i->GetPos().x - GetPos().x) > StageManager::defaultBlockSize_ * 3) {
-                continue;
-            }
-
-            float surplus{};
-
-            // x軸方向
-            if (CheckHit(GetPos().y, height_.fromB2T, 0, i->GetPos().y, i->GetSize().y)) {
-                if (CheckHit(GetPos().x, width_.fromR2L, vel.x, i->GetPos().x, i->GetSize().x, surplus)) {
-                    isPositive<float>(vel.x) ? vel.x += surplus : vel.x -= surplus;
-                }
-            }
-
-            // y軸方向
-            if (CheckHit(GetPos().x, width_.fromR2L, 0, i->GetPos().x, i->GetSize().x)) {
-                if (CheckHit(GetPos().y, height_.fromB2T, vel.y, i->GetPos().y, i->GetSize().y, surplus)) {
-                    // めり込んでいる場合、めり込んでいる量だけ移動量を減らす。場合によっては押し出す。
-                    isPositive<float>(vel.y) ? vel.y += surplus, isJump_ = false : vel.y -= surplus;
-                    // ※重力方向が"+"だが、参照渡しをしている"surplus"に入る値はめり込んでいる状態なら"-"値が入るので"true = + surplus"で問題ない
-                }
-            }
-        }
-        break;
-
-    case 3: // 第3象限
-        for (std::unique_ptr<IBlock>& i : StageManager::GetStage()->blocks_) {
-            if (std::abs(i->GetPos().x - GetPos().x) > StageManager::defaultBlockSize_ * 3) {
-                continue;
-            }
-
-            float surplus{};
-
-            // x軸方向
-            if (CheckHit(GetPos().y, height_.fromT2B, 0, i->GetPos().y, i->GetSize().y)) {
-                if (CheckHit(GetPos().x, width_.fromR2L, vel.x, i->GetPos().x, i->GetSize().x, surplus)) {
-                    isPositive<float>(vel.x) ? vel.x += surplus : vel.x -= surplus;
-                }
-            }
-
-            // y軸方向
-            if (CheckHit(GetPos().x, width_.fromR2L, 0, i->GetPos().x, i->GetSize().x)) {
-                if (CheckHit(GetPos().y, height_.fromT2B, vel.y, i->GetPos().y, i->GetSize().y, surplus)) {
-                    // めり込んでいる場合、めり込んでいる量だけ移動量を減らす。場合によっては押し出す。
-                    isPositive<float>(vel.y) ? vel.y += surplus, isJump_ = false : vel.y -= surplus;
-                    // ※重力方向が"+"だが、参照渡しをしている"surplus"に入る値はめり込んでいる状態なら"-"値が入るので"true = + surplus"で問題ない
-                }
-            }
-        }
-        break;
-
-    case 4: // 第4象限
-        for (std::unique_ptr<IBlock>& i : StageManager::GetStage()->blocks_) {
-            if (std::abs(i->GetPos().x - GetPos().x) > StageManager::defaultBlockSize_ * 3) {
-                continue;
-            }
-
-            float surplus{};
-
-            // x軸方向
-            if (CheckHit(GetPos().y, height_.fromT2B, 0, i->GetPos().y, i->GetSize().y)) {
-                if (CheckHit(GetPos().x, width_.fromL2R, vel.x, i->GetPos().x, i->GetSize().x, surplus)) {
-                    isPositive<float>(vel.x) ? vel.x += surplus : vel.x -= surplus;
-                }
-            }
-
-            // y軸方向
-            if (CheckHit(GetPos().x, width_.fromL2R, 0, i->GetPos().x, i->GetSize().x)) {
-                if (CheckHit(GetPos().y, height_.fromT2B, vel.y, i->GetPos().y, i->GetSize().y, surplus)) {
-                    // めり込んでいる場合、めり込んでいる量だけ移動量を減らす。場合によっては押し出す。
-                    isPositive<float>(vel.y) ? vel.y += surplus, isJump_ = false : vel.y -= surplus;
-                    // ※重力方向が"+"だが、参照渡しをしている"surplus"に入る値はめり込んでいる状態なら"-"値が入るので"true = + surplus"で問題ない
-                }
-            }
-        }
-        break;
-
-    case 0: // 例外
-        break;
-    }
 
 }
 
 int32_t Player::FilterQuadrantFromPlayer(void)
 {
     // 第1象限
-    if (GetPos().x < p_filter_->GetPos().x && GetPos().y < p_filter_->GetPos().y) return 1;
+    if (GetPos().x < p_filter_->GetPos().x && GetPos().y > p_filter_->GetPos().y) return 1;
     // 第2象限
-    if (GetPos().x > p_filter_->GetPos().x && GetPos().y < p_filter_->GetPos().y) return 2;
+    if (GetPos().x > p_filter_->GetPos().x && GetPos().y > p_filter_->GetPos().y) return 2;
     // 第3象限
-    if (GetPos().x > p_filter_->GetPos().x && GetPos().y > p_filter_->GetPos().y) return 3;
+    if (GetPos().x > p_filter_->GetPos().x && GetPos().y < p_filter_->GetPos().y) return 3;
     // 第4象限
-    if (GetPos().x < p_filter_->GetPos().x && GetPos().y > p_filter_->GetPos().y) return 4;
+    if (GetPos().x < p_filter_->GetPos().x && GetPos().y < p_filter_->GetPos().y) return 4;
 
     // 例外
     return 0;
@@ -315,25 +206,33 @@ void Player::CheckFilterDistance(void)
             height_.fromB2T = (std::max)(height_.fromB2T, 0.f);
         }
         else { // めり込んでいない場合、常にもとのsize値に補正
-            height_.fromT2B = GetSize().x;
-            height_.fromB2T = GetSize().x;
+            height_.fromT2B = GetSize().y;
+            height_.fromB2T = GetSize().y;
         }
     }
     else { // めり込んでいない場合、常にもとのsize値に補正
-        height_.fromT2B = GetSize().x;
-        height_.fromB2T = GetSize().x;
+        height_.fromT2B = GetSize().y;
+        height_.fromB2T = GetSize().y;
     }
 }
 
-bool Player::CheckHit(float pos, float size, float vel, float blockpos, float blocksize)
+bool Player::CheckHit(float pos, float size, float vel, float blockpos, float blocksize, bool isFormer, float correct)
 {
+    float result{};
+
+    isFormer ? result = pos - correct : result = pos + correct;
+
     // 値が0未満ならめり込んでる。
-    return std::abs(pos - blockpos + vel) - (size + blocksize / 2) < 0;
+    return std::abs(result - blockpos + vel) - (size + blocksize / 2) < 0;
 }
 
-bool Player::CheckHit(float pos, float size, float vel, float blockpos, float blocksize, float& surplus)
+bool Player::CheckHit(float pos, float size, float vel, float blockpos, float blocksize, float& surplus, bool isFormer, float correct)
 {
-    surplus = std::abs(pos - blockpos + vel) - (size + blocksize / 2);
+    float result{};
+
+    isFormer ? result = pos - correct : result = pos + correct;
+
+    surplus = std::abs(result - blockpos + vel) - (size + blocksize / 2);
 
     // 値が0未満ならめり込んでる。
     return surplus < 0;
