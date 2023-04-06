@@ -91,7 +91,9 @@ void StageManager::Update(void)
         isResize_ = true;
     }
 
-    if (KEY::IsTrigger(KEY_INPUT_RETURN)) Export();
+    if (KEY::IsDown(KEY_INPUT_LSHIFT) && KEY::IsTrigger(KEY_INPUT_RETURN)) {
+        Export();
+    }
 }
 
 void StageManager::Draw(void)
@@ -170,7 +172,7 @@ void StageManager::DrawDebug(void)
     DrawFormatString(570, 40, 0xffffff, "Erase:   [E]");
     DrawFormatString(570, 60, 0xffffff, "Clear:   [LSHIFT] + [Q]");
     DrawFormatString(810, 0, 0xffffff, "Resize: [R]");
-    DrawFormatString(810, 20, 0xffffff, "Export: [RETURN]");
+    DrawFormatString(810, 20, 0xffffff, "Export: \n[LSHIFT]\n+ [RETURN]");
     //DrawFormatString(500, 100, 0xffffff, MOUSE::IsTrigger(MOUSE::Click::LEFT) ? "Left: ON" : "Left: OFF");
 }
 
