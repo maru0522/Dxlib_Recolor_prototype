@@ -15,8 +15,20 @@ public:
     static constexpr int BLACK{ 0x000000 };
     static constexpr int RED{ 0xff0000 };
     static constexpr int GREEN{ 0x00ff00 };
+    static constexpr int MAGENTA{ 0xff00ff };
     static constexpr int YELLOW{ 0xffff00 };
     static constexpr int CYAN{ 0x00ffff };
+
+    enum class BlockNum
+    {
+        AIR,
+        BASIC,
+        STONE,
+        START,
+        GOAL,
+        RESPAWN,
+        COLLECT,
+    };
 
     // ä÷êî
     void Initialize(int width, int height);
@@ -44,7 +56,8 @@ private:
     bool isResize_{ false };
     MOUSE::IntXY_t resizeVal_{ 0,0 };
 
-    std::vector<std::vector<int>> mapchip_{};
+    std::vector<std::vector<int>> mapchipBlock_{};
+    std::vector<std::vector<int>> mapchipObject_{};
     int targetNumber_{ 0 };
 
     int holdBlockNumber_{ 1 };

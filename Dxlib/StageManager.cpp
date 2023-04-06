@@ -7,8 +7,13 @@
 
 void StageManager::Initialize(int width, int height)
 {
-    mapchip_.resize(height);
-    for (size_t i = 0; i < mapchip_.size(); i++) mapchip_.at(i).resize(width);
+    // ブロック
+    mapchipBlock_.resize(height);
+    for (size_t i = 0; i < mapchipBlock_.size(); i++) mapchipBlock_.at(i).resize(width);
+
+    // オブジェクト
+    mapchipObject_.resize(height);
+    for (size_t i = 0; i < mapchipObject_.size(); i++) mapchipObject_.at(i).resize(width);
 }
 
 void StageManager::Update(void)
@@ -25,11 +30,13 @@ void StageManager::Update(void)
     else if (startPoint_.mx_ <= x && x <= endPoint_.mx_ &&
         startPoint_.my_ <= y && y <= endPoint_.my_) {
 
+        // 要素数の算出
         mapchipElemX = int{ (x - startPoint_.mx_) / basicBlockSize_ };
         mapchipElemY = int{ (y - startPoint_.my_) / basicBlockSize_ };
 
-        if (0 <= mapchipElemX && mapchipElemX < (int)mapchip_[0].size() &&
-            0 <= mapchipElemY && mapchipElemY < (int)mapchip_.size()) {
+        // 配列の要素数よりも大きかったり小さかったりしないかチェック
+        if (0 <= mapchipElemX && mapchipElemX < (int)mapchipBlock_[0].size() &&
+            0 <= mapchipElemY && mapchipElemY < (int)mapchipBlock_.size()) {
 
             debugElemCursor_.mx_ = mapchipElemX;
             debugElemCursor_.my_ = mapchipElemY;
@@ -38,21 +45,25 @@ void StageManager::Update(void)
 
         if (KEY::IsDown(KEY_INPUT_SPACE)) {
             // 配列の要素数よりも大きかったり小さかったりしないかチェック
-            if (0 <= mapchipElemX && mapchipElemX < (int)mapchip_[0].size() &&
-                0 <= mapchipElemY && mapchipElemY < (int)mapchip_.size()) {
+            if (0 <= mapchipElemX && mapchipElemX < (int)mapchipBlock_[0].size() &&
+                0 <= mapchipElemY && mapchipElemY < (int)mapchipBlock_.size()) {
 
                 // 対象のintをブロックの数字に書き換え
-                mapchip_[mapchipElemY][mapchipElemX] = holdBlockNumber_;
+                if (static_cast<int>(BlockNum::BASIC) <= holdBlockNumber_ && holdBlockNumber_ <= static_cast<int>(BlockNum::STONE))
+                    mapchipBlock_[mapchipElemY][mapchipElemX] = holdBlockNumber_;
+                else if (static_cast<int>(BlockNum::START) <= holdBlockNumber_ && holdBlockNumber_ <= static_cast<int>(BlockNum::COLLECT))
+                    mapchipObject_[mapchipElemY][mapchipElemX] = holdBlockNumber_;
             }
         }
 
         if (KEY::IsDown(KEY_INPUT_E)) {
             // 配列の要素数よりも大きかったり小さかったりしないかチェック
-            if (0 <= mapchipElemX && mapchipElemX < (int)mapchip_[0].size() &&
-                0 <= mapchipElemY && mapchipElemY < (int)mapchip_.size()) {
+            if (0 <= mapchipElemX && mapchipElemX < (int)mapchipBlock_[0].size() &&
+                0 <= mapchipElemY && mapchipElemY < (int)mapchipBlock_.size()) {
 
                 // 対象のintを0に書き換え
-                mapchip_[mapchipElemY][mapchipElemX] = 0;
+                mapchipBlock_[mapchipElemY][mapchipElemX] = 0;
+                mapchipObject_[mapchipElemY][mapchipElemX] = 0;
             }
         }
     }
@@ -95,15 +106,15 @@ void StageManager::Draw(void)
 void StageManager::DrawLattice(void)
 {
     // 縦線をx方向に増やす
-    for (size_t i = 0; i <= mapchip_.at(0).size(); i++) {
+    for (size_t i = 0; i <= mapchipBlock_.at(0).size(); i++) {
         DrawLine(startPoint_.mx_ + i * basicBlockSize_, startPoint_.my_,
-            startPoint_.mx_ + i * basicBlockSize_, startPoint_.my_ + mapchip_.size() * basicBlockSize_,
+            startPoint_.mx_ + i * basicBlockSize_, startPoint_.my_ + mapchipBlock_.size() * basicBlockSize_,
             0xffffff, 1);
 
         // 横線をy方向に増やす
-        for (size_t i = 0; i <= mapchip_.size(); i++) {
+        for (size_t i = 0; i <= mapchipBlock_.size(); i++) {
             DrawLine(startPoint_.mx_, startPoint_.my_ + i * basicBlockSize_,
-                startPoint_.mx_ + mapchip_.at(0).size() * basicBlockSize_, startPoint_.my_ + i * basicBlockSize_,
+                startPoint_.mx_ + mapchipBlock_.at(0).size() * basicBlockSize_, startPoint_.my_ + i * basicBlockSize_,
                 0xffffff, 1);
         }
     }
@@ -124,6 +135,22 @@ void StageManager::DrawDebug(void)
 
     case 2:
         holdStr = "STONE";
+        break;
+
+    case 3:
+        holdStr = "START";
+        break;
+
+    case 4:
+        holdStr = "GOAL";
+        break;
+
+    case 5:
+        holdStr = "RESPAWN";
+        break;
+
+    case 6:
+        holdStr = "COLLECT";
         break;
 
     default:
@@ -149,47 +176,65 @@ void StageManager::DrawDebug(void)
 
 void StageManager::DrawMapchip(void)
 {
-    for (size_t y = 0; y < mapchip_.size(); y++) {
-        for (size_t x = 0; x < mapchip_[0].size(); x++) {
+    for (size_t y = 0; y < mapchipBlock_.size(); y++) {
+        for (size_t x = 0; x < mapchipBlock_[0].size(); x++) {
 
-            int color{};
+            int blockcolor{};
+            int circlecolor{};
 
-            switch (mapchip_[y][x])
+            switch (mapchipBlock_[y][x])
             {
             case 0:
-                color = BLACK;
+                blockcolor = BLACK;
                 break;
 
             case 1:
-                color = WHITE;
+                blockcolor = WHITE;
                 break;
 
             case 2:
-                color = RED;
-                break;
-
-            case 3:
-                color = GREEN;
-                break;
-
-            case 4:
-                color = YELLOW;
-                break;
-
-            case 5:
-                color = CYAN;
+                blockcolor = RED;
                 break;
 
             default:
-                color = BLACK;
+                blockcolor = BLACK;
                 break;
             }
 
-            DrawFormatString(800, 0, 0xffffff, "blockNum:%d", mapchip_[0][0]);
+            switch (mapchipObject_[y][x])
+            {
+            case 3:
+                circlecolor = GREEN;
+                break;
+
+            case 4:
+                circlecolor = YELLOW;
+                break;
+
+            case 5:
+                circlecolor = MAGENTA;
+                break;
+
+            case 6:
+                circlecolor = CYAN;
+                break;
+
+            default:
+                circlecolor = BLACK;
+                break;
+            }
+
+            //DrawFormatString(800, 0, 0xffffff, "blockNum:%d", mapchip_[0][0]);
 
             DrawBox(x * basicBlockSize_ + startPoint_.mx_, y * basicBlockSize_ + startPoint_.my_,
                 x * basicBlockSize_ + basicBlockSize_ + startPoint_.mx_, y * basicBlockSize_ + basicBlockSize_ + startPoint_.my_,
-                color, 1);
+                blockcolor, 1);
+
+            if (mapchipObject_[y][x] != 0)
+                DrawCircle(x * basicBlockSize_ + startPoint_.mx_ + basicBlockSize_ / 2,
+                           y * basicBlockSize_ + startPoint_.my_ + basicBlockSize_ / 2,
+                           basicBlockSize_ / 8,
+                           circlecolor, 1, 1);
 
             //DrawBox(
             //    startPoint_.mx_, // x1
@@ -206,9 +251,10 @@ void StageManager::DrawMapchip(void)
 
 void StageManager::ClearMapchip(void)
 {
-    for (size_t y = 0; y < mapchip_.size(); y++) {
-        for (size_t x = 0; x < mapchip_[0].size(); x++) {
-            mapchip_[y][x] = 0;
+    for (size_t y = 0; y < mapchipBlock_.size(); y++) {
+        for (size_t x = 0; x < mapchipBlock_[0].size(); x++) {
+            mapchipBlock_[y][x] = 0;
+            mapchipObject_[y][x] = 0;
         }
     }
 }
@@ -221,24 +267,42 @@ void StageManager::Resize(void)
     // y
     resizeVal_.my_ = KeyInputNumber(-500, -500, 500, 0, false);
 
-    mapchip_.resize(resizeVal_.my_);
-    for (size_t i = 0; i < mapchip_.size(); i++) mapchip_[i].resize(resizeVal_.mx_);
+    // ブロック
+    mapchipBlock_.resize(resizeVal_.my_);
+    for (size_t i = 0; i < mapchipBlock_.size(); i++) mapchipBlock_[i].resize(resizeVal_.mx_);
+
+    // オブジェクト
+    mapchipObject_.resize(resizeVal_.my_);
+    for (size_t i = 0; i < mapchipObject_.size(); i++) mapchipObject_.at(i).resize(resizeVal_.mx_);
 
     isResize_ = false;
 }
 
 void StageManager::Export(void)
 {
-    const std::string fileName{ "export" + std::to_string(countExport_) + ".csv" };
+    const std::string blockFileName{ "exportBlock" + std::to_string(countExport_) + ".csv" };
+    const std::string objectFileName{ "exportObject" + std::to_string(countExport_) + ".csv" };
     std::ofstream ofs{};
 
-    ofs.open(fileName, std::ios::out);
-    for (size_t y = 0; y < mapchip_.size(); y++) {
-        for (size_t x = 0; x < mapchip_[0].size(); x++) {
-            if (x == mapchip_[0].size() - 1) {
-                ofs << mapchip_[y][x];
+    ofs.open(blockFileName, std::ios::out);
+    for (size_t y = 0; y < mapchipBlock_.size(); y++) {
+        for (size_t x = 0; x < mapchipBlock_[0].size(); x++) {
+            if (x == mapchipBlock_[0].size() - 1) {
+                ofs << mapchipBlock_[y][x];
             }
-            else ofs << mapchip_[y][x] << ',';
+            else ofs << mapchipBlock_[y][x] << ',';
+        }
+        ofs << std::endl;
+    }
+    ofs.close();
+
+    ofs.open(objectFileName, std::ios::out);
+    for (size_t y = 0; y < mapchipObject_.size(); y++) {
+        for (size_t x = 0; x < mapchipObject_[0].size(); x++) {
+            if (x == mapchipObject_[0].size() - 1) {
+                ofs << mapchipObject_[y][x];
+            }
+            else ofs << mapchipObject_[y][x] << ',';
         }
         ofs << std::endl;
     }
