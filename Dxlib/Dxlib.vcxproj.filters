@@ -19,12 +19,6 @@
     <Filter Include="ソース ファイル\other">
       <UniqueIdentifier>{8da37212-8dbc-438c-a444-d5fc6c5b4e09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\block">
-      <UniqueIdentifier>{09ac2c6f-bfa5-4c09-80e4-32aff9a7c467}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\block">
-      <UniqueIdentifier>{a4efc497-0611-4c6e-b981-314de3a4d5bf}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,11 +39,8 @@
     <ClCompile Include="Vector3.cpp">
       <Filter>ソース ファイル\other</Filter>
     </ClCompile>
-    <ClCompile Include="IBlock.cpp">
-      <Filter>ソース ファイル\block</Filter>
-    </ClCompile>
-    <ClCompile Include="StoneBlock.cpp">
-      <Filter>ソース ファイル\block</Filter>
+    <ClCompile Include="Input.cpp">
+      <Filter>ソース ファイル\other</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,11 +59,8 @@
     <ClInclude Include="Vector3.h">
       <Filter>ヘッダー ファイル\other</Filter>
     </ClInclude>
-    <ClInclude Include="IBlock.h">
-      <Filter>ヘッダー ファイル\block</Filter>
-    </ClInclude>
-    <ClInclude Include="StoneBlock.h">
-      <Filter>ヘッダー ファイル\block</Filter>
+    <ClInclude Include="Input.h">
+      <Filter>ヘッダー ファイル\other</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
