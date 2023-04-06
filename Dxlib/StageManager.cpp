@@ -143,6 +143,7 @@ void StageManager::DrawDebug(void)
     DrawFormatString(570, 40, 0xffffff, "Erase:   [E]");
     DrawFormatString(570, 60, 0xffffff, "Clear:   [LSHIFT] + [Q]");
     DrawFormatString(810, 0, 0xffffff, "Resize: [R]");
+    DrawFormatString(810, 20, 0xffffff, "Export: [RETURN]");
     //DrawFormatString(500, 100, 0xffffff, MOUSE::IsTrigger(MOUSE::Click::LEFT) ? "Left: ON" : "Left: OFF");
 }
 
