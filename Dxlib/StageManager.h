@@ -56,8 +56,7 @@ private:
     bool isResize_{ false };
     MOUSE::IntXY_t resizeVal_{ 0,0 };
 
-    std::vector<std::vector<int>> mapchipBlock_{};
-    std::vector<std::vector<int>> mapchipObject_{};
+    std::vector<std::vector<int>> mapchip_{};
     int targetNumber_{ 0 };
 
     int holdBlockNumber_{ 1 };
