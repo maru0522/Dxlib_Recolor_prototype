@@ -140,11 +140,11 @@ void StageManager::DrawDebug(void)
         break;
 
     case 5:
-        holdStr = "RESPAWN";
+        holdStr = "COLLECT";
         break;
 
     case 6:
-        holdStr = "COLLECT";
+        holdStr = "RESPAWN";
         break;
 
     default:
@@ -199,11 +199,11 @@ void StageManager::DrawMapchip(void)
                 break;
 
             case 5:
-                blockcolor = MAGENTA;
+                blockcolor = CYAN;
                 break;
 
             case 6:
-                blockcolor = CYAN;
+                blockcolor = MAGENTA;
                 break;
 
             default:
