@@ -26,8 +26,8 @@ public:
         STONE,
         START,
         GOAL,
-        RESPAWN,
         COLLECT,
+        RESPAWN,
     };
 
     // ä÷êî
