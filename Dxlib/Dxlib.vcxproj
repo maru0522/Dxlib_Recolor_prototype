@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="IBlock.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="StoneBlock.cpp" />
@@ -138,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IBlock.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="StoneBlock.h" />
     <ClInclude Include="Util.h" />
