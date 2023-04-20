@@ -43,31 +43,23 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// ゲームループで使う変数の宣言
     std::unique_ptr<StageManager> stM{ std::make_unique<StageManager>() };
-    std::unique_ptr<Stage> stage1{ std::make_unique<Stage>() };
+    //std::unique_ptr<Stage> stage1{ std::make_unique<Stage>() };
 
-    StageManager::LoadCSV(stage1.get(), "Resources/test.csv");
-
-	// 最新のキーボード情報用
-	char keys[256] = {0};
-
-	// 1ループ(フレーム)前のキーボード情報
-	char oldkeys[256] = {0};
+    //StageManager::LoadCSV(stage1.get(), "Resources/test.csv");
 
 	// ゲームループ
 	while (true) {
-		// 最新のキーボード情報だったものは1フレーム前のキーボード情報として保存
-		// 最新のキーボード情報を取得
-		GetHitKeyStateAll(keys);
 
 		// 画面クリア
 		ClearDrawScreen();
 		//---------  ここからプログラムを記述  ----------//
 
 		// 更新処理
-        stage1->Update();
+        //stage1->Update();
 
 		// 描画処理
-        stage1->Draw();
+        //stage1->Draw();
+        stM->Draw();
 
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
