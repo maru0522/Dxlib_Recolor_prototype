@@ -23,6 +23,7 @@ public:
 
     // •Ï”
     std::list<std::unique_ptr<IBlock>> blocks_;
+    std::vector<std::vector<IBlock*>> mapchip_;
 
 private:
     int offsetX{ blockRadius_ + 10 };

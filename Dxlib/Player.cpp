@@ -5,7 +5,8 @@
 #include "IBlock.h"
 #include "StageManager.h"
 
-Player::Player(const Vector2& pos, const Vector2& radius)
+Player::Player(const Vector2& pos, const Vector2& radius) :
+    isJump_(true)
 {
     SetPos(pos);
     SetRadius(radius);

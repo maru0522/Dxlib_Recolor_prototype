@@ -4,8 +4,6 @@
 #include <DxLib.h>
 #include "Input.h"
 
-BlockFactory blockFactory;
-
 StageManager* StageManager::GetInstance(void)
 {
     static StageManager ins;
@@ -72,22 +70,25 @@ void Stage::LoadCSV(std::string csvPath)
         size_t loopX{};
 
         while (std::getline(line_stream, temp, ',')) {
+
             switch (std::stoi(temp))
             {
             case 0: // IBlock::Type::NONE
+                mapchip_[loopY][loopX] = nullptr;
                 break;
 
             case 1:
-                blocks_.emplace_back(blockFactory.CreateBlock(
+                blocks_.emplace_back(BlockFactory::CreateBlock(
                     "BASIC",
                     { (float)loopX * IBlock::defaultRadius_ * 2,(float)loopY * IBlock::defaultRadius_ * 2 }
                 ));
+                mapchip_[loopY][loopX] = blocks_.back().get();
                 break;
 
             default:
+                mapchip_[loopY][loopX] = nullptr;
                 break;
             }
-
             loopX++;
         }
         loopY++;

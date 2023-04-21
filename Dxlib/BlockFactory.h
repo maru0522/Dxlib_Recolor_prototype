@@ -7,8 +7,9 @@ class BlockFactory
 {
 public:
     // ä÷êî
-    BlockFactory(void) = default;
+    static IBlock* CreateBlock(const std::string& type, const Vector2& pos, const Vector2& radius = { IBlock::defaultRadius_,IBlock::defaultRadius_ });
 
-    IBlock* CreateBlock(const std::string& type, const Vector2& pos, const Vector2& radius = { IBlock::defaultRadius_,IBlock::defaultRadius_ });
+private:
+    BlockFactory(void) = default;
 };
 
