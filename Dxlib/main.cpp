@@ -2,6 +2,7 @@
 #include <memory>
 #include "StageManager.h"
 #include "Input.h"
+#include "Player.h"
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "aaa: タイトル";
@@ -44,8 +45,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     // ゲームループで使う変数の宣言
 
-    std::unique_ptr<StageManager> stM{ std::make_unique<StageManager>() };
-    stM->LoadCSV("Resources/testt.csv");
+    StageManager* stM = StageManager::GetInstance();
+    std::unique_ptr<Stage> st1{ std::make_unique<Stage>() };
+    st1->LoadCSV("Resources/testt.csv");
+    stM->SetStage(st1.get());
+
+    Vector2 pos{ 100,100 };
+    Vector2 rad{ 16,16 };
+
+    std::unique_ptr<Player> player{ std::make_unique<Player>(pos,rad) };
+
     //std::unique_ptr<Stage> stage1{ std::make_unique<Stage>() };
 
     //StageManager::LoadCSV(stage1.get(), "Resources/test.csv");
@@ -60,10 +69,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         // 更新処理
         //stage1->Update();
+        player->Update();
         stM->Update();
 
         // 描画処理
         //stage1->Draw();
+        player->Draw();
         stM->Draw();
 
         //---------  ここまでにプログラムを記述  ---------//

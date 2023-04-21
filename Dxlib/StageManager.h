@@ -3,24 +3,47 @@
 #include <vector>
 #include <list>
 #include <string>
-#include "IBlock.h"
 #include <memory>
+#include "BlockFactory.h"
+
+constexpr int blockRadius_{ 16 }; // ”¼Œa
+constexpr int blockSize_{ blockRadius_ * 2 }; // ’¼Œa
+
+class Stage
+{
+public:
+    // ŠÖ”
+    Stage(void) = default;
+    ~Stage(void) = default;
+
+    void Update(void);
+    void Draw(void);
+
+    void LoadCSV(std::string csvPath);
+
+    // •Ï”
+    std::list<std::unique_ptr<IBlock>> blocks_;
+
+private:
+    int offsetX{ blockRadius_ + 10 };
+    int offsetY{ blockRadius_ };
+};
 
 class StageManager
 {
 public:
-    static constexpr int blockRadius_{ 16 }; // ”¼Œa
-    static constexpr int blockSize_{ blockRadius_ * 2 }; // ’¼Œa
+    // ŠÖ”
+    static StageManager* GetInstance(void);
 
-    StageManager(void) = default;
     void Update(void);
     void Draw(void);
 
-    inline void SetMapchip(const std::array<std::array<int, 30>, 20>& mapchip) { mapchip_ = mapchip; }
-    std::array<std::array<int, 30>, 20> mapchip_{};
-    int offsetX{ blockRadius_ + 10 };
-    int offsetY{ blockRadius_ };
+    Stage* currentPtr_{ nullptr };
 
-    // Ã“IŠÖ”
-     void LoadCSV(std::string csvPath);
+    inline void SetStage(Stage* ptr) { currentPtr_ = ptr; }
+    inline Stage* GetStagePtr(void) { return currentPtr_; }
+
+private:
+    // singleton
+    StageManager(void) = default;
 };
