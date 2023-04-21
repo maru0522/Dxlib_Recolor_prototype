@@ -3,16 +3,18 @@
 #include <sstream>
 #include <DxLib.h>
 #include "StoneBlock.h"
+#include "Input.h"
 
 void StageManager::Update(void)
 {
-
+    if (Input::Keyboard::IsDown(KEY_INPUT_W)) offsetY -= 2;
+    if (Input::Keyboard::IsDown(KEY_INPUT_S)) offsetY += 2;
+    if (Input::Keyboard::IsDown(KEY_INPUT_A)) offsetX -= 2;
+    if (Input::Keyboard::IsDown(KEY_INPUT_D)) offsetX += 2;
 }
 
 void StageManager::Draw(void)
 {
-    int offsetX{ blockRadius_ + 10 };
-    int offsetY{ blockRadius_ };
 
     for (size_t y = 0; y < mapchip_.size(); y++)
     {
@@ -52,38 +54,25 @@ void StageManager::Draw(void)
     }
 }
 
-//void StageManager::LoadCSV(Stage* ins, std::string csvPath)
-//{
-//    std::ifstream ifs{ csvPath };
-//
-//    std::string line, temp;
-//    size_t loopY{};
-//
-//    while (std::getline(ifs, line)) {
-//        std::istringstream line_stream{ line };
-//        size_t loopX{};
-//
-//        while (std::getline(line_stream, temp, ',')) {
-//            switch (std::stoi(temp))
-//            {
-//            case 0: // IBlock::Type::NONE
-//                break;;
-//
-//            case 1: // IBlock::Type::STONE
-//                ins->Register(new StoneBlock{ 
-//                    {(float)loopX * blockDistance_ + defaultBlockPosOffset_,(float)loopY * blockDistance_ + defaultBlockPosOffset_}, // pos
-//                    {defaultBlockSize_,defaultBlockSize_} } // size
-//                );
-//
-//            default:
-//                break;
-//            }
-//
-//            loopX++;
-//        }
-//        loopY++;
-//    }
-//}
+void StageManager::LoadCSV(std::string csvPath)
+{
+    std::ifstream ifs{ csvPath };
+
+    std::string line, temp;
+    size_t loopY{};
+
+    while (std::getline(ifs, line)) {
+        std::istringstream line_stream{ line };
+        size_t loopX{};
+
+        while (std::getline(line_stream, temp, ',')) {
+            mapchip_[loopY][loopX] = std::stoi(temp);
+
+            loopX++;
+        }
+        loopY++;
+    }
+}
 
 //void StageManager::Stage::Register(IBlock* p_block)
 //{

@@ -16,8 +16,11 @@ public:
     void Update(void);
     void Draw(void);
 
-    std::array<std::array<int, 30>, 20> mapchip_;
+    inline void SetMapchip(const std::array<std::array<int, 30>, 20>& mapchip) { mapchip_ = mapchip; }
+    std::array<std::array<int, 30>, 20> mapchip_{};
+    int offsetX{ blockRadius_ + 10 };
+    int offsetY{ blockRadius_ };
 
     // ê√ìIä÷êî
-    //static void LoadCSV(Stage* ins, std::string csvPath);
+     void LoadCSV(std::string csvPath);
 };
