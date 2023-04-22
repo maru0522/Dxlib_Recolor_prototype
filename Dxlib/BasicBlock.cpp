@@ -1,10 +1,9 @@
 #include "BasicBlock.h"
 #include <DxLib.h>
 
-BasicBlock::BasicBlock(const Vector2& pos, const Vector2& radius)
+BasicBlock::BasicBlock(const Vector2& pos, const Vector2& radius) :
+    IBlock(pos, radius)
 {
-    SetPos(pos);
-    SetRadius(radius);
     SetType(Type::BASIC);
 }
 

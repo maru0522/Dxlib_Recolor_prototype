@@ -22,8 +22,8 @@ public:
     void LoadCSV(std::string csvPath);
 
     // •Ï”
-    std::list<std::unique_ptr<IBlock>> blocks_;
-    std::vector<std::vector<IBlock*>> mapchip_;
+    std::list<IBlock*> blocks_;
+    std::vector<std::vector<std::unique_ptr<IBlock>>> mapchip_;
 
 private:
     int offsetX{ blockRadius_ + 10 };

@@ -19,6 +19,12 @@
     <Filter Include="ソース ファイル\other">
       <UniqueIdentifier>{8da37212-8dbc-438c-a444-d5fc6c5b4e09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="app">
+      <UniqueIdentifier>{532f4497-6ea5-44eb-9c1a-5dc0d4f899e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app\block">
+      <UniqueIdentifier>{25de4dd8-8d48-4c9e-af07-bae49c543779}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -48,17 +54,20 @@
     <ClCompile Include="IEntity.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="IBlock.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="BasicBlock.cpp">
+    <ClCompile Include="Filter.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="BlockFactory.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>app\block</Filter>
     </ClCompile>
-    <ClCompile Include="Filter.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="BasicBlock.cpp">
+      <Filter>app\block</Filter>
+    </ClCompile>
+    <ClCompile Include="IBlock.cpp">
+      <Filter>app\block</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneBlock.cpp">
+      <Filter>app\block</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,17 +95,20 @@
     <ClInclude Include="IEntity.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="IBlock.h">
+    <ClInclude Include="Filter.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="BasicBlock.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>app\block</Filter>
     </ClInclude>
     <ClInclude Include="BlockFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>app\block</Filter>
     </ClInclude>
-    <ClInclude Include="Filter.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="StoneBlock.h">
+      <Filter>app\block</Filter>
+    </ClInclude>
+    <ClInclude Include="IBlock.h">
+      <Filter>app\block</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

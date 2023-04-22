@@ -46,14 +46,14 @@ void Stage::Update(void)
     //if (Input::Keyboard::IsDown(KEY_INPUT_A)) offsetX -= 2;
     //if (Input::Keyboard::IsDown(KEY_INPUT_D)) offsetX += 2;
 
-    for (std::unique_ptr<IBlock>& i : blocks_) {
+    for (IBlock* i : blocks_) {
         i->Update();
     }
 }
 
 void Stage::Draw(void)
 {
-    for (std::unique_ptr<IBlock>& i : blocks_) {
+    for (IBlock* i : blocks_) {
         i->Draw();
     }
 }
@@ -70,23 +70,28 @@ void Stage::LoadCSV(std::string csvPath)
         size_t loopX{};
 
         while (std::getline(line_stream, temp, ',')) {
+            Vector2 pos{ (float)loopX * IBlock::defaultRadius_ * 2,(float)loopY * IBlock::defaultRadius_ * 2 };
+            Vector2 radius{ IBlock::defaultRadius_,IBlock::defaultRadius_ };
+
+            mapchip_.emplace_back(std::vector<std::unique_ptr<IBlock>>{});
 
             switch (std::stoi(temp))
             {
             case 0: // IBlock::Type::NONE
-                mapchip_[loopY][loopX] = nullptr;
+                mapchip_[loopY].emplace_back(BlockFactory::CreateBlock("NONE", pos, radius));
                 break;
 
             case 1:
-                blocks_.emplace_back(BlockFactory::CreateBlock(
-                    "BASIC",
-                    { (float)loopX * IBlock::defaultRadius_ * 2,(float)loopY * IBlock::defaultRadius_ * 2 }
-                ));
-                mapchip_[loopY][loopX] = blocks_.back().get();
+                mapchip_[loopY].emplace_back(BlockFactory::CreateBlock("BASIC", pos, radius));
+                blocks_.emplace_back(mapchip_[loopY][loopX].get());
+                break;
+            case 2:
+                mapchip_[loopY].emplace_back(BlockFactory::CreateBlock("STONE", pos, radius));
+                blocks_.emplace_back(mapchip_[loopY][loopX].get());
                 break;
 
             default:
-                mapchip_[loopY][loopX] = nullptr;
+                mapchip_[loopY].emplace_back(BlockFactory::CreateBlock("NONE", pos, radius));
                 break;
             }
             loopX++;

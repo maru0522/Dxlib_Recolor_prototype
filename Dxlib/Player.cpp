@@ -6,10 +6,8 @@
 #include "StageManager.h"
 
 Player::Player(const Vector2& pos, const Vector2& radius) :
-    isJump_(true)
+    IEntity(pos,radius), isJump_(true)
 {
-    SetPos(pos);
-    SetRadius(radius);
 }
 
 void Player::Update(void)
@@ -73,7 +71,7 @@ void Player::Jump(Vector2& vel)
 
 void Player::Collision(Vector2& vel)
 {
-    for (std::unique_ptr<IBlock>& i : StageManager::GetInstance()->GetStagePtr()->blocks_) {
+    for (IBlock* i : StageManager::GetInstance()->GetStagePtr()->blocks_) {
         if (std::abs(i->GetPos().x - GetPos().x) > (IBlock::defaultRadius_ * 2) * 3) {
             continue;
         }
