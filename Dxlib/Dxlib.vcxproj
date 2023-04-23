@@ -128,7 +128,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BasicBlock.cpp" />
-    <ClCompile Include="BlockFactory.cpp" />
     <ClCompile Include="Filter.cpp" />
     <ClCompile Include="IBlock.cpp" />
     <ClCompile Include="IEntity.cpp" />
@@ -144,7 +143,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicBlock.h" />
-    <ClInclude Include="BlockFactory.h" />
     <ClInclude Include="Filter.h" />
     <ClInclude Include="IBlock.h" />
     <ClInclude Include="IEntity.h" />

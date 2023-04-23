@@ -21,7 +21,7 @@ public:
     virtual ~IBlock(void) = default;
 
     inline virtual void Update(void) {};
-    inline virtual void Draw(void) { DrawBox(GetPos().x - defaultRadius_, GetPos().y + defaultRadius_, GetPos().x + defaultRadius_, GetPos().y - defaultRadius_, 0xff0000, false); };
+    inline virtual void Draw(void) { /*DrawBox(GetPos().x - defaultRadius_, GetPos().y + defaultRadius_, GetPos().x + defaultRadius_, GetPos().y - defaultRadius_, 0xff0000, false);*/ };
 
     inline void SetType(const Type& type) { type_ = type; }
     inline const Type& GetType(void) { return type_; }

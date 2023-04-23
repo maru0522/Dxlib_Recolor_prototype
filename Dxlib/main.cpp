@@ -72,8 +72,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         // XVˆ—
         //stage1->Update();
         player->Update();
-        filter->Update();
         stM->Update();
+        filter->Update();
 
         // •`‰æˆ—
         //stage1->Draw();

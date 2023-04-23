@@ -32,7 +32,9 @@ private:
     void UpdatePos(void);
 
     std::unique_ptr<IBlock> CutPointingBlock(int offsetY, int offsetX);
+    void CheckMapchipAutoC(int mceY, int mceX, int offsetY, int offsetX);
     std::unique_ptr<IBlock> PastePointingBlock(int mcElemY, int mcElemX);
+    void CheckMapchipAutoP(int mceY, int mceX, int offsetY, int offsetX);
 
     void DrawDebug(void);
 

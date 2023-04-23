@@ -4,7 +4,7 @@
 #include <list>
 #include <string>
 #include <memory>
-#include "BlockFactory.h"
+#include "IBlock.h"
 
 constexpr int blockRadius_{ 16 }; // îºåa
 constexpr int blockSize_{ blockRadius_ * 2 }; // íºåa
@@ -22,7 +22,7 @@ public:
     void LoadCSV(std::string csvPath);
 
     // ïœêî
-    std::list<IBlock*> blocks_;
+    //std::list<IBlock*> blocks_;
     std::vector<std::vector<std::unique_ptr<IBlock>>> mapchip_;
 
 private:
