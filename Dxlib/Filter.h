@@ -16,6 +16,12 @@ private:
         LEFT
     };
 
+    struct McInfo
+    {
+        IBlock::Type type{};
+        Vector2 pos{};
+    };
+
 public:
     // ä÷êî
     static const unsigned int defaultElemWidth_{ 3 };
@@ -25,11 +31,16 @@ public:
     void Update(void);
     void Draw(void);
 
-    void CopyToFilter(void);
-    void PlaceToMapchip(void);
 
 private:
+    void CopyToFilter(void);
+    void PlaceToMapchip(void);
+    void MapchipAdaptDirection(Direction nextDir);
+    std::unique_ptr<IBlock> GenerateBlock(IBlock::Type type,const Vector2& pos, const Vector2& radius);
+
+
     void UpdatePos(void);
+    void RotateDirection(void);
 
     std::unique_ptr<IBlock> CutPointingBlock(int offsetY, int offsetX);
     void CheckMapchipAutoC(int mceY, int mceX, int offsetY, int offsetX);

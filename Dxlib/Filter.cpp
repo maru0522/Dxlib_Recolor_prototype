@@ -4,6 +4,7 @@
 #include <DxLib.h>
 #include "IBlock.h"
 #include "StoneBlock.h"
+#include "BasicBlock.h"
 
 Filter::Filter(Player* pPtr) :
     pPtr_(pPtr)
@@ -29,6 +30,8 @@ void Filter::Update(void)
 
     if (KEY::IsTrigger(KEY_INPUT_C)) CopyToFilter();
     if (KEY::IsTrigger(KEY_INPUT_P)) PlaceToMapchip();
+
+    RotateDirection();
 }
 
 void Filter::Draw(void)
@@ -148,12 +151,15 @@ void Filter::CopyToFilter(void)
         break;
 
     default:
-        // 上方向
-        for (size_t y = 0; y < mapchip_.size(); y++) {
-            for (size_t x = 0; x < mapchip_[0].size(); x++) {
-                mapchip_[y][x] = CutPointingBlock(y - 3, x - 1);
-            }
-        }
+        CheckMapchipAutoC(0, 0, -3, -1);
+        CheckMapchipAutoC(0, 1, -3, 0);
+        CheckMapchipAutoC(0, 2, -3, 1);
+        CheckMapchipAutoC(1, 0, -2, -1);
+        CheckMapchipAutoC(1, 1, -2, 0);
+        CheckMapchipAutoC(1, 2, -2, 1);
+        CheckMapchipAutoC(2, 0, -1, -1);
+        CheckMapchipAutoC(2, 1, -1, 0);
+        CheckMapchipAutoC(2, 2, -1, 1);
         break;
     }
 }
@@ -177,51 +183,353 @@ void Filter::PlaceToMapchip(void)
 
         // 右方向
     case Filter::Direction::RIGHT:
-        mapchip_[0][0] = CutPointingBlock(-1, 1);
-        mapchip_[0][1] = CutPointingBlock(-1, 2);
-        mapchip_[0][2] = CutPointingBlock(-1, 3);
-        mapchip_[1][0] = CutPointingBlock(0, 1);
-        mapchip_[1][1] = CutPointingBlock(0, 2);
-        mapchip_[1][2] = CutPointingBlock(0, 3);
-        mapchip_[2][0] = CutPointingBlock(1, 1);
-        mapchip_[2][1] = CutPointingBlock(1, 2);
-        mapchip_[2][2] = CutPointingBlock(1, 3);
+        //mapchip_[0][0] = CutPointingBlock(-1, 1);
+        //mapchip_[0][1] = CutPointingBlock(-1, 2);
+        //mapchip_[0][2] = CutPointingBlock(-1, 3);
+        //mapchip_[1][0] = CutPointingBlock(0, 1);
+        //mapchip_[1][1] = CutPointingBlock(0, 2);
+        //mapchip_[1][2] = CutPointingBlock(0, 3);
+        //mapchip_[2][0] = CutPointingBlock(1, 1);
+        //mapchip_[2][1] = CutPointingBlock(1, 2);
+        //mapchip_[2][2] = CutPointingBlock(1, 3);
+        CheckMapchipAutoP(0, 0, -1, 1);
+        CheckMapchipAutoP(0, 1, -1, 2);
+        CheckMapchipAutoP(0, 2, -1, 3);
+        CheckMapchipAutoP(1, 0, 0, 1);
+        CheckMapchipAutoP(1, 1, 0, 2);
+        CheckMapchipAutoP(1, 2, 0, 3);
+        CheckMapchipAutoP(2, 0, 1, 1);
+        CheckMapchipAutoP(2, 1, 1, 2);
+        CheckMapchipAutoP(2, 2, 1, 3);
         break;
 
         // 下方向
     case Filter::Direction::BOTTOM:
-        mapchip_[0][0] = CutPointingBlock(1, -1);
-        mapchip_[0][1] = CutPointingBlock(1, 0);
-        mapchip_[0][2] = CutPointingBlock(1, 1);
-        mapchip_[1][0] = CutPointingBlock(2, -1);
-        mapchip_[1][1] = CutPointingBlock(2, 0);
-        mapchip_[1][2] = CutPointingBlock(2, 1);
-        mapchip_[2][0] = CutPointingBlock(3, -1);
-        mapchip_[2][1] = CutPointingBlock(3, 0);
-        mapchip_[2][2] = CutPointingBlock(3, 1);
+        //mapchip_[0][0] = CutPointingBlock(1, -1);
+        //mapchip_[0][1] = CutPointingBlock(1, 0);
+        //mapchip_[0][2] = CutPointingBlock(1, 1);
+        //mapchip_[1][0] = CutPointingBlock(2, -1);
+        //mapchip_[1][1] = CutPointingBlock(2, 0);
+        //mapchip_[1][2] = CutPointingBlock(2, 1);
+        //mapchip_[2][0] = CutPointingBlock(3, -1);
+        //mapchip_[2][1] = CutPointingBlock(3, 0);
+        //mapchip_[2][2] = CutPointingBlock(3, 1);
+        CheckMapchipAutoP(0, 0, 1, -1);
+        CheckMapchipAutoP(0, 1, 1, 0);
+        CheckMapchipAutoP(0, 2, 1, 1);
+        CheckMapchipAutoP(1, 0, 2, -1);
+        CheckMapchipAutoP(1, 1, 2, 0);
+        CheckMapchipAutoP(1, 2, 2, 1);
+        CheckMapchipAutoP(2, 0, 3, -1);
+        CheckMapchipAutoP(2, 1, 3, 0);
+        CheckMapchipAutoP(2, 2, 3, 1);
         break;
 
         // 左方向
     case Filter::Direction::LEFT:
-        mapchip_[0][0] = CutPointingBlock(-1, -1);
-        mapchip_[0][1] = CutPointingBlock(-1, -2);
-        mapchip_[0][2] = CutPointingBlock(-1, -3);
-        mapchip_[1][0] = CutPointingBlock(0, -1);
-        mapchip_[1][1] = CutPointingBlock(0, -2);
-        mapchip_[1][2] = CutPointingBlock(0, -3);
-        mapchip_[2][0] = CutPointingBlock(1, -1);
-        mapchip_[2][1] = CutPointingBlock(1, -2);
-        mapchip_[2][2] = CutPointingBlock(1, -3);
+        //mapchip_[0][0] = CutPointingBlock(-1, -1);
+        //mapchip_[0][1] = CutPointingBlock(-1, -2);
+        //mapchip_[0][2] = CutPointingBlock(-1, -3);
+        //mapchip_[1][0] = CutPointingBlock(0, -1);
+        //mapchip_[1][1] = CutPointingBlock(0, -2);
+        //mapchip_[1][2] = CutPointingBlock(0, -3);
+        //mapchip_[2][0] = CutPointingBlock(1, -1);
+        //mapchip_[2][1] = CutPointingBlock(1, -2);
+        //mapchip_[2][2] = CutPointingBlock(1, -3);
+        CheckMapchipAutoP(0, 0, -1, -1);
+        CheckMapchipAutoP(0, 1, -1, -2);
+        CheckMapchipAutoP(0, 2, -1, -3);
+        CheckMapchipAutoP(1, 0, 0, -1);
+        CheckMapchipAutoP(1, 1, 0, -2);
+        CheckMapchipAutoP(1, 2, 0, -3);
+        CheckMapchipAutoP(2, 0, 1, -1);
+        CheckMapchipAutoP(2, 1, 1, -2);
+        CheckMapchipAutoP(2, 2, 1, -3);
         break;
 
     default:
-        // 上方向
-        for (size_t y = 0; y < mapchip_.size(); y++) {
-            for (size_t x = 0; x < mapchip_[0].size(); x++) {
-                mapchip_[y][x] = CutPointingBlock(y - 3, x - 1);
-            }
-        }
+        CheckMapchipAutoP(0, 0, -3, -1);
+        CheckMapchipAutoP(0, 1, -3, 0);
+        CheckMapchipAutoP(0, 2, -3, 1);
+        CheckMapchipAutoP(1, 0, -2, -1);
+        CheckMapchipAutoP(1, 1, -2, 0);
+        CheckMapchipAutoP(1, 2, -2, 1);
+        CheckMapchipAutoP(2, 0, -1, -1);
+        CheckMapchipAutoP(2, 1, -1, 0);
+        CheckMapchipAutoP(2, 2, -1, 1);
         break;
+    }
+}
+
+void Filter::MapchipAdaptDirection(Direction nextDir)
+{
+    std::array<std::array<McInfo, defaultElemWidth_>, defaultElemHeight_> mcInfo{ {
+        {McInfo{mapchip_[0][0]->GetType(),mapchip_[0][0]->GetPos()},McInfo{mapchip_[0][1]->GetType(),mapchip_[0][1]->GetPos()},McInfo{mapchip_[0][2]->GetType(),mapchip_[0][2]->GetPos()}},
+        {McInfo{mapchip_[1][0]->GetType(),mapchip_[1][0]->GetPos()},McInfo{mapchip_[1][1]->GetType(),mapchip_[1][1]->GetPos()},McInfo{mapchip_[1][2]->GetType(),mapchip_[1][2]->GetPos()}},
+        {McInfo{mapchip_[2][0]->GetType(),mapchip_[2][0]->GetPos()},McInfo{mapchip_[2][1]->GetType(),mapchip_[2][1]->GetPos()},McInfo{mapchip_[2][2]->GetType(),mapchip_[2][2]->GetPos()}}
+    } };
+    Vector2 radius{ IBlock::defaultRadius_,IBlock::defaultRadius_ };
+
+    if (dir_ == Direction::TOP)
+    {
+        switch (nextDir)
+        {
+        case Filter::Direction::TOP:
+            break;
+        case Filter::Direction::RIGHT:
+            // 上段->右端列
+            mapchip_[0][2] = GenerateBlock(mcInfo[0][0].type, mcInfo[0][0].pos, radius);
+            mapchip_[1][2] = GenerateBlock(mcInfo[0][1].type, mcInfo[0][1].pos, radius);
+            mapchip_[2][2] = GenerateBlock(mcInfo[0][2].type, mcInfo[0][2].pos, radius);
+            // 中段->中央列
+            mapchip_[0][1] = GenerateBlock(mcInfo[1][0].type, mcInfo[1][0].pos, radius);
+            mapchip_[1][1] = GenerateBlock(mcInfo[1][1].type, mcInfo[1][1].pos, radius);
+            mapchip_[2][1] = GenerateBlock(mcInfo[1][2].type, mcInfo[1][2].pos, radius);
+            // 下段->左端列
+            mapchip_[0][0] = GenerateBlock(mcInfo[2][0].type, mcInfo[2][0].pos, radius);
+            mapchip_[1][0] = GenerateBlock(mcInfo[2][1].type, mcInfo[2][1].pos, radius);
+            mapchip_[2][0] = GenerateBlock(mcInfo[2][2].type, mcInfo[2][2].pos, radius);
+            break;
+
+        case Filter::Direction::BOTTOM:
+            // 上段->下段
+            mapchip_[2][2] = GenerateBlock(mcInfo[0][0].type, mcInfo[0][0].pos, radius);
+            mapchip_[2][1] = GenerateBlock(mcInfo[0][1].type, mcInfo[0][1].pos, radius);
+            mapchip_[2][0] = GenerateBlock(mcInfo[0][2].type, mcInfo[0][2].pos, radius);
+            // 中段->中段
+            mapchip_[1][2] = GenerateBlock(mcInfo[1][0].type, mcInfo[1][0].pos, radius);
+            mapchip_[1][1] = GenerateBlock(mcInfo[1][1].type, mcInfo[1][1].pos, radius);
+            mapchip_[1][0] = GenerateBlock(mcInfo[1][2].type, mcInfo[1][2].pos, radius);
+            // 下段->上段
+            mapchip_[0][2] = GenerateBlock(mcInfo[2][0].type, mcInfo[2][0].pos, radius);
+            mapchip_[0][1] = GenerateBlock(mcInfo[2][1].type, mcInfo[2][1].pos, radius);
+            mapchip_[0][0] = GenerateBlock(mcInfo[2][2].type, mcInfo[2][2].pos, radius);
+            break;
+
+        case Filter::Direction::LEFT:
+            // 上段->左端列
+            mapchip_[2][0] = GenerateBlock(mcInfo[0][0].type, mcInfo[0][0].pos, radius);
+            mapchip_[1][0] = GenerateBlock(mcInfo[0][1].type, mcInfo[0][1].pos, radius);
+            mapchip_[0][0] = GenerateBlock(mcInfo[0][2].type, mcInfo[0][2].pos, radius);
+            // 中段->中央列
+            mapchip_[2][1] = GenerateBlock(mcInfo[1][0].type, mcInfo[1][0].pos, radius);
+            mapchip_[1][1] = GenerateBlock(mcInfo[1][1].type, mcInfo[1][1].pos, radius);
+            mapchip_[0][1] = GenerateBlock(mcInfo[1][2].type, mcInfo[1][2].pos, radius);
+            // 下段->右端列
+            mapchip_[2][2] = GenerateBlock(mcInfo[2][0].type, mcInfo[2][0].pos, radius);
+            mapchip_[1][2] = GenerateBlock(mcInfo[2][1].type, mcInfo[2][1].pos, radius);
+            mapchip_[0][2] = GenerateBlock(mcInfo[2][2].type, mcInfo[2][2].pos, radius);
+            break;
+
+        default:
+            break;
+        }
+    }
+    else if (dir_ == Direction::RIGHT)
+    {
+        switch (nextDir)
+        {
+        case Filter::Direction::TOP:
+            // 上段->左端列
+            mapchip_[2][0] = GenerateBlock(mcInfo[0][0].type, mcInfo[0][0].pos, radius);
+            mapchip_[1][0] = GenerateBlock(mcInfo[0][1].type, mcInfo[0][1].pos, radius);
+            mapchip_[0][0] = GenerateBlock(mcInfo[0][2].type, mcInfo[0][2].pos, radius);
+            // 中段->中段(左右反転)
+            mapchip_[2][1] = GenerateBlock(mcInfo[1][0].type, mcInfo[1][0].pos, radius);
+            mapchip_[1][1] = GenerateBlock(mcInfo[1][1].type, mcInfo[1][1].pos, radius);
+            mapchip_[0][1] = GenerateBlock(mcInfo[1][2].type, mcInfo[1][2].pos, radius);
+            // 下段->左端列
+            mapchip_[2][2] = GenerateBlock(mcInfo[2][0].type, mcInfo[2][0].pos, radius);
+            mapchip_[1][2] = GenerateBlock(mcInfo[2][1].type, mcInfo[2][1].pos, radius);
+            mapchip_[0][2] = GenerateBlock(mcInfo[2][2].type, mcInfo[2][2].pos, radius);
+            break;
+        case Filter::Direction::RIGHT:
+            break;
+
+        case Filter::Direction::BOTTOM:
+            // 上段->左端列
+            mapchip_[0][2] = GenerateBlock(mcInfo[0][0].type, mcInfo[0][0].pos, radius);
+            mapchip_[1][2] = GenerateBlock(mcInfo[0][1].type, mcInfo[0][1].pos, radius);
+            mapchip_[2][2] = GenerateBlock(mcInfo[0][2].type, mcInfo[0][2].pos, radius);
+            // 中段->中央列
+            mapchip_[0][1] = GenerateBlock(mcInfo[1][0].type, mcInfo[1][0].pos, radius);
+            mapchip_[1][1] = GenerateBlock(mcInfo[1][1].type, mcInfo[1][1].pos, radius);
+            mapchip_[2][1] = GenerateBlock(mcInfo[1][2].type, mcInfo[1][2].pos, radius);
+            // 下段->右端列
+            mapchip_[0][0] = GenerateBlock(mcInfo[2][0].type, mcInfo[2][0].pos, radius);
+            mapchip_[1][0] = GenerateBlock(mcInfo[2][1].type, mcInfo[2][1].pos, radius);
+            mapchip_[2][0] = GenerateBlock(mcInfo[2][2].type, mcInfo[2][2].pos, radius);
+            break;
+
+        case Filter::Direction::LEFT:
+            // 上段->下段
+            mapchip_[2][2] = GenerateBlock(mcInfo[0][0].type, mcInfo[0][0].pos, radius);
+            mapchip_[2][1] = GenerateBlock(mcInfo[0][1].type, mcInfo[0][1].pos, radius);
+            mapchip_[2][0] = GenerateBlock(mcInfo[0][2].type, mcInfo[0][2].pos, radius);
+            // 中段->中段（左右反転）
+            mapchip_[1][2] = GenerateBlock(mcInfo[1][0].type, mcInfo[1][0].pos, radius);
+            mapchip_[1][1] = GenerateBlock(mcInfo[1][1].type, mcInfo[1][1].pos, radius);
+            mapchip_[1][0] = GenerateBlock(mcInfo[1][2].type, mcInfo[1][2].pos, radius);
+            // 下段->上段
+            mapchip_[0][2] = GenerateBlock(mcInfo[2][0].type, mcInfo[2][0].pos, radius);
+            mapchip_[0][1] = GenerateBlock(mcInfo[2][1].type, mcInfo[2][1].pos, radius);
+            mapchip_[0][0] = GenerateBlock(mcInfo[2][2].type, mcInfo[2][2].pos, radius);
+            break;
+
+        default:
+            break;
+        }
+    }
+    else if (dir_ == Direction::BOTTOM)
+    {
+        switch (nextDir)
+        {
+        case Filter::Direction::TOP:
+            // 上段->下段
+            mapchip_[2][2] = GenerateBlock(mcInfo[0][0].type, mcInfo[0][0].pos, radius);
+            mapchip_[2][1] = GenerateBlock(mcInfo[0][1].type, mcInfo[0][1].pos, radius);
+            mapchip_[2][0] = GenerateBlock(mcInfo[0][2].type, mcInfo[0][2].pos, radius);
+            // 中段->中段(左右反転)
+            mapchip_[1][2] = GenerateBlock(mcInfo[1][0].type, mcInfo[1][0].pos, radius);
+            mapchip_[1][1] = GenerateBlock(mcInfo[1][1].type, mcInfo[1][1].pos, radius);
+            mapchip_[1][0] = GenerateBlock(mcInfo[1][2].type, mcInfo[1][2].pos, radius);
+            // 下段->上段
+            mapchip_[0][2] = GenerateBlock(mcInfo[2][0].type, mcInfo[2][0].pos, radius);
+            mapchip_[0][1] = GenerateBlock(mcInfo[2][1].type, mcInfo[2][1].pos, radius);
+            mapchip_[0][0] = GenerateBlock(mcInfo[2][2].type, mcInfo[2][2].pos, radius);
+            break;
+        case Filter::Direction::RIGHT:
+            // 上段->左端列
+            mapchip_[2][0] = GenerateBlock(mcInfo[0][0].type, mcInfo[0][0].pos, radius);
+            mapchip_[1][0] = GenerateBlock(mcInfo[0][1].type, mcInfo[0][1].pos, radius);
+            mapchip_[0][0] = GenerateBlock(mcInfo[0][2].type, mcInfo[0][2].pos, radius);
+            // 中段->中央列
+            mapchip_[2][1] = GenerateBlock(mcInfo[1][0].type, mcInfo[1][0].pos, radius);
+            mapchip_[1][1] = GenerateBlock(mcInfo[1][1].type, mcInfo[1][1].pos, radius);
+            mapchip_[0][1] = GenerateBlock(mcInfo[1][2].type, mcInfo[1][2].pos, radius);
+            // 下段->右端列
+            mapchip_[2][2] = GenerateBlock(mcInfo[2][0].type, mcInfo[2][0].pos, radius);
+            mapchip_[1][2] = GenerateBlock(mcInfo[2][1].type, mcInfo[2][1].pos, radius);
+            mapchip_[0][2] = GenerateBlock(mcInfo[2][2].type, mcInfo[2][2].pos, radius);
+            break;
+
+        case Filter::Direction::BOTTOM:
+            break;
+
+        case Filter::Direction::LEFT:
+            // 上段->右端列
+            mapchip_[0][2] = GenerateBlock(mcInfo[0][0].type, mcInfo[0][0].pos, radius);
+            mapchip_[1][2] = GenerateBlock(mcInfo[0][1].type, mcInfo[0][1].pos, radius);
+            mapchip_[2][2] = GenerateBlock(mcInfo[0][2].type, mcInfo[0][2].pos, radius);
+            // 中段->中央列
+            mapchip_[0][1] = GenerateBlock(mcInfo[1][0].type, mcInfo[1][0].pos, radius);
+            mapchip_[1][1] = GenerateBlock(mcInfo[1][1].type, mcInfo[1][1].pos, radius);
+            mapchip_[2][1] = GenerateBlock(mcInfo[1][2].type, mcInfo[1][2].pos, radius);
+            // 下段->左端列
+            mapchip_[0][0] = GenerateBlock(mcInfo[2][0].type, mcInfo[2][0].pos, radius);
+            mapchip_[1][0] = GenerateBlock(mcInfo[2][1].type, mcInfo[2][1].pos, radius);
+            mapchip_[2][0] = GenerateBlock(mcInfo[2][2].type, mcInfo[2][2].pos, radius);
+            break;
+
+        default:
+            break;
+        }
+    }
+    else if (dir_ == Direction::LEFT)
+    {
+        switch (nextDir)
+        {
+        case Filter::Direction::TOP:
+            // 上段->右端列
+            mapchip_[0][2] = GenerateBlock(mcInfo[0][0].type, mcInfo[0][0].pos, radius);
+            mapchip_[1][2] = GenerateBlock(mcInfo[0][1].type, mcInfo[0][1].pos, radius);
+            mapchip_[2][2] = GenerateBlock(mcInfo[0][2].type, mcInfo[0][2].pos, radius);
+            // 中段->中央列
+            mapchip_[0][1] = GenerateBlock(mcInfo[1][0].type, mcInfo[1][0].pos, radius);
+            mapchip_[1][1] = GenerateBlock(mcInfo[1][1].type, mcInfo[1][1].pos, radius);
+            mapchip_[2][1] = GenerateBlock(mcInfo[1][2].type, mcInfo[1][2].pos, radius);
+            // 下段->左端列
+            mapchip_[0][0] = GenerateBlock(mcInfo[2][0].type, mcInfo[2][0].pos, radius);
+            mapchip_[1][0] = GenerateBlock(mcInfo[2][1].type, mcInfo[2][1].pos, radius);
+            mapchip_[2][0] = GenerateBlock(mcInfo[2][2].type, mcInfo[2][2].pos, radius);
+            break;
+
+        case Filter::Direction::RIGHT:
+            // 上段->下段
+            mapchip_[2][2] = GenerateBlock(mcInfo[0][0].type, mcInfo[0][0].pos, radius);
+            mapchip_[2][1] = GenerateBlock(mcInfo[0][1].type, mcInfo[0][1].pos, radius);
+            mapchip_[2][0] = GenerateBlock(mcInfo[0][2].type, mcInfo[0][2].pos, radius);
+            // 中段->中段（左右反転）
+            mapchip_[1][2] = GenerateBlock(mcInfo[1][0].type, mcInfo[1][0].pos, radius);
+            mapchip_[1][1] = GenerateBlock(mcInfo[1][1].type, mcInfo[1][1].pos, radius);
+            mapchip_[1][0] = GenerateBlock(mcInfo[1][2].type, mcInfo[1][2].pos, radius);
+            // 下段->上段
+            mapchip_[0][2] = GenerateBlock(mcInfo[2][0].type, mcInfo[2][0].pos, radius);
+            mapchip_[0][1] = GenerateBlock(mcInfo[2][1].type, mcInfo[2][1].pos, radius);
+            mapchip_[0][0] = GenerateBlock(mcInfo[2][2].type, mcInfo[2][2].pos, radius);
+            break;
+
+        case Filter::Direction::BOTTOM:
+            // 上段->左端列
+            mapchip_[2][0] = GenerateBlock(mcInfo[0][0].type, mcInfo[0][0].pos, radius);
+            mapchip_[1][0] = GenerateBlock(mcInfo[0][1].type, mcInfo[0][1].pos, radius);
+            mapchip_[0][0] = GenerateBlock(mcInfo[0][2].type, mcInfo[0][2].pos, radius);
+            // 中段->中央列
+            mapchip_[2][1] = GenerateBlock(mcInfo[1][0].type, mcInfo[1][0].pos, radius);
+            mapchip_[1][1] = GenerateBlock(mcInfo[1][1].type, mcInfo[1][1].pos, radius);
+            mapchip_[0][1] = GenerateBlock(mcInfo[1][2].type, mcInfo[1][2].pos, radius);
+            // 下段->右端列
+            mapchip_[2][2] = GenerateBlock(mcInfo[2][0].type, mcInfo[2][0].pos, radius);
+            mapchip_[1][2] = GenerateBlock(mcInfo[2][1].type, mcInfo[2][1].pos, radius);
+            mapchip_[0][2] = GenerateBlock(mcInfo[2][2].type, mcInfo[2][2].pos, radius);
+            break;
+
+        case Filter::Direction::LEFT:
+            break;
+
+        default:
+            break;
+        }
+    }
+}
+
+std::unique_ptr<IBlock> Filter::GenerateBlock(IBlock::Type type, const Vector2& pos, const Vector2& radius)
+{
+    switch (type)
+    {
+    case IBlock::Type::NONE:
+        return std::make_unique<IBlock>(Vector2{ pos }, Vector2{ radius });
+        break;
+    case IBlock::Type::BASIC:
+        return std::make_unique<BasicBlock>(Vector2{ pos }, Vector2{ radius });
+        break;
+    case IBlock::Type::STONE:
+        return std::make_unique<StoneBlock>(Vector2{ pos }, Vector2{ radius });
+        break;
+    default:
+        return std::make_unique<IBlock>(Vector2{ pos }, Vector2{ radius });
+        break;
+    }
+}
+
+void Filter::RotateDirection(void)
+{
+    // mode切替のRT + 十字キーとかのがよいかも
+    if (KEY::IsTrigger(KEY_INPUT_1)) {
+        MapchipAdaptDirection(Direction::TOP);
+        dir_ = Direction::TOP;
+    }
+    if (KEY::IsTrigger(KEY_INPUT_2)) {
+        MapchipAdaptDirection(Direction::RIGHT);
+        dir_ = Direction::RIGHT;
+    }
+    if (KEY::IsTrigger(KEY_INPUT_3)) {
+        MapchipAdaptDirection(Direction::BOTTOM);
+        dir_ = Direction::BOTTOM;
+    }
+    if (KEY::IsTrigger(KEY_INPUT_4)) {
+        MapchipAdaptDirection(Direction::LEFT);
+        dir_ = Direction::LEFT;
     }
 }
 
@@ -253,7 +561,7 @@ void Filter::UpdatePos(void)
     case Filter::Direction::LEFT:
         for (size_t y = 0; y < mapchip_.size(); y++) {
             for (size_t x = 0; x < mapchip_[0].size(); x++) {
-                mapchip_[y][x]->SetPos({ (basePointByElemX_ + x - 1) * IBlock::defaultRadius_ * 2, (basePointByElemY_ + y - 1) * IBlock::defaultRadius_ * 2 });
+                mapchip_[y][x]->SetPos({ (basePointByElemX_ + x - 3) * IBlock::defaultRadius_ * 2, (basePointByElemY_ + y - 1) * IBlock::defaultRadius_ * 2 });
             }
         }
         break;
@@ -341,7 +649,7 @@ void Filter::CheckMapchipAutoP(int mceY, int mceX, int offsetY, int offsetX)
 {
     IBlock* curBlockPtr{ StageManager::GetInstance()->GetStagePtr()->mapchip_[basePointByElemY_ + offsetY][basePointByElemX_ + offsetX].get() };
     if (curBlockPtr->GetType() != IBlock::Type::NONE) return;
-    StageManager::GetInstance()->GetStagePtr()->mapchip_[basePointByElemY_ + offsetY][basePointByElemX_ + offsetX] = PastePointingBlock(mceY,mceX);
+    StageManager::GetInstance()->GetStagePtr()->mapchip_[basePointByElemY_ + offsetY][basePointByElemX_ + offsetX] = PastePointingBlock(mceY, mceX);
 }
 
 void Filter::DrawDebug(void)
