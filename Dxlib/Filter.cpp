@@ -652,6 +652,65 @@ void Filter::CheckMapchipAutoP(int mceY, int mceX, int offsetY, int offsetX)
     StageManager::GetInstance()->GetStagePtr()->mapchip_[basePointByElemY_ + offsetY][basePointByElemX_ + offsetX] = PastePointingBlock(mceY, mceX);
 }
 
+Vector2 Filter::DetectStoneBlock(void)
+{
+    for (size_t y = 0; y < mapchip_.size(); y++) {
+        for (size_t x = 0; x < mapchip_[0].size(); x++) {
+            if (mapchip_[y][x]->GetType() == IBlock::Type::STONE)
+                return Vector2{ (float)x,(float)y };
+        }
+    }
+    return Vector2{ -1,-1 };
+}
+
+void Filter::RotatePlayer(void)
+{
+    Direction dirOfExcuteTiming{ dir_ };
+}
+
+void Filter::RotatePlayerSelect(Direction dirOfExcuteTiming)
+{
+    int mceX{ (int)DetectStoneBlock().x };
+    int mceY{ (int)DetectStoneBlock().y };
+
+    if (mceX == -1 || mceY == -1) return;
+
+    switch (dirOfExcuteTiming)
+    {
+    case Filter::Direction::TOP:
+        break;
+    case Filter::Direction::RIGHT:
+        RotatePlayerPos(dirOfExcuteTiming, mceY, mceX);
+        break;
+    case Filter::Direction::BOTTOM:
+        break;
+    case Filter::Direction::LEFT:
+        break;
+    default:
+        break;
+    }
+}
+
+void Filter::RotatePlayerPos(Direction dirOfExcuteTiming, int mceY, int mceX)
+{
+    if (mceY == 0 && mceX == 0) {
+        switch (pDirByRotateBase_)
+        {
+        case Filter::Direction::TOP:
+            //pPtr_->SetPos(mapchip_[mceY][mceX]->GetPos())
+                break;
+        case Filter::Direction::RIGHT:
+            break;
+        case Filter::Direction::BOTTOM:
+            break;
+        case Filter::Direction::LEFT:
+            break;
+        default:
+            break;
+        }
+    }
+}
+
 void Filter::DrawDebug(void)
 {
     DrawFormatString(0, 0, 0xffffff, "basePointElemX: %d", basePointByElemX_);

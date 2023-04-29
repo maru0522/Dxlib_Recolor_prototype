@@ -26,5 +26,6 @@ private:
 
     // •Ï”
     bool isJump_;
+    bool isRotate_;
 };
 

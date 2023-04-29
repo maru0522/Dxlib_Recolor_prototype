@@ -36,8 +36,7 @@ private:
     void CopyToFilter(void);
     void PlaceToMapchip(void);
     void MapchipAdaptDirection(Direction nextDir);
-    std::unique_ptr<IBlock> GenerateBlock(IBlock::Type type,const Vector2& pos, const Vector2& radius);
-
+    std::unique_ptr<IBlock> GenerateBlock(IBlock::Type type, const Vector2& pos, const Vector2& radius);
 
     void UpdatePos(void);
     void RotateDirection(void);
@@ -47,6 +46,12 @@ private:
     std::unique_ptr<IBlock> PastePointingBlock(int mcElemY, int mcElemX);
     void CheckMapchipAutoP(int mceY, int mceX, int offsetY, int offsetX);
 
+    // possibleMoveBlockÇ™1ëOíÒ
+    Vector2 DetectStoneBlock(void);
+    void RotatePlayer(void);
+    void RotatePlayerSelect(Direction dirOfExcuteTiming);
+    void RotatePlayerPos(Direction dirOfExcuteTiming, int mceY, int mceX);
+
     void DrawDebug(void);
 
     // ïœêî
@@ -54,6 +59,7 @@ private:
     unsigned int basePointByElemY_{};
     unsigned int possibleMoveBlock_{};
     Direction dir_{};
+    Direction pDirByRotateBase_{};
     Player* pPtr_{};
     std::array<std::array<std::unique_ptr<IBlock>, defaultElemWidth_>, defaultElemHeight_> mapchip_;
 };
