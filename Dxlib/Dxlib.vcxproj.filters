@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル\other">
-      <UniqueIdentifier>{c99990f3-6059-4e94-9f5d-22714d27cbb7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\other">
       <UniqueIdentifier>{8da37212-8dbc-438c-a444-d5fc6c5b4e09}</UniqueIdentifier>
     </Filter>
@@ -25,12 +22,12 @@
     <Filter Include="app\block">
       <UniqueIdentifier>{25de4dd8-8d48-4c9e-af07-bae49c543779}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\other">
+      <UniqueIdentifier>{2af25e1e-8f73-40d5-9f45-ca44b11cb60f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="StageManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Vector4.cpp">
@@ -48,60 +45,39 @@
     <ClCompile Include="Input.cpp">
       <Filter>ソース ファイル\other</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="IEntity.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Filter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="BasicBlock.cpp">
-      <Filter>app\block</Filter>
-    </ClCompile>
     <ClCompile Include="IBlock.cpp">
       <Filter>app\block</Filter>
     </ClCompile>
-    <ClCompile Include="StoneBlock.cpp">
+    <ClCompile Include="Piece.cpp">
+      <Filter>app\block</Filter>
+    </ClCompile>
+    <ClCompile Include="StageManager.cpp">
       <Filter>app\block</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="StageManager.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="IBlock.h">
+      <Filter>app\block</Filter>
     </ClInclude>
     <ClInclude Include="Vector4.h">
-      <Filter>ヘッダー ファイル\other</Filter>
-    </ClInclude>
-    <ClInclude Include="Util.h">
-      <Filter>ヘッダー ファイル\other</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2.h">
       <Filter>ヘッダー ファイル\other</Filter>
     </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>ヘッダー ファイル\other</Filter>
     </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>ヘッダー ファイル\other</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>ヘッダー ファイル\other</Filter>
+    </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>ヘッダー ファイル\other</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="IEntity.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Filter.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="BasicBlock.h">
+    <ClInclude Include="Piece.h">
       <Filter>app\block</Filter>
     </ClInclude>
-    <ClInclude Include="StoneBlock.h">
-      <Filter>app\block</Filter>
-    </ClInclude>
-    <ClInclude Include="IBlock.h">
+    <ClInclude Include="StageManager.h">
       <Filter>app\block</Filter>
     </ClInclude>
   </ItemGroup>

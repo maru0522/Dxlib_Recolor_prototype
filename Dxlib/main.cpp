@@ -1,18 +1,16 @@
 #include "DxLib.h"
 #include <memory>
-#include "StageManager.h"
 #include "Input.h"
-#include "Player.h"
-#include "Filter.h"
+#include "Piece.h"
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "aaa: タイトル";
 
 // ウィンドウ横幅
-const int WIN_WIDTH = 960;
+const int WIN_WIDTH = 1280;
 
 // ウィンドウ縦幅
-const int WIN_HEIGHT = 540;
+const int WIN_HEIGHT = 720;
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
     _In_ int nCmdShow) {
@@ -42,24 +40,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     SetDrawScreen(DX_SCREEN_BACK);
 
     // 画像などのリソースデータの変数宣言と読み込み
-
+    Piece piece{ Vector2{300,300}, Vector2{50,50} };
+    piece.Register(new IBlock{ Vector2{20,20} });
+    piece.Register(new IBlock{ Vector2{-10,-10} });
+    piece.Register(new IBlock{ Vector2{5,5} });
+    piece.Register(new IBlock{ Vector2{50,50} });
 
     // ゲームループで使う変数の宣言
 
-    StageManager* stM = StageManager::GetInstance();
-    std::unique_ptr<Stage> st1{ std::make_unique<Stage>() };
-    st1->LoadCSV("Resources/testt.csv");
-    stM->SetStage(st1.get());
-
-    Vector2 pos{ 100,100 };
-    Vector2 rad{ 16,16 };
-
-    std::unique_ptr<Player> player{ std::make_unique<Player>(pos,rad) };
-    std::unique_ptr<Filter> filter{ std::make_unique<Filter>(player.get()) };
-
-    //std::unique_ptr<Stage> stage1{ std::make_unique<Stage>() };
-
-    //StageManager::LoadCSV(stage1.get(), "Resources/test.csv");
 
     // ゲームループ
     while (true) {
@@ -70,16 +58,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //---------  ここからプログラムを記述  ----------//
 
         // 更新処理
-        //stage1->Update();
-        player->Update();
-        stM->Update();
-        filter->Update();
+        piece.Update();
 
         // 描画処理
-        //stage1->Draw();
-        player->Draw();
-        filter->Draw();
-        stM->Draw();
+        piece.Draw();
 
         //---------  ここまでにプログラムを記述  ---------//
         // (ダブルバッファ)裏面

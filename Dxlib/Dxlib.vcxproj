@@ -127,29 +127,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BasicBlock.cpp" />
-    <ClCompile Include="Filter.cpp" />
     <ClCompile Include="IBlock.cpp" />
-    <ClCompile Include="IEntity.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Piece.cpp" />
     <ClCompile Include="StageManager.cpp" />
-    <ClCompile Include="StoneBlock.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Vector4.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BasicBlock.h" />
-    <ClInclude Include="Filter.h" />
     <ClInclude Include="IBlock.h" />
-    <ClInclude Include="IEntity.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="Piece.h" />
     <ClInclude Include="StageManager.h" />
-    <ClInclude Include="StoneBlock.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
