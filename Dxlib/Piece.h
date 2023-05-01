@@ -33,14 +33,13 @@ public:
     void RegisterBlock(IBlock* ptr);
     void RegisterTab(bool isTab, int indexBlockVector,const Dir& dir); // PieceEntranceBlockの追加関数
 
-    void SetMove(bool isMove) { isMove_ = isMove; } // pieceを動貸せるかどうか設定する関数
-
 private:
     void ChangeTabsDir(int changeValue); // tabs_回転時情報更新用関数
     void RotateBlocks(int rotateValue); // 全ブロック回転時更新関数
     void MoveBlocks(const Vector2& moveValue); // 全ブロック移動時更新関数
 
     void UpdateTabs(void); // 全ブロック移動時tabs_情報更新関数
+    void WriteBlockPos(void);
 
     // 変数
     std::vector<std::unique_ptr<IBlock>> blockVector_;
@@ -58,16 +57,20 @@ private:
     // はめ込まれているかどうか
     bool isInPlace_;
 
-    bool isMove_{};
+    bool isOperator_{};
 
 public:
     // setter・getter
     inline void SetPos(const Vector2& pos) { pos_ = pos; }
     inline void SetRadius(const Vector2& radius) { radiusBlockCount_ = radius; }
     inline void SetRotate(int rotate) { rotate = rotate; }
+    inline void SetOperator(bool isOperator) { isOperator_ = isOperator; }
 
     inline const Vector2& GetPos(void) { return pos_; }
     inline const Vector2& GetRadius(void) { return radiusBlockCount_; }
     inline int GetRotate(void) { return rotate_; }
+    inline const std::vector<std::unique_ptr<IBlock>>* GetBlocksPtr(void) { return &blockVector_; }
+    inline const std::vector<Tab_t>& GetTabs(void) { return tabs_; }
+    inline bool GetOperator(void) { return isOperator_; }
 };
 

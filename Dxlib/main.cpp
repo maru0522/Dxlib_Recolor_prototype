@@ -2,6 +2,7 @@
 #include <memory>
 #include "Input.h"
 #include "Piece.h"
+#include "Stage.h"
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "aaa: タイトル";
@@ -46,11 +47,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //piece.Register(new IBlock{ Vector2{5,5} });
     //piece.Register(new IBlock{ Vector2{50,50} });
 
-    Piece piece{ {300,300},{5,5} };
-    piece.RegisterTab(true, 4, Piece::Dir::TOP);
-    piece.SetMove(true);
-    Piece piece2{ {500,300},{3,3} };
-    piece2.RegisterTab(true, 10, Piece::Dir::BOTTOM);
+    Stage stage{};
+
+    Piece* piecePtr = new Piece{ {300,300},{5,5} };
+    piecePtr->RegisterTab(true, 4, Piece::Dir::TOP);
+    stage.AddPiece(piecePtr);
+
+    Piece* piece2Ptr = new Piece{ {500,300},{3,3} };
+    piece2Ptr->RegisterTab(true, 10, Piece::Dir::BOTTOM);
+    stage.AddPiece(piece2Ptr);
 
     // ゲームループで使う変数の宣言
 
@@ -64,12 +69,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //---------  ここからプログラムを記述  ----------//
 
         // 更新処理
-        piece.Update();
-        piece2.Update();
+        stage.Update();
+        //piece2.Update();
 
         // 描画処理
-        piece.Draw();
-        piece2.Draw();
+        stage.Draw();
+        //piece2.Draw();
 
         //---------  ここまでにプログラムを記述  ---------//
         // (ダブルバッファ)裏面

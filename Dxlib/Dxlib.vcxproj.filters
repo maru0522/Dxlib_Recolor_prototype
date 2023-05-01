@@ -60,6 +60,9 @@
     <ClCompile Include="PieceEntranceBlock.cpp">
       <Filter>app\block</Filter>
     </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>app</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IBlock.h">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="PieceEntranceBlock.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>app</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

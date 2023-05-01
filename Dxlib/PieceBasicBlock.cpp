@@ -1,7 +1,7 @@
 #include "PieceBasicBlock.h"
 
-PieceBasicBlock::PieceBasicBlock(const Vector2& pos, const Vector2& radius) :
-    IBlock(pos,radius)
+PieceBasicBlock::PieceBasicBlock(const Vector2& pos, const Vector2& offset, const Vector2& radius) :
+    IBlock(pos,offset,radius)
 {
     SetType(Type::PIECEBASIC);
 }

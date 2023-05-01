@@ -23,7 +23,6 @@ public:
 
     // ë„ì¸ÉIÉoÉç
     Vector2& operator=(const Vector2& v);
-    Vector2& operator=(const DirectX::XMFLOAT2& xmf2);
     Vector2& operator+=(const Vector2& v);
     Vector2& operator-=(const Vector2& v);
     Vector2& operator*=(float s);

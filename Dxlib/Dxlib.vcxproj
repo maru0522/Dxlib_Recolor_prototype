@@ -133,6 +133,7 @@
     <ClCompile Include="Piece.cpp" />
     <ClCompile Include="PieceBasicBlock.cpp" />
     <ClCompile Include="PieceEntranceBlock.cpp" />
+    <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Vector2.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Piece.h" />
     <ClInclude Include="PieceBasicBlock.h" />
     <ClInclude Include="PieceEntranceBlock.h" />
+    <ClInclude Include="Stage.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Vector2.h" />

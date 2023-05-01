@@ -12,27 +12,27 @@ Piece::Piece(const Vector2& pos, const Vector2& radiusBlockCount) :
     float offset{ IBlock::radiusBase_ };
 
     // è„ï”
-    // 0 ~ radiusBlockCount * 2 - 1Ç‹Ç≈
+    // 0 ~ radiusBlockCount * 2 Ç‹Ç≈
     for (size_t t = 0; t < radiusBlockCount.x * 2 + 1; t++)
     {
-        blockVector_.emplace_back(new PieceBasicBlock{ Vector2{(pos.x - radiusBlockCount.x * IBlock::radiusBase_ * 2) + t * IBlock::radiusBase_ * 2, pos.y - radiusBlockCount.y * IBlock::radiusBase_ * 2 - offset}, Vector2{IBlock::radiusBase_,1} });
+        blockVector_.emplace_back(new PieceBasicBlock{ Vector2{(pos.x - radiusBlockCount.x * IBlock::radiusBase_ * 2) + t * IBlock::radiusBase_ * 2, pos.y - radiusBlockCount.y * IBlock::radiusBase_ * 2 - offset}, Vector2{ -radiusBlockCount.x * IBlock::radiusBase_ * 2 + t * IBlock::radiusBase_ * 2, -radiusBlockCount.y * IBlock::radiusBase_ * 2 - offset}, Vector2{IBlock::radiusBase_,1} });
     }
     // íÍï”
-    // radiusBlockCount * 2 ~ radiusBlockCount * 4 - 1Ç‹Ç≈
+    // radiusBlockCount * 2 + 1 ~ radiusBlockCount * 4 Ç‹Ç≈
     for (size_t b = 0; b < radiusBlockCount.x * 2 + 1; b++)
     {
-        blockVector_.emplace_back(new PieceBasicBlock{ Vector2{(pos.x - radiusBlockCount.x * IBlock::radiusBase_ * 2) + b * IBlock::radiusBase_ * 2, pos.y + radiusBlockCount.y * IBlock::radiusBase_ * 2 + offset}, Vector2{IBlock::radiusBase_,1} });
+        blockVector_.emplace_back(new PieceBasicBlock{ Vector2{(pos.x - radiusBlockCount.x * IBlock::radiusBase_ * 2) + b * IBlock::radiusBase_ * 2, pos.y + radiusBlockCount.y * IBlock::radiusBase_ * 2 + offset}, Vector2{ -radiusBlockCount.x * IBlock::radiusBase_ * 2 + b * IBlock::radiusBase_ * 2, radiusBlockCount.y * IBlock::radiusBase_ * 2 + offset }, Vector2{IBlock::radiusBase_,1} });
     }
     // ç∂ï”
-    // radiusBlockCount * 4 ~ radiusBlockCount * 6 - 1Ç‹Ç≈
+    // radiusBlockCount * 4 + 1 ~ radiusBlockCount * 6 Ç‹Ç≈
     for (size_t l = 0; l < radiusBlockCount.x * 2 + 1; l++)
     {
-        blockVector_.emplace_back(new PieceBasicBlock{ Vector2{ pos.x - radiusBlockCount.x * IBlock::radiusBase_ * 2 - offset, (pos.y - radiusBlockCount.y * IBlock::radiusBase_ * 2) + l * IBlock::radiusBase_ * 2}, Vector2{1,IBlock::radiusBase_} });
+        blockVector_.emplace_back(new PieceBasicBlock{ Vector2{ pos.x - radiusBlockCount.x * IBlock::radiusBase_ * 2 - offset, (pos.y - radiusBlockCount.y * IBlock::radiusBase_ * 2) + l * IBlock::radiusBase_ * 2}, Vector2{ -radiusBlockCount.x * IBlock::radiusBase_ * 2 - offset, -radiusBlockCount.y * IBlock::radiusBase_ * 2 + l * IBlock::radiusBase_ * 2}, Vector2{1,IBlock::radiusBase_} });
     }
     // âEï”
     for (size_t r = 0; r < radiusBlockCount.x * 2 + 1; r++)
     {
-        blockVector_.emplace_back(new PieceBasicBlock{ Vector2{ pos.x + radiusBlockCount.x * IBlock::radiusBase_ * 2 + offset, (pos.y - radiusBlockCount.y * IBlock::radiusBase_ * 2) + r * IBlock::radiusBase_ * 2}, Vector2{1,IBlock::radiusBase_} });
+        blockVector_.emplace_back(new PieceBasicBlock{ Vector2{ pos.x + radiusBlockCount.x * IBlock::radiusBase_ * 2 + offset, (pos.y - radiusBlockCount.y * IBlock::radiusBase_ * 2) + r * IBlock::radiusBase_ * 2}, Vector2{ +radiusBlockCount.x * IBlock::radiusBase_ * 2 + offset,  -radiusBlockCount.y * IBlock::radiusBase_ * 2 + r * IBlock::radiusBase_ * 2},Vector2{1,IBlock::radiusBase_} });
     }
 }
 
@@ -42,26 +42,25 @@ void Piece::Update(void)
         block->Update();
     }
 
-    if (KEY::IsTrigger(KEY_INPUT_0)) {
-        rotate_ - 90 < 0 ? // âüÇµÇΩÇ±Ç∆Ç…ÇÊÇ¡Çƒ 0 >> -90Ç…Ç»ÇÈÇ©Ç«Ç§Ç©
-            rotate_ = 270 :
-            rotate_ -= 90;
-
-        ChangeTabsDir(-90);
-        RotateBlocks(-90);
-    }
-    if (KEY::IsTrigger(KEY_INPUT_1)) {
-        rotate_ + 90 > 270 ? // âüÇµÇΩÇ±Ç∆Ç…ÇÊÇ¡Çƒ 360 >> 450Ç…Ç»ÇÈÇ©Ç«Ç§Ç©
-            rotate_ = 90 :
-            rotate_ += 90;
-
-        ChangeTabsDir(90);
-        RotateBlocks(90);
-    }
-
-    // isMove << debug
-    if (isMove_)
+    if (isOperator_)
     {
+        if (KEY::IsTrigger(KEY_INPUT_J)) {
+            rotate_ - 90 < 0 ? // âüÇµÇΩÇ±Ç∆Ç…ÇÊÇ¡Çƒ 0 >> -90Ç…Ç»ÇÈÇ©Ç«Ç§Ç©
+                rotate_ = 270 :
+                rotate_ -= 90;
+
+            ChangeTabsDir(-90);
+            RotateBlocks(-90);
+        }
+        if (KEY::IsTrigger(KEY_INPUT_K)) {
+            rotate_ + 90 > 270 ? // âüÇµÇΩÇ±Ç∆Ç…ÇÊÇ¡Çƒ 360 >> 450Ç…Ç»ÇÈÇ©Ç«Ç§Ç©
+                rotate_ = 90 :
+                rotate_ += 90;
+
+            ChangeTabsDir(90);
+            RotateBlocks(90);
+        }
+
         if (KEY::IsDown(KEY_INPUT_W)) {
             pos_.y -= 5;
             MoveBlocks({ 0,-5 });
@@ -78,9 +77,10 @@ void Piece::Update(void)
             pos_.x += 5;
             MoveBlocks({ 5, 0 });
         }
-    }
 
-    UpdateTabs();
+        UpdateTabs();
+        WriteBlockPos();
+    }
 }
 
 void Piece::Draw(void)
@@ -110,7 +110,7 @@ void Piece::RegisterTab(bool isTab, int indexBlockVector, const Dir& dir)
 
     tabs_.emplace_back(tab);
 
-    blockVector_[indexBlockVector] = std::make_unique<PieceEntranceBlock>(blockVector_[indexBlockVector]->GetPos(), blockVector_[indexBlockVector]->GetRadius());
+    blockVector_[indexBlockVector] = std::make_unique<PieceEntranceBlock>(blockVector_[indexBlockVector]->GetPos(), blockVector_[indexBlockVector]->GetOffset(), blockVector_[indexBlockVector]->GetRadius());
 }
 
 void Piece::ChangeTabsDir(int changeValue)
@@ -174,6 +174,9 @@ void Piece::RotateBlocks(int rotateValue)
                     blockVector_[i]->SetRadius(Vector2{ 1, IBlock::radiusBase_ }) :
                     blockVector_[i]->SetRadius(Vector2{ IBlock::radiusBase_, 1 });
             }
+
+            // offset
+            blockVector_[i]->SetOffset(Vector2{ result - pos_ });
         }
     }
     else {
@@ -208,6 +211,9 @@ void Piece::RotateBlocks(int rotateValue)
                     blockVector_[i]->SetRadius(Vector2{ 1, IBlock::radiusBase_ }) :
                     blockVector_[i]->SetRadius(Vector2{ IBlock::radiusBase_, 1 });
             }
+
+            // offset
+            blockVector_[i]->SetOffset(Vector2{ result - pos_ });
         }
     }
 }
@@ -227,5 +233,15 @@ void Piece::UpdateTabs(void)
     for (size_t i = 0; i < tabs_.size(); i++)
     {
         tabs_[i].pos_ = blockVector_[tabs_[i].indexBlockVector_]->GetPos();
+    }
+}
+
+void Piece::WriteBlockPos(void)
+{
+    float offset{ IBlock::radiusBase_ };
+
+    for (size_t i = 0; i < blockVector_.size(); i++)
+    {
+        blockVector_[i]->SetPos(pos_ + blockVector_[i]->GetOffset());
     }
 }
