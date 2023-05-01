@@ -26,22 +26,21 @@ public:
 
     // 関数
     Piece(const Vector2& pos, const Vector2& radiusBlockCount);
-    
-    // Tabをすべて追加してから行うこと。
+
     void Update(void);
     void Draw(void);
 
     void RegisterBlock(IBlock* ptr);
-    void RegisterTab(bool isTab, int indexBlockVector,const Dir& dir);
+    void RegisterTab(bool isTab, int indexBlockVector,const Dir& dir); // PieceEntranceBlockの追加関数
 
-    void SetMove(bool isMove) { isMove_ = isMove; }
+    void SetMove(bool isMove) { isMove_ = isMove; } // pieceを動貸せるかどうか設定する関数
 
 private:
-    void ChangeTabsDir(int changeValue);
-    void RotateBlocks(int rotateValue);
-    void MoveBlocks(const Vector2& moveValue);
+    void ChangeTabsDir(int changeValue); // tabs_回転時情報更新用関数
+    void RotateBlocks(int rotateValue); // 全ブロック回転時更新関数
+    void MoveBlocks(const Vector2& moveValue); // 全ブロック移動時更新関数
 
-    void UpdateTabs(void);
+    void UpdateTabs(void); // 全ブロック移動時tabs_情報更新関数
 
     // 変数
     std::vector<std::unique_ptr<IBlock>> blockVector_;
@@ -55,6 +54,7 @@ private:
 
     std::vector<Tab_t> tabs_;
 
+    /// ↓↓↓debgu_info
     // はめ込まれているかどうか
     bool isInPlace_;
 
