@@ -35,9 +35,14 @@ public:
     void RegisterBlock(IBlock* ptr);
     void RegisterTab(bool isTab, int indexBlockVector,const Dir& dir);
 
+    void SetMove(bool isMove) { isMove_ = isMove; }
+
 private:
     void ChangeTabsDir(int changeValue);
     void RotateBlocks(int rotateValue);
+    void MoveBlocks(const Vector2& moveValue);
+
+    void UpdateTabs(void);
 
     // ïœêî
     std::vector<std::unique_ptr<IBlock>> blockVector_;
@@ -53,6 +58,8 @@ private:
 
     // ÇÕÇﬂçûÇ‹ÇÍÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©
     bool isInPlace_;
+
+    bool isMove_{};
 
 public:
     // setterÅEgetter

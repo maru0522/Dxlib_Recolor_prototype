@@ -92,6 +92,29 @@ void Piece::Update(void)
         ChangeTabsDir(90);
         RotateBlocks(90);
     }
+
+    // isMove << debug
+    if (isMove_)
+    {
+        if (KEY::IsDown(KEY_INPUT_W)) {
+            pos_.y -= 5;
+            MoveBlocks({ 0,-5 });
+        }
+        if (KEY::IsDown(KEY_INPUT_S)) {
+            pos_.y += 5;
+            MoveBlocks({ 0, 5 });
+        }
+        if (KEY::IsDown(KEY_INPUT_A)) {
+            pos_.x -= 5;
+            MoveBlocks({ -5, 0 });
+        }
+        if (KEY::IsDown(KEY_INPUT_D)) {
+            pos_.x += 5;
+            MoveBlocks({ 5, 0 });
+        }
+    }
+
+    UpdateTabs();
 }
 
 void Piece::Draw(void)
@@ -258,5 +281,23 @@ void Piece::RotateBlocks(int rotateValue)
                     blockVector_[i]->SetRadius(Vector2{ IBlock::radiusBase_, 1 });
             }
         }
+    }
+}
+
+void Piece::MoveBlocks(const Vector2& moveValue)
+{
+    for (size_t i = 0; i < blockVector_.size(); i++)
+    {
+        // À•W•ÏŠ·
+        Vector2 velocity{ blockVector_[i]->GetPos() + moveValue };
+        blockVector_[i]->SetPos(velocity);
+    }
+}
+
+void Piece::UpdateTabs(void)
+{
+    for (size_t i = 0; i < tabs_.size(); i++)
+    {
+        tabs_[i].pos_ = blockVector_[tabs_[i].indexBlockVector_]->GetPos();
     }
 }

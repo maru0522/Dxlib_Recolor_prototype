@@ -48,6 +48,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     Piece piece{ {300,300},{5,5} };
     piece.RegisterTab(true, 4, Piece::Dir::TOP);
+    piece.SetMove(true);
+    Piece piece2{ {500,300},{3,3} };
+    piece2.RegisterTab(true, 10, Piece::Dir::BOTTOM);
 
     // ゲームループで使う変数の宣言
 
@@ -62,9 +65,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         // 更新処理
         piece.Update();
+        piece2.Update();
 
         // 描画処理
         piece.Draw();
+        piece2.Draw();
 
         //---------  ここまでにプログラムを記述  ---------//
         // (ダブルバッファ)裏面
