@@ -1,7 +1,7 @@
 #include "IBlock.h"
 
-IBlock::IBlock(const Vector2& offset, const Vector2& radius) :
-    type_(Type::NONE), pos_(0.f, 0.f), offsetPiecePos_(offset), radius_(radius), rotate_(0)
+IBlock::IBlock(const Vector2& pos, const Vector2& radius) :
+    type_(Type::NONE), pos_(pos), radius_(radius), rotate_(0)
 {
 }
 

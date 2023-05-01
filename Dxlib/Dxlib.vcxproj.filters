@@ -54,6 +54,12 @@
     <ClCompile Include="StageManager.cpp">
       <Filter>app\block</Filter>
     </ClCompile>
+    <ClCompile Include="PieceBasicBlock.cpp">
+      <Filter>app\block</Filter>
+    </ClCompile>
+    <ClCompile Include="PieceEntranceBlock.cpp">
+      <Filter>app\block</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IBlock.h">
@@ -79,6 +85,12 @@
     </ClInclude>
     <ClInclude Include="StageManager.h">
       <Filter>app\block</Filter>
+    </ClInclude>
+    <ClInclude Include="PieceBasicBlock.h">
+      <Filter>app\block</Filter>
+    </ClInclude>
+    <ClInclude Include="PieceEntranceBlock.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

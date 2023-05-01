@@ -40,11 +40,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     SetDrawScreen(DX_SCREEN_BACK);
 
     // 画像などのリソースデータの変数宣言と読み込み
-    Piece piece{ Vector2{300,300}, Vector2{50,50} };
-    piece.Register(new IBlock{ Vector2{20,20} });
-    piece.Register(new IBlock{ Vector2{-10,-10} });
-    piece.Register(new IBlock{ Vector2{5,5} });
-    piece.Register(new IBlock{ Vector2{50,50} });
+    //Piece piece{ Vector2{300,300}, Vector2{50,50} };
+    //piece.RegisterBlock(new IBlock{ Vector2{20,20} });
+    //piece.Register(new IBlock{ Vector2{-10,-10} });
+    //piece.Register(new IBlock{ Vector2{5,5} });
+    //piece.Register(new IBlock{ Vector2{50,50} });
+
+    Piece piece{ {300,300},{5,5} };
+    piece.RegisterTab(true, 4, Piece::Dir::TOP);
 
     // ゲームループで使う変数の宣言
 
