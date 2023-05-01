@@ -28,7 +28,6 @@ public:
     Piece(const Vector2& pos, const Vector2& radiusBlockCount);
     
     // Tab‚ğ‚·‚×‚Ä’Ç‰Á‚µ‚Ä‚©‚çs‚¤‚±‚ÆB
-    void Initialize(void);
     void Update(void);
     void Draw(void);
 

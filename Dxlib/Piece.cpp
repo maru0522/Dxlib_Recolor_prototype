@@ -36,40 +36,6 @@ Piece::Piece(const Vector2& pos, const Vector2& radiusBlockCount) :
     }
 }
 
-void Piece::Initialize(void)
-{
-    int t{}, r{}, l{}, b{};
-
-    for (size_t i = 0; i < tabs_.size(); i++)
-    {
-        switch (tabs_[i].dir_)
-        {
-        case Piece::Dir::TOP:
-            t++;
-            break;
-        case Piece::Dir::RIGHT:
-            r++;
-            break;
-        case Piece::Dir::LEFT:
-            l++;
-            break;
-        case Piece::Dir::BOTTOM:
-            b++;
-            break;
-        default:
-            break;
-        }
-    }
-
-    // 上方向
-    //while (t > 0)
-    //{
-
-    //}
-
-    //RegisterBlock(new PieceBasicBlock{ radiusBlockCount_ * IBlock::radiusBase_ })
-}
-
 void Piece::Update(void)
 {
     for (auto& block : blockVector_) {
@@ -132,44 +98,6 @@ void Piece::Draw(void)
 
     // 中心点
     DrawCircle(static_cast<int>(pos_.x), static_cast<int>(pos_.y), 4, 0xff0000, false, 1);
-
-    // 各方向へのでっぱり表現
-    // 上下
-    //isTabTop_ ?
-    //    DrawBox(static_cast<int>(pos_.x - 15), static_cast<int>(pos_.y - radiusBlockCount_.y - 15), static_cast<int>(pos_.x + 15), static_cast<int>(pos_.y - radiusBlockCount_.y), 0xff0000, false) :
-    //    DrawBox(static_cast<int>(pos_.x - 15), static_cast<int>(pos_.y - radiusBlockCount_.y + 15), static_cast<int>(pos_.x + 15), static_cast<int>(pos_.y - radiusBlockCount_.y), 0xff0000, false);
-    //isTabBottom_ ?
-    //    DrawBox(static_cast<int>(pos_.x - 15), static_cast<int>(pos_.y + radiusBlockCount_.y + 15), static_cast<int>(pos_.x + 15), static_cast<int>(pos_.y + radiusBlockCount_.y), 0xff0000, false) :
-    //    DrawBox(static_cast<int>(pos_.x - 15), static_cast<int>(pos_.y + radiusBlockCount_.y - 15), static_cast<int>(pos_.x + 15), static_cast<int>(pos_.y + radiusBlockCount_.y), 0xff0000, false);
-    //// 左右
-    //isTabLeft_ ?
-    //    DrawBox(static_cast<int>(pos_.x - radiusBlockCount_.x - 15), static_cast<int>(pos_.y - 15), static_cast<int>(pos_.x - radiusBlockCount_.x), static_cast<int>(pos_.y + 15), 0xff0000, false) :
-    //    DrawBox(static_cast<int>(pos_.x - radiusBlockCount_.x + 15), static_cast<int>(pos_.y - 15), static_cast<int>(pos_.x - radiusBlockCount_.x), static_cast<int>(pos_.y + 15), 0xff0000, false);
-    //isTabRight_ ?
-    //    DrawBox(static_cast<int>(pos_.x + radiusBlockCount_.x + 15), static_cast<int>(pos_.y - 15), static_cast<int>(pos_.x + radiusBlockCount_.x), static_cast<int>(pos_.y + 15), 0xff0000, false) :
-    //    DrawBox(static_cast<int>(pos_.x + radiusBlockCount_.x - 15), static_cast<int>(pos_.y - 15), static_cast<int>(pos_.x + radiusBlockCount_.x), static_cast<int>(pos_.y + 15), 0xff0000, false);
-}
-
-void Piece::RegisterBlock(IBlock* ptr)
-{
-    //// offsetとブロックのradiusの取得
-    //Vector2  offset{ ptr->GetOffset() }, bRadius{ ptr->GetRadius() };
-
-    //// オフセットの値がpieceのradiusよりも大きい場合、ローカル座標がピースの枠をはみ出るため追加しない。
-    //if (std::fabs(offset.x + bRadius.x) > std::fabs(radiusBlockCount_.x * IBlock::radiusBase_)) {
-    //    delete ptr;
-    //    return;
-    //};
-    //if (std::fabs(offset.y + bRadius.y) > std::fabs(radiusBlockCount_.y * IBlock::radiusBase_)) {
-    //    delete ptr;
-    //    return;
-    //}
-
-    //// リストへの追加
-    //blockList_.emplace_back(ptr);
-
-    //// ブロックの座標をpieceの原点からのローカル座標をセット
-    //blockList_.back()->SetPos(pos_ + offset);
 }
 
 void Piece::RegisterTab(bool isTab, int indexBlockVector, const Dir& dir)
