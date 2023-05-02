@@ -1,7 +1,7 @@
 #include "PieceEntranceBlock.h"
 
 PieceEntranceBlock::PieceEntranceBlock(const Vector2& pos, const Vector2& offset, const Vector2& radius) :
-    IBlock(pos, offset, radius),isInPiece_(false)
+    IBlock(pos, offset, radius)
 {
     SetType(Type::PIECEENTRANCE);
 }

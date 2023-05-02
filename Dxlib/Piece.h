@@ -59,12 +59,15 @@ private:
 
     bool isOperator_{};
 
+    Piece* connectedNoOperatorPiecePtr_{ nullptr };
+
 public:
     // setterÅEgetter
     inline void SetPos(const Vector2& pos) { pos_ = pos; }
     inline void SetRadius(const Vector2& radius) { radiusBlockCount_ = radius; }
     inline void SetRotate(int rotate) { rotate = rotate; }
     inline void SetOperator(bool isOperator) { isOperator_ = isOperator; }
+    inline void SetConnectedPiecePtr(Piece* connectedPiecePtr) { connectedNoOperatorPiecePtr_ = connectedPiecePtr; }
 
     inline const Vector2& GetPos(void) { return pos_; }
     inline const Vector2& GetRadius(void) { return radiusBlockCount_; }

@@ -35,8 +35,14 @@ private:
 
     int rotate_;
 
+    bool isEntranceOpen_{};
+
 public:
     // setterÅEgetter
+    inline void SetEntranceOpen(bool inPiece) { isEntranceOpen_ = inPiece; }
+
+    inline bool GetEntranceOpen(void) { return isEntranceOpen_; }
+
     inline void SetType(const Type& type) { type_ = type; }
     inline void SetPos(const Vector2& pos) { pos_ = pos; }
     inline void SetOffset(const Vector2& offset) { offset_ = offset; }

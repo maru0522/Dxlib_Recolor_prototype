@@ -27,6 +27,9 @@ private:
     // ïœêî
     std::vector<std::unique_ptr<Piece>> pieceVector_;
     size_t indexOperatorPiece_{};
+    size_t indexNoOperatorPiece_{};
+    size_t indexInPieceMineTab_{};
+    size_t indexInPieceOtherTab_{};
 
     std::vector<Piece::Tab_t> operatorTabs_;
 

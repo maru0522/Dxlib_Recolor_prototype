@@ -25,12 +25,12 @@ Piece::Piece(const Vector2& pos, const Vector2& radiusBlockCount) :
     }
     // 左辺
     // radiusBlockCount * 4 + 1 ~ radiusBlockCount * 6 まで
-    for (size_t l = 0; l < radiusBlockCount.x * 2 + 1; l++)
+    for (size_t l = 0; l < radiusBlockCount.y * 2 + 1; l++)
     {
         blockVector_.emplace_back(new PieceBasicBlock{ Vector2{ pos.x - radiusBlockCount.x * IBlock::radiusBase_ * 2 - offset, (pos.y - radiusBlockCount.y * IBlock::radiusBase_ * 2) + l * IBlock::radiusBase_ * 2}, Vector2{ -radiusBlockCount.x * IBlock::radiusBase_ * 2 - offset, -radiusBlockCount.y * IBlock::radiusBase_ * 2 + l * IBlock::radiusBase_ * 2}, Vector2{1,IBlock::radiusBase_} });
     }
     // 右辺
-    for (size_t r = 0; r < radiusBlockCount.x * 2 + 1; r++)
+    for (size_t r = 0; r < radiusBlockCount.y * 2 + 1; r++)
     {
         blockVector_.emplace_back(new PieceBasicBlock{ Vector2{ pos.x + radiusBlockCount.x * IBlock::radiusBase_ * 2 + offset, (pos.y - radiusBlockCount.y * IBlock::radiusBase_ * 2) + r * IBlock::radiusBase_ * 2}, Vector2{ +radiusBlockCount.x * IBlock::radiusBase_ * 2 + offset,  -radiusBlockCount.y * IBlock::radiusBase_ * 2 + r * IBlock::radiusBase_ * 2},Vector2{1,IBlock::radiusBase_} });
     }
@@ -98,6 +98,12 @@ void Piece::Draw(void)
 
     // 中心点
     DrawCircle(static_cast<int>(pos_.x), static_cast<int>(pos_.y), 4, 0xff0000, false, 1);
+
+    if (isOperator_)
+        for (size_t i = 0; i < tabs_.size(); i++)
+        {
+            DrawFormatString(500 + i * 20, 0, 0xffffff, "tabs_dir[%d]", static_cast<int>(tabs_[i].dir_));
+        }
 }
 
 void Piece::RegisterTab(bool isTab, int indexBlockVector, const Dir& dir)
@@ -142,6 +148,8 @@ void Piece::ChangeTabsDir(int changeValue)
 void Piece::RotateBlocks(int rotateValue)
 {
     // rotateValueは 90/-90 のみの想定。また度数法とする。
+
+    Vector2 radiusCopy{ radiusBlockCount_ };
 
     if (rotateValue > 0) {
         for (size_t i = 0; i < blockVector_.size(); i++)
@@ -216,6 +224,8 @@ void Piece::RotateBlocks(int rotateValue)
             blockVector_[i]->SetOffset(Vector2{ result - pos_ });
         }
     }
+
+    radiusBlockCount_ = { radiusCopy.y,radiusCopy.x };
 }
 
 void Piece::MoveBlocks(const Vector2& moveValue)
@@ -233,6 +243,10 @@ void Piece::UpdateTabs(void)
     for (size_t i = 0; i < tabs_.size(); i++)
     {
         tabs_[i].pos_ = blockVector_[tabs_[i].indexBlockVector_]->GetPos();
+        if (blockVector_[tabs_[i].indexBlockVector_]->GetEntranceOpen() == true) {
+            blockVector_[tabs_[i].indexBlockVector_]->SetEntranceOpen(false);
+            //connectedNoOperatorPiecePtr_->GetBlocksPtr();
+        }
     }
 }
 

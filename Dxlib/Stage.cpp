@@ -69,32 +69,19 @@ void Stage::ExplorateNearTabs(Vector2& recordPos)
                     // 該当tabと他tabの方向（Piece::Dir）が適正であるか確認
                     if (static_cast<int>(operatorTabs_[i].dir_) + static_cast<int>(pieceVector_[j]->GetTabs()[k].dir_) == 3) {
                         isPossibleInPiece_ = true;
-                            recordPos = { noOpTabPos.x + pieceVector_[indexOperatorPiece_]->GetPos().x - operatorTabs_[i].pos_.x, noOpTabPos.y + pieceVector_[indexOperatorPiece_]->GetPos().y - operatorTabs_[i].pos_.y };
-                        // 該当tabの方向に基づいて、該当Pieceの中心座標を再計算
-                        //switch (operatorTabs_[i].dir_)
-                        //{
-                        //case Piece::Dir::TOP:
-                        //    recordPos = { noOpTabPos.x + pieceVector_[indexOperatorPiece_]->GetPos().x - operatorTabs_[i].pos_.x, noOpTabPos.y + pieceVector_[indexOperatorPiece_]->GetPos().y - operatorTabs_[i].pos_.y };
-                        //    break;
-                        //case Piece::Dir::RIGHT:
-                        //    recordPos = { noOpTabPos.x - pieceVector_[indexOperatorPiece_]->GetRadius().x * IBlock::radiusBase_ * 2 , noOpTabPos.y };
-                        //    break;
-                        //case Piece::Dir::LEFT:
-                        //    recordPos = { noOpTabPos.x + pieceVector_[indexOperatorPiece_]->GetRadius().x * IBlock::radiusBase_ * 2 , noOpTabPos.y };
-                        //    break;
-                        //case Piece::Dir::BOTTOM:
-                        //    recordPos = { noOpTabPos.x + pieceVector_[indexOperatorPiece_]->GetPos().x - operatorTabs_[i].pos_.x, noOpTabPos.y + pieceVector_[indexOperatorPiece_]->GetPos().y - operatorTabs_[i].pos_.y };
-                        //    break;
-                        //default:
-                        //    break;
-                        //}
+                        // 該当Pieceの中心座標を再計算
+                        recordPos = { noOpTabPos.x + pieceVector_[indexOperatorPiece_]->GetPos().x - operatorTabs_[i].pos_.x, noOpTabPos.y + pieceVector_[indexOperatorPiece_]->GetPos().y - operatorTabs_[i].pos_.y };
+                        // 該当tabのindexを保存
+                        indexInPieceMineTab_ = i;
+                        indexNoOperatorPiece_ = j;
+                        indexInPieceOtherTab_ = k;
                     }
                     else {
                         //isPossibleInPiece_ = false;
                     }
                 }
                 else {
-                    //isPossibleInPiece_ = false;
+                    isPossibleInPiece_ = false;
                 }
             }
         }
@@ -105,11 +92,21 @@ void Stage::ConfirmOperatorPiecePos(const Vector2& pos)
 {
     if (KEY::IsTrigger(KEY_INPUT_RETURN))
         if (isPossibleInPiece_) {
+            // 該当Pieceの中心点をExplorateNearTabs()で取得した値に変更。
             pieceVector_[indexOperatorPiece_]->SetPos(pos);
-            isPossibleInPiece_ = false;
+            // 該当Pieceの接続tabのisEntranceOpenをtrueに変更
+            pieceVector_[indexOperatorPiece_]->GetBlocksPtr()->at(operatorTabs_[indexInPieceMineTab_].indexBlockVector_)->SetEntranceOpen(true);
+            // 他Pieceの接続tabのisEntranceOpenをtrueに変更
+            size_t elem{ pieceVector_[indexNoOperatorPiece_]->GetTabs()[indexInPieceOtherTab_].indexBlockVector_ };
+            pieceVector_[indexNoOperatorPiece_]->GetBlocksPtr()->at(elem)->SetEntranceOpen(true);
+            // 該当Pieceの中心点等を変更したので、Update()を実行
             pieceVector_[indexOperatorPiece_]->Update();
+            // 該当Pieceの操作権を放棄
             pieceVector_[indexOperatorPiece_]->SetOperator(false);
+            // 該当Pieceのtabsコピーを破棄
             operatorTabs_.clear();
+            // 該当Pieceはめ込み可能か知らせるフラグをfalseに変更。
+            isPossibleInPiece_ = false;
         }
 }
 

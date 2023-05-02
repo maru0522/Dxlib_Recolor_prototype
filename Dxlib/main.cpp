@@ -57,6 +57,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     piece2Ptr->RegisterTab(true, 10, Piece::Dir::BOTTOM);
     stage.AddPiece(piece2Ptr);
 
+    Piece* piece3Ptr = new Piece{ {700,400},{2,6} };
+    piece3Ptr->RegisterTab(true, 15, Piece::Dir::LEFT);
+    stage.AddPiece(piece3Ptr);
+
     // ゲームループで使う変数の宣言
 
 

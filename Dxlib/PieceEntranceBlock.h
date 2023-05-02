@@ -10,15 +10,5 @@ public:
 
     void Update(void) override;
     void Draw(void) override;
-
-private:
-    // ïœêî
-    bool isInPiece_;
-
-public:
-    // setterÅEgetter
-    void SetInPiece(bool inPiece) { isInPiece_ = inPiece; }
-
-    bool GetInPiece(void) { return isInPiece_; }
 };
 
