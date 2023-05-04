@@ -35,13 +35,18 @@ private:
 
     int rotate_;
 
+    // 当たり判定の有無
     bool isEntranceOpen_{};
+    // このブロックを通過したかどうか
+    bool isPlayerEnterInside_{ false };
 
 public:
     // setter・getter
     inline void SetEntranceOpen(bool inPiece) { isEntranceOpen_ = inPiece; }
-
     inline bool GetEntranceOpen(void) { return isEntranceOpen_; }
+
+    inline void SetPlayerEnterInside(bool enterinside) { isPlayerEnterInside_ = enterinside; }
+    inline bool GetPlayerEnterInside(void) { return isPlayerEnterInside_; }
 
     inline void SetType(const Type& type) { type_ = type; }
     inline void SetPos(const Vector2& pos) { pos_ = pos; }

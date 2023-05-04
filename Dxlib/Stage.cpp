@@ -29,6 +29,17 @@ void Stage::AddPiece(Piece* ptr)
     pieceVector_.emplace_back(ptr);
 }
 
+void Stage::OperatePiece(int index)
+{
+    for (size_t i = 0; i < pieceVector_.size(); i++)
+    {
+        pieceVector_[i]->SetOperator(false);
+    }
+    pieceVector_[index]->SetOperator(true);
+
+    permissionTabsAccess_ = true;
+}
+
 void Stage::InternalUpdatePieces(int index)
 {
     pieceVector_[index]->Update();
@@ -58,6 +69,8 @@ void Stage::ExplorateNearTabs(Vector2& recordPos)
         // 他の全てのpieceを検索
         for (size_t j = 0; j < pieceVector_.size(); j++)
         {
+            if (j == indexOperatorPiece_) continue;
+
             // 他Pieceのtabをすべて検索
             for (size_t k = 0; k < pieceVector_[j]->GetTabs().size(); k++)
             {
@@ -68,7 +81,7 @@ void Stage::ExplorateNearTabs(Vector2& recordPos)
                     std::fabs(operatorTabs_[i].pos_.y - noOpTabPos.y) <= detectRadius_) {
                     // 該当tabと他tabの方向（Piece::Dir）が適正であるか確認
                     if (static_cast<int>(operatorTabs_[i].dir_) + static_cast<int>(pieceVector_[j]->GetTabs()[k].dir_) == 3) {
-                        isPossibleInPiece_ = true;
+                        //isPossibleInPiece_ = true;
                         // 該当Pieceの中心座標を再計算
                         recordPos = { noOpTabPos.x + pieceVector_[indexOperatorPiece_]->GetPos().x - operatorTabs_[i].pos_.x, noOpTabPos.y + pieceVector_[indexOperatorPiece_]->GetPos().y - operatorTabs_[i].pos_.y };
                         // 該当tabのindexを保存
@@ -76,13 +89,21 @@ void Stage::ExplorateNearTabs(Vector2& recordPos)
                         indexNoOperatorPiece_ = j;
                         indexInPieceOtherTab_ = k;
                     }
-                    else {
-                        //isPossibleInPiece_ = false;
-                    }
                 }
-                else {
-                    isPossibleInPiece_ = false;
-                }
+            }
+        }
+    }
+
+    // 操作pieceが単一であることを考慮して、操作pieceが存在しない場合、operatorTabsは中身がないので例外スローが発生する。
+    // しれを回避するためのbool
+    if (permissionTabsAccess_) {
+        if (indexOperatorPiece_ != indexNoOperatorPiece_) {
+            if (std::fabs(operatorTabs_[indexInPieceMineTab_].pos_.x - pieceVector_[indexNoOperatorPiece_]->GetTabs()[indexInPieceOtherTab_].pos_.x) <= detectRadius_ &&
+                std::fabs(operatorTabs_[indexInPieceMineTab_].pos_.y - pieceVector_[indexNoOperatorPiece_]->GetTabs()[indexInPieceOtherTab_].pos_.y) <= detectRadius_) {
+                isPossibleInPiece_ = true;
+            }
+            else {
+                isPossibleInPiece_ = false;
             }
         }
     }
@@ -90,8 +111,9 @@ void Stage::ExplorateNearTabs(Vector2& recordPos)
 
 void Stage::ConfirmOperatorPiecePos(const Vector2& pos)
 {
-    if (KEY::IsTrigger(KEY_INPUT_RETURN))
+    if (KEY::IsTrigger(KEY_INPUT_RETURN)) {
         if (isPossibleInPiece_) {
+            permissionTabsAccess_ = false;
             // 該当Pieceの中心点をExplorateNearTabs()で取得した値に変更。
             pieceVector_[indexOperatorPiece_]->SetPos(pos);
             // 該当Pieceの接続tabのisEntranceOpenをtrueに変更
@@ -108,21 +130,22 @@ void Stage::ConfirmOperatorPiecePos(const Vector2& pos)
             // 該当Pieceはめ込み可能か知らせるフラグをfalseに変更。
             isPossibleInPiece_ = false;
         }
+    }
 }
 
 void Stage::SelectPieceForOperatorDebug(void)
 {
     if (KEY::IsDown(KEY_INPUT_LSHIFT)) {
-        if (KEY::IsTrigger(KEY_INPUT_0)) pieceVector_[0]->SetOperator(true);
-        if (KEY::IsTrigger(KEY_INPUT_1)) pieceVector_[1]->SetOperator(true);
-        if (KEY::IsTrigger(KEY_INPUT_2)) pieceVector_[2]->SetOperator(true);
-        if (KEY::IsTrigger(KEY_INPUT_3)) pieceVector_[3]->SetOperator(true);
-        if (KEY::IsTrigger(KEY_INPUT_4)) pieceVector_[4]->SetOperator(true);
-        if (KEY::IsTrigger(KEY_INPUT_5)) pieceVector_[5]->SetOperator(true);
-        if (KEY::IsTrigger(KEY_INPUT_6)) pieceVector_[6]->SetOperator(true);
-        if (KEY::IsTrigger(KEY_INPUT_7)) pieceVector_[7]->SetOperator(true);
-        if (KEY::IsTrigger(KEY_INPUT_8)) pieceVector_[8]->SetOperator(true);
-        if (KEY::IsTrigger(KEY_INPUT_9)) pieceVector_[9]->SetOperator(true);
+        if (KEY::IsTrigger(KEY_INPUT_0)) OperatePiece(0);
+        if (KEY::IsTrigger(KEY_INPUT_1)) OperatePiece(1);
+        if (KEY::IsTrigger(KEY_INPUT_2)) OperatePiece(2);
+        if (KEY::IsTrigger(KEY_INPUT_3)) OperatePiece(3);
+        if (KEY::IsTrigger(KEY_INPUT_4)) OperatePiece(4);
+        if (KEY::IsTrigger(KEY_INPUT_5)) OperatePiece(5);
+        if (KEY::IsTrigger(KEY_INPUT_6)) OperatePiece(6);
+        if (KEY::IsTrigger(KEY_INPUT_7)) OperatePiece(7);
+        if (KEY::IsTrigger(KEY_INPUT_8)) OperatePiece(8);
+        if (KEY::IsTrigger(KEY_INPUT_9)) OperatePiece(9);
     }
     else {
         if (KEY::IsTrigger(KEY_INPUT_0)) pieceVector_[0]->SetOperator(false);
@@ -135,18 +158,5 @@ void Stage::SelectPieceForOperatorDebug(void)
         if (KEY::IsTrigger(KEY_INPUT_7)) pieceVector_[7]->SetOperator(false);
         if (KEY::IsTrigger(KEY_INPUT_8)) pieceVector_[8]->SetOperator(false);
         if (KEY::IsTrigger(KEY_INPUT_9)) pieceVector_[9]->SetOperator(false);
-    }
-
-    if (KEY::IsTrigger(KEY_INPUT_R)) {
-        pieceVector_[0]->SetOperator(false);
-        pieceVector_[1]->SetOperator(false);
-        pieceVector_[2]->SetOperator(false);
-        pieceVector_[3]->SetOperator(false);
-        pieceVector_[4]->SetOperator(false);
-        pieceVector_[5]->SetOperator(false);
-        pieceVector_[6]->SetOperator(false);
-        pieceVector_[7]->SetOperator(false);
-        pieceVector_[8]->SetOperator(false);
-        pieceVector_[9]->SetOperator(false);
     }
 }

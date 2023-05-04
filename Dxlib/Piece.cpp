@@ -6,8 +6,7 @@
 #include "Util.h"
 
 Piece::Piece(const Vector2& pos, const Vector2& radiusBlockCount) :
-    pos_(pos), radiusBlockCount_(radiusBlockCount), rotate_(0),
-    isInPlace_(false)
+    pos_(pos), radiusBlockCount_(radiusBlockCount), rotate_(0)
 {
     float offset{ IBlock::radiusBase_ };
 
@@ -44,39 +43,7 @@ void Piece::Update(void)
 
     if (isOperator_)
     {
-        if (KEY::IsTrigger(KEY_INPUT_J)) {
-            rotate_ - 90 < 0 ? // 押したことによって 0 >> -90になるかどうか
-                rotate_ = 270 :
-                rotate_ -= 90;
-
-            ChangeTabsDir(-90);
-            RotateBlocks(-90);
-        }
-        if (KEY::IsTrigger(KEY_INPUT_K)) {
-            rotate_ + 90 > 270 ? // 押したことによって 360 >> 450になるかどうか
-                rotate_ = 90 :
-                rotate_ += 90;
-
-            ChangeTabsDir(90);
-            RotateBlocks(90);
-        }
-
-        if (KEY::IsDown(KEY_INPUT_W)) {
-            pos_.y -= 5;
-            MoveBlocks({ 0,-5 });
-        }
-        if (KEY::IsDown(KEY_INPUT_S)) {
-            pos_.y += 5;
-            MoveBlocks({ 0, 5 });
-        }
-        if (KEY::IsDown(KEY_INPUT_A)) {
-            pos_.x -= 5;
-            MoveBlocks({ -5, 0 });
-        }
-        if (KEY::IsDown(KEY_INPUT_D)) {
-            pos_.x += 5;
-            MoveBlocks({ 5, 0 });
-        }
+        MovePiecePos();
 
         UpdateTabs();
         WriteBlockPos();
@@ -106,6 +73,15 @@ void Piece::Draw(void)
         }
 }
 
+void Piece::RegisterBlock(IBlock* ptr, const Vector2& offset, const Vector2& radius)
+{
+    ptr->SetPos(pos_ + offset);
+    ptr->SetOffset(offset);
+    ptr->SetRadius(radius);
+
+    blockVector_.emplace_back(ptr);
+}
+
 void Piece::RegisterTab(bool isTab, int indexBlockVector, const Dir& dir)
 {
     Tab_t tab;
@@ -117,6 +93,23 @@ void Piece::RegisterTab(bool isTab, int indexBlockVector, const Dir& dir)
     tabs_.emplace_back(tab);
 
     blockVector_[indexBlockVector] = std::make_unique<PieceEntranceBlock>(blockVector_[indexBlockVector]->GetPos(), blockVector_[indexBlockVector]->GetOffset(), blockVector_[indexBlockVector]->GetRadius());
+}
+
+void Piece::MovePiecePos(void)
+{
+    if (KEY::IsDown(KEY_INPUT_W)) {
+        // Pieceの中心点座標の移動
+        pos_.y -= 5;
+    }
+    if (KEY::IsDown(KEY_INPUT_S)) {
+        pos_.y += 5;
+    }
+    if (KEY::IsDown(KEY_INPUT_A)) {
+        pos_.x -= 5;
+    }
+    if (KEY::IsDown(KEY_INPUT_D)) {
+        pos_.x += 5;
+    }
 }
 
 void Piece::ChangeTabsDir(int changeValue)
@@ -173,15 +166,18 @@ void Piece::RotateBlocks(int rotateValue)
 
             blockVector_[i]->SetPos(result);
 
-            if (blockVector_[i]->GetType() == IBlock::Type::PIECEBASIC ||
-                blockVector_[i]->GetType() == IBlock::Type::PIECEENTRANCE) {
-                Vector2 bradius{ blockVector_[i]->GetRadius() };
+            // 半径変更
+            //if (blockVector_[i]->GetType() == IBlock::Type::PIECEBASIC ||
+            //    blockVector_[i]->GetType() == IBlock::Type::PIECEENTRANCE) {
+            //    Vector2 bradius{ blockVector_[i]->GetRadius() };
 
-                // 半径変更
-                bradius.x > bradius.y ?
-                    blockVector_[i]->SetRadius(Vector2{ 1, IBlock::radiusBase_ }) :
-                    blockVector_[i]->SetRadius(Vector2{ IBlock::radiusBase_, 1 });
-            }
+            //    bradius.x > bradius.y ?
+            //        blockVector_[i]->SetRadius(Vector2{ 1, IBlock::radiusBase_ }) :
+            //        blockVector_[i]->SetRadius(Vector2{ IBlock::radiusBase_, 1 });
+            //}
+            Vector2 bradius{ blockVector_[i]->GetRadius() };
+
+            blockVector_[i]->SetRadius({ bradius.y,bradius.x });
 
             // offset
             blockVector_[i]->SetOffset(Vector2{ result - pos_ });
@@ -210,15 +206,17 @@ void Piece::RotateBlocks(int rotateValue)
             blockVector_[i]->SetPos(result);
 
 
-            if (blockVector_[i]->GetType() == IBlock::Type::PIECEBASIC ||
-                blockVector_[i]->GetType() == IBlock::Type::PIECEENTRANCE) {
-                Vector2 bradius{ blockVector_[i]->GetRadius() };
+            //if (blockVector_[i]->GetType() == IBlock::Type::PIECEBASIC ||
+            //    blockVector_[i]->GetType() == IBlock::Type::PIECEENTRANCE) {
+            //    Vector2 bradius{ blockVector_[i]->GetRadius() };
 
-                // 半径変更
-                bradius.x > bradius.y ?
-                    blockVector_[i]->SetRadius(Vector2{ 1, IBlock::radiusBase_ }) :
-                    blockVector_[i]->SetRadius(Vector2{ IBlock::radiusBase_, 1 });
-            }
+            //    // 半径変更
+            //    bradius.x > bradius.y ?
+            //        blockVector_[i]->SetRadius(Vector2{ 1, IBlock::radiusBase_ }) :
+            //        blockVector_[i]->SetRadius(Vector2{ IBlock::radiusBase_, 1 });
+            //}
+            Vector2 bradius{ blockVector_[i]->GetRadius() };
+            blockVector_[i]->SetRadius({ bradius.y,bradius.x });
 
             // offset
             blockVector_[i]->SetOffset(Vector2{ result - pos_ });
@@ -228,25 +226,33 @@ void Piece::RotateBlocks(int rotateValue)
     radiusBlockCount_ = { radiusCopy.y,radiusCopy.x };
 }
 
-void Piece::MoveBlocks(const Vector2& moveValue)
-{
-    for (size_t i = 0; i < blockVector_.size(); i++)
-    {
-        // 座標変換
-        Vector2 velocity{ blockVector_[i]->GetPos() + moveValue };
-        blockVector_[i]->SetPos(velocity);
-    }
-}
-
 void Piece::UpdateTabs(void)
 {
+    if (KEY::IsTrigger(KEY_INPUT_J)) {
+        rotate_ - 90 < 0 ? // 押したことによって 0 >> -90になるかどうか
+            rotate_ = 270 :
+            rotate_ -= 90;
+
+        ChangeTabsDir(-90);
+        RotateBlocks(-90);
+    }
+    if (KEY::IsTrigger(KEY_INPUT_K)) {
+        rotate_ + 90 > 270 ? // 押したことによって 360 >> 450になるかどうか
+            rotate_ = 90 :
+            rotate_ += 90;
+
+        ChangeTabsDir(90);
+        RotateBlocks(90);
+    }
+
     for (size_t i = 0; i < tabs_.size(); i++)
     {
+        // tabsに記録しているPieceEntranceBlockの座標を更新
         tabs_[i].pos_ = blockVector_[tabs_[i].indexBlockVector_]->GetPos();
-        if (blockVector_[tabs_[i].indexBlockVector_]->GetEntranceOpen() == true) {
-            blockVector_[tabs_[i].indexBlockVector_]->SetEntranceOpen(false);
-            //connectedNoOperatorPiecePtr_->GetBlocksPtr();
-        }
+        // この関数が通っているということはisOperatorがtrue = Pieceは固定されていないためisConnectedは全てfalse
+        tabs_[i].isConnected_ = false;
+        // 同上の理由で固定されていないので、blockの判定透過はoff
+        blockVector_[tabs_[i].indexBlockVector_]->SetEntranceOpen(false);
     }
 }
 

@@ -16,12 +16,32 @@ public:
         BOTTOM,
     };
 
+    enum class State
+    {
+        IMMUTABLE,
+        MOVABLE,
+    };
+
+    // for文の肥大化抑制のため、PieceEntranceBlockの情報を持つ構造体（≒ヘルパー）
     struct Tab_t
     {
-        bool isTab_{};
+        // 凹凸どちらなのか
+        bool isTab_{ true }; // デフォルトは凸
+
+        // PieceEntranceBlockの中心点
         Vector2 pos_{};
+        
+        // 該当PieceEntranceBlockはPieceから見てどの面に存在しているのか
         Dir dir_{};
+
+        // 該当PieceEntranceBlockはBlockVectorの何番目なのか
         size_t indexBlockVector_{};
+
+        // 該当PieceEntranceBlockは接続してるかどうか
+        bool isConnected_{ false };
+
+        // 該当PieceEntranceBlockは接続する側なのかされる側なのか
+        bool isConnectExecuter_{ false };
     };
 
     // 関数
@@ -30,13 +50,15 @@ public:
     void Update(void);
     void Draw(void);
 
-    void RegisterBlock(IBlock* ptr);
-    void RegisterTab(bool isTab, int indexBlockVector,const Dir& dir); // PieceEntranceBlockの追加関数
+    // 新規生成するときの初期値はどうでもいい。offsetとradiusは正確な値が必要
+    void RegisterBlock(IBlock* ptr,const Vector2& offset, const Vector2& radius);
+    void RegisterTab(bool isTab, int indexBlockVector, const Dir& dir); // PieceEntranceBlockの追加関数
 
 private:
+    void MovePiecePos(void);
+
     void ChangeTabsDir(int changeValue); // tabs_回転時情報更新用関数
     void RotateBlocks(int rotateValue); // 全ブロック回転時更新関数
-    void MoveBlocks(const Vector2& moveValue); // 全ブロック移動時更新関数
 
     void UpdateTabs(void); // 全ブロック移動時tabs_情報更新関数
     void WriteBlockPos(void);
@@ -53,13 +75,13 @@ private:
 
     std::vector<Tab_t> tabs_;
 
+    State state_{ State::MOVABLE };
+    bool isResetToMove_{ false };
+
     /// ↓↓↓debgu_info
     // はめ込まれているかどうか
-    bool isInPlace_;
-
     bool isOperator_{};
 
-    Piece* connectedNoOperatorPiecePtr_{ nullptr };
 
 public:
     // setter・getter
@@ -67,7 +89,7 @@ public:
     inline void SetRadius(const Vector2& radius) { radiusBlockCount_ = radius; }
     inline void SetRotate(int rotate) { rotate = rotate; }
     inline void SetOperator(bool isOperator) { isOperator_ = isOperator; }
-    inline void SetConnectedPiecePtr(Piece* connectedPiecePtr) { connectedNoOperatorPiecePtr_ = connectedPiecePtr; }
+    inline void SetState(State state) { state_ = state; }
 
     inline const Vector2& GetPos(void) { return pos_; }
     inline const Vector2& GetRadius(void) { return radiusBlockCount_; }
@@ -75,5 +97,6 @@ public:
     inline const std::vector<std::unique_ptr<IBlock>>* GetBlocksPtr(void) { return &blockVector_; }
     inline const std::vector<Tab_t>& GetTabs(void) { return tabs_; }
     inline bool GetOperator(void) { return isOperator_; }
+    inline State GetState(void) { return state_; }
 };
 

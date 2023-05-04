@@ -127,12 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BasicBlock.cpp" />
     <ClCompile Include="IBlock.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Piece.cpp" />
     <ClCompile Include="PieceBasicBlock.cpp" />
     <ClCompile Include="PieceEntranceBlock.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="Util.cpp" />
@@ -141,11 +143,13 @@
     <ClCompile Include="Vector4.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BasicBlock.h" />
     <ClInclude Include="IBlock.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Piece.h" />
     <ClInclude Include="PieceBasicBlock.h" />
     <ClInclude Include="PieceEntranceBlock.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="Util.h" />

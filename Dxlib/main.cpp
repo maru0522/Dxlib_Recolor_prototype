@@ -3,6 +3,8 @@
 #include "Input.h"
 #include "Piece.h"
 #include "Stage.h"
+#include "BasicBlock.h"
+#include "Player.h"
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "aaa: タイトル";
@@ -59,7 +61,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     Piece* piece3Ptr = new Piece{ {700,400},{2,6} };
     piece3Ptr->RegisterTab(true, 15, Piece::Dir::LEFT);
+    piece3Ptr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ 20,-15 }, Vector2{ 2,60 });
     stage.AddPiece(piece3Ptr);
+
+    Player player{ &stage };
+    player.SetPos(Vector2{ 200,200 });
 
     // ゲームループで使う変数の宣言
 
@@ -74,10 +80,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         // 更新処理
         stage.Update();
+        player.Update();
         //piece2.Update();
 
         // 描画処理
         stage.Draw();
+        player.Draw();
         //piece2.Draw();
 
         //---------  ここまでにプログラムを記述  ---------//
