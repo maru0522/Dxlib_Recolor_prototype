@@ -56,15 +56,19 @@ void Piece::Draw(void)
         block->Draw();
     }
 
+    int color{ 0xff0000 };
+    if (isFixity_) color = 0x00ff00;
+    if (tabs_[0].isConnected_) color = 0xff00ff;
+
     // pieceの範囲表示
     DrawBox(
         static_cast<int>(pos_.x - radiusBlockCount_.x * IBlock::radiusBase_), static_cast<int>(pos_.y - radiusBlockCount_.y * IBlock::radiusBase_),
         static_cast<int>(pos_.x + radiusBlockCount_.x * IBlock::radiusBase_), static_cast<int>(pos_.y + radiusBlockCount_.y * IBlock::radiusBase_),
-        0xff0000, false
+        color, false
     );
 
     // 中心点
-    DrawCircle(static_cast<int>(pos_.x), static_cast<int>(pos_.y), 4, 0xff0000, false, 1);
+    DrawCircle(static_cast<int>(pos_.x), static_cast<int>(pos_.y), 4, color, false, 1);
 
     if (isOperator_)
         for (size_t i = 0; i < tabs_.size(); i++)
@@ -97,19 +101,19 @@ void Piece::RegisterTab(bool isTab, int indexBlockVector, const Dir& dir)
 
 void Piece::MovePiecePos(void)
 {
-    if (KEY::IsDown(KEY_INPUT_W)) {
-        // Pieceの中心点座標の移動
-        pos_.y -= 5;
-    }
-    if (KEY::IsDown(KEY_INPUT_S)) {
-        pos_.y += 5;
-    }
-    if (KEY::IsDown(KEY_INPUT_A)) {
-        pos_.x -= 5;
-    }
-    if (KEY::IsDown(KEY_INPUT_D)) {
-        pos_.x += 5;
-    }
+        if (KEY::IsDown(KEY_INPUT_T)) {
+            // Pieceの中心点座標の移動
+            pos_.y -= 5;
+        }
+        if (KEY::IsDown(KEY_INPUT_G)) {
+            pos_.y += 5;
+        }
+        if (KEY::IsDown(KEY_INPUT_F)) {
+            pos_.x -= 5;
+        }
+        if (KEY::IsDown(KEY_INPUT_H)) {
+            pos_.x += 5;
+        }
 }
 
 void Piece::ChangeTabsDir(int changeValue)

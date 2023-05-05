@@ -36,6 +36,7 @@ void Stage::OperatePiece(int index)
         pieceVector_[i]->SetOperator(false);
     }
     pieceVector_[index]->SetOperator(true);
+    pieceVector_[index]->SetFixity(false);
 
     permissionTabsAccess_ = true;
 }
@@ -112,15 +113,30 @@ void Stage::ExplorateNearTabs(Vector2& recordPos)
 void Stage::ConfirmOperatorPiecePos(const Vector2& pos)
 {
     if (KEY::IsTrigger(KEY_INPUT_RETURN)) {
-        if (isPossibleInPiece_) {
+        if (isPossibleInPiece_ && pieceVector_[indexNoOperatorPiece_]->GetTabs()[indexInPieceOtherTab_].isConnected_ == false) {
             permissionTabsAccess_ = false;
             // 該当Pieceの中心点をExplorateNearTabs()で取得した値に変更。
             pieceVector_[indexOperatorPiece_]->SetPos(pos);
             // 該当Pieceの接続tabのisEntranceOpenをtrueに変更
             pieceVector_[indexOperatorPiece_]->GetBlocksPtr()->at(operatorTabs_[indexInPieceMineTab_].indexBlockVector_)->SetEntranceOpen(true);
+            // 該当PieceのTabsから接続状態の有無を変更
+            pieceVector_[indexOperatorPiece_]->GetTabsRef()[indexInPieceMineTab_].isConnected_ = true;
+            // 該当PieceのTabsから接続者か被接続者かの有無を変更
+            pieceVector_[indexOperatorPiece_]->GetTabsRef()[indexInPieceMineTab_].isConnectExecuter_ = true;
+            // 該当Pieceをはめ込んだので固定
+            pieceVector_[indexOperatorPiece_]->SetFixity(true);
+
             // 他Pieceの接続tabのisEntranceOpenをtrueに変更
             size_t elem{ pieceVector_[indexNoOperatorPiece_]->GetTabs()[indexInPieceOtherTab_].indexBlockVector_ };
             pieceVector_[indexNoOperatorPiece_]->GetBlocksPtr()->at(elem)->SetEntranceOpen(true);
+            // 他PieceのTabsから接続状態の有無を変更
+            pieceVector_[indexNoOperatorPiece_]->GetTabsRef()[indexInPieceOtherTab_].isConnected_ = true;
+            // 他PieceのTabsから接続者か被接続者かの有無を変更
+            pieceVector_[indexNoOperatorPiece_]->GetTabsRef()[indexInPieceOtherTab_].isConnectExecuter_ = false;
+
+
+            // 他Pieceもはめ込んだことにする
+            pieceVector_[indexNoOperatorPiece_]->SetFixity(true);
             // 該当Pieceの中心点等を変更したので、Update()を実行
             pieceVector_[indexOperatorPiece_]->Update();
             // 該当Pieceの操作権を放棄

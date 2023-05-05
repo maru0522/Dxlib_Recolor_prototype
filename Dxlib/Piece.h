@@ -75,13 +75,13 @@ private:
 
     std::vector<Tab_t> tabs_;
 
+    // “®‚©‚¹‚é‚©‚Ç‚¤‚©
     State state_{ State::MOVABLE };
-    bool isResetToMove_{ false };
+    // ‚Í‚ß‚½‚©‚Ç‚¤‚© = ŒÅ’è
+    bool isFixity_{ false };
 
-    /// «««debgu_info
-    // ‚Í‚ß‚Ü‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
+    // ‘€ì‚µ‚Ä‚¢‚é‚©
     bool isOperator_{};
-
 
 public:
     // setterEgetter
@@ -90,13 +90,16 @@ public:
     inline void SetRotate(int rotate) { rotate = rotate; }
     inline void SetOperator(bool isOperator) { isOperator_ = isOperator; }
     inline void SetState(State state) { state_ = state; }
+    inline void SetFixity(bool fixity) { isFixity_ = fixity; }
 
     inline const Vector2& GetPos(void) { return pos_; }
     inline const Vector2& GetRadius(void) { return radiusBlockCount_; }
     inline int GetRotate(void) { return rotate_; }
     inline const std::vector<std::unique_ptr<IBlock>>* GetBlocksPtr(void) { return &blockVector_; }
     inline const std::vector<Tab_t>& GetTabs(void) { return tabs_; }
+    inline std::vector<Tab_t>& GetTabsRef(void) { return tabs_; }
     inline bool GetOperator(void) { return isOperator_; }
     inline State GetState(void) { return state_; }
+    inline bool GetFixity(void) { return isFixity_; }
 };
 
