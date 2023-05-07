@@ -57,8 +57,9 @@ void Piece::Draw(void)
     }
 
     int color{ 0xff0000 };
-    if (isFixity_) color = 0x00ff00;
-    if (tabs_[0].isConnected_) color = 0xff00ff;
+    if (isFixity_) color = 0x00ff00; // —Î
+    if (tabs_[0].isConnected_) color = 0xff00ff; // ‡
+    if (state_ == State::IMMUTABLE) color = 0x00ffff; // …
 
     // piece‚Ì”ÍˆÍ•\¦
     DrawBox(

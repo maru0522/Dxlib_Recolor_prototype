@@ -4,19 +4,21 @@
 #include <DxLib.h>
 
 Player::Player(Stage* stagePtr) :
-    stagePtr_(stagePtr),radius_(defaultWidth_,defaultHeight_)
+    stagePtr_(stagePtr), radius_(defaultWidth_, defaultHeight_)
 {
 }
 
 void Player::Update(void)
 {
     Move();
+
+    if (pos_.y > 600)pos_.y = 0;
 }
 
 void Player::Draw(void)
 {
     DrawBox(GetPos().x - GetRadius().x, GetPos().y - GetRadius().y, GetPos().x + GetRadius().x, GetPos().y + GetRadius().y, 0xffffff, true);
-    DrawCircle(GetPos().x, GetPos().y, 10, 0xff0000, 1, 1);
+    DrawCircle(GetPos().x, GetPos().y, 5, 0xff0000, 1, 1);
 }
 
 void Player::Move(void)
@@ -27,6 +29,7 @@ void Player::Move(void)
     // xé≤
     // ç∂âEì¸óÕÇÃîªíËÇ∆à⁄ìÆó â¡éZ
     vel.x += (KEY::IsDown(KEY_INPUT_D) - KEY::IsDown(KEY_INPUT_A)) * moveSpeed_;
+    vel.y += (KEY::IsDown(KEY_INPUT_S) - KEY::IsDown(KEY_INPUT_W)) * moveSpeed_;
 
     // yé≤
     // ÉWÉÉÉìÉvèàóù
@@ -70,12 +73,24 @@ void Player::Jump(Vector2& vel)
 void Player::Collision(Vector2& vel)
 {
     for (size_t i = 0; i < stagePtr_->GetPieceVectorPtr()->size(); i++) {
+        if (stagePtr_->GetPieceVectorPtr()->at(i)->GetOperator()) continue;
+
         for (size_t j = 0; j < stagePtr_->GetPieceVectorPtr()->at(i)->GetBlocksPtr()->size(); j++)
         {
             IBlock* tempBlockPtr{ stagePtr_->GetPieceVectorPtr()->at(i)->GetBlocksPtr()->at(j).get() };
 
             if (std::abs(tempBlockPtr->GetPos().x - GetPos().x) > IBlock::radiusBase_ * 6) continue;
             if (std::abs(tempBlockPtr->GetPos().y - GetPos().y) > IBlock::radiusBase_ * 6) continue;
+
+            if (tempBlockPtr->GetType() == IBlock::Type::PIECEENTRANCE) {
+                if (CheckHit(GetPos().x, GetRadius().x, 0, tempBlockPtr->GetPos().x, 8) &&
+                    CheckHit(GetPos().y, GetRadius().y, 0, tempBlockPtr->GetPos().y, 8)) {
+                    stagePtr_->GetPieceVectorPtr()->at(i)->SetState(Piece::State::IMMUTABLE);
+                }
+
+                if (tempBlockPtr->GetEntranceOpen()) 
+                    continue;
+            }
 
             float surplus{};
 

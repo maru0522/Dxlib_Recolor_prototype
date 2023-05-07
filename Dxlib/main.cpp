@@ -53,20 +53,21 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     Piece* piecePtr = new Piece{ {300,300},{5,5} };
     piecePtr->RegisterTab(true, 4, Piece::Dir::TOP);
-    piecePtr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -20,-15 }, Vector2{ 60,2 });
+    piecePtr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -12,-110 }, Vector2{ 2,60 });
     stage.AddPiece(piecePtr);
 
     Piece* piece2Ptr = new Piece{ {500,300},{3,3} };
     piece2Ptr->RegisterTab(true, 10, Piece::Dir::BOTTOM);
     stage.AddPiece(piece2Ptr);
 
-    Piece* piece3Ptr = new Piece{ {700,400},{2,6} };
+    Piece* piece3Ptr = new Piece{ {780,400},{2,6} };
     piece3Ptr->RegisterTab(true, 15, Piece::Dir::LEFT);
     piece3Ptr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ 20,-15 }, Vector2{ 2,60 });
     stage.AddPiece(piece3Ptr);
 
     Player player{ &stage };
     player.SetPos(Vector2{ 200,200 });
+    player.SetIndexPiece(0);
 
     // ゲームループで使う変数の宣言
 
