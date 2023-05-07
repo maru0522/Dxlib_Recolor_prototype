@@ -38,6 +38,8 @@ private:
     bool permissionTabsAccess_{ false };
     bool isPossibleInPiece_{ false };
 
+    bool isReset_{ false };
+
 public:
     //setterÅEgetter
     std::vector<std::unique_ptr<Piece>>* GetPieceVectorPtr(void) { return &pieceVector_; }

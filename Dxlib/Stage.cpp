@@ -22,6 +22,7 @@ void Stage::Draw(void)
     }
 
     DrawFormatString(0, 0, 0xffffff, isPossibleInPiece_ ? "ready to InPiece" : "no ready to InPiece");
+    DrawFormatString(0, 20, 0xff0000, isReset_ ? "execute reset" : "do not permission to reset");
 }
 
 void Stage::AddPiece(Piece* ptr)
@@ -31,6 +32,11 @@ void Stage::AddPiece(Piece* ptr)
 
 void Stage::OperatePiece(int index)
 {
+    if (pieceVector_[index]->GetState() == Piece::State::IMMUTABLE) {
+        isReset_ = true;
+        return;
+    }
+
     for (size_t i = 0; i < pieceVector_.size(); i++)
     {
         pieceVector_[i]->SetOperator(false);
