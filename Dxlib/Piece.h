@@ -52,7 +52,7 @@ public:
 
     // 新規生成するときの初期値はどうでもいい。offsetとradiusは正確な値が必要
     void RegisterBlock(IBlock* ptr,const Vector2& offset, const Vector2& radius);
-    void RegisterTab(bool isTab, int indexBlockVector, const Dir& dir); // PieceEntranceBlockの追加関数
+    void RegisterTab(bool isTab, int indexBlockVector); // PieceEntranceBlockの追加関数
 
 private:
     void MovePiecePos(void);

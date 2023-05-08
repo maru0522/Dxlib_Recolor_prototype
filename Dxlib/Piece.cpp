@@ -87,13 +87,16 @@ void Piece::RegisterBlock(IBlock* ptr, const Vector2& offset, const Vector2& rad
     blockVector_.emplace_back(ptr);
 }
 
-void Piece::RegisterTab(bool isTab, int indexBlockVector, const Dir& dir)
+void Piece::RegisterTab(bool isTab, int indexBlockVector)
 {
     Tab_t tab;
     tab.isTab_ = isTab;
     tab.pos_ = blockVector_[indexBlockVector]->GetPos();
-    tab.dir_ = dir;
     tab.indexBlockVector_ = indexBlockVector;
+    if (0<= indexBlockVector && indexBlockVector <= (int)radiusBlockCount_.x * 2) tab.dir_ = Dir::TOP;
+    else if ((int)radiusBlockCount_.x * 2 + 1 <= indexBlockVector && indexBlockVector <= (int)radiusBlockCount_.x * 4 + 1) tab.dir_ = Dir::BOTTOM;
+    else if ((int)radiusBlockCount_.x * 4 + 2 <= indexBlockVector && indexBlockVector <= (int)radiusBlockCount_.x * 6 + 2) tab.dir_ = Dir::LEFT;
+    else if ((int)radiusBlockCount_.x * 6 + 3 <= indexBlockVector && indexBlockVector <= (int)radiusBlockCount_.x * 8 + 3) tab.dir_ = Dir::RIGHT;
 
     tabs_.emplace_back(tab);
 

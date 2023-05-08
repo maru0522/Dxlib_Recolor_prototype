@@ -21,5 +21,5 @@ void PieceEntranceBlock::Draw(void)
         0x0000ff, true
     );
 
-    //DrawCircle(static_cast<int>(GetPos().x), static_cast<int>(GetPos().y), 4, 0xff00ff, true, 1);
+    DrawCircle(static_cast<int>(GetPos().x), static_cast<int>(GetPos().y), 4, 0xff00ff, true, 1);
 }
