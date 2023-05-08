@@ -18,8 +18,9 @@ public:
 
     enum class State
     {
-        IMMUTABLE,
-        MOVABLE,
+        ROOT, // 初期状態で固定
+        IMMUTABLE, // tab相互接続後プレイヤーの通過により変更不可状態
+        MOVABLE, // 変更可能状態
     };
 
     // for文の肥大化抑制のため、PieceEntranceBlockの情報を持つ構造体（≒ヘルパー）

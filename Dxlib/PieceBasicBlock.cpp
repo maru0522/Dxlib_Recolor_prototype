@@ -21,5 +21,5 @@ void PieceBasicBlock::Draw(void)
         0x00ff00, true
     );
 
-    DrawCircle(static_cast<int>(GetPos().x), static_cast<int>(GetPos().y), 4, 0xff0000, true, 1);
+    //DrawCircle(static_cast<int>(GetPos().x), static_cast<int>(GetPos().y), 4, 0xff0000, true, 1);
 }

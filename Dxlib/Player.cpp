@@ -12,7 +12,7 @@ void Player::Update(void)
 {
     Move();
 
-    if (pos_.y > 600)pos_.y = 0;
+    //if (pos_.y > 600)pos_.y = 0;
 }
 
 void Player::Draw(void)

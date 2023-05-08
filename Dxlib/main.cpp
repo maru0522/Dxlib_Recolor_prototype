@@ -58,6 +58,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     piecePtr->RegisterTab(true, 34);
     piecePtr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -12,20 }, Vector2{ 60,2 });
     piecePtr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -12,-70 }, Vector2{ 60,2 });
+    piecePtr->SetFixity(true);
+    piecePtr->SetState(Piece::State::ROOT);
     stage.AddPiece(piecePtr);
 
     Piece* piece2Ptr = new Piece{ {500,300},{3,3} };

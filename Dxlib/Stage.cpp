@@ -32,6 +32,10 @@ void Stage::AddPiece(Piece* ptr)
 
 void Stage::OperatePiece(int index)
 {
+    if (pieceVector_[index]->GetState() == Piece::State::ROOT) {
+        return;
+    }
+
     if (pieceVector_[index]->GetState() == Piece::State::IMMUTABLE) {
         isReset_ = true;
         return;
