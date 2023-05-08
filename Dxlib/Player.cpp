@@ -29,7 +29,7 @@ void Player::Move(void)
     // x²
     // ¶‰E“ü—Í‚Ì”»’è‚ÆˆÚ“®—Ê‰ÁZ
     vel.x += (KEY::IsDown(KEY_INPUT_D) - KEY::IsDown(KEY_INPUT_A)) * moveSpeed_;
-    vel.y += (KEY::IsDown(KEY_INPUT_S) - KEY::IsDown(KEY_INPUT_W)) * moveSpeed_;
+    //vel.y += (KEY::IsDown(KEY_INPUT_S) - KEY::IsDown(KEY_INPUT_W)) * moveSpeed_;
 
     // y²
     // ƒWƒƒƒ“ƒvˆ—
