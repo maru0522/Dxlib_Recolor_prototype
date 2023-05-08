@@ -82,7 +82,7 @@ void Player::Collision(Vector2& vel)
             if (std::abs(tempBlockPtr->GetPos().x - GetPos().x) > IBlock::radiusBase_ * 6) continue;
             if (std::abs(tempBlockPtr->GetPos().y - GetPos().y) > IBlock::radiusBase_ * 6) continue;
 
-            if (tempBlockPtr->GetType() == IBlock::Type::PIECEENTRANCE) {
+            if (tempBlockPtr->GetType() == IBlock::Type::PIECEENTRANCE && stagePtr_->GetPieceVectorPtr()->at(i)->GetFixity()) {
                 if (CheckHit(GetPos().x, GetRadius().x, 0, tempBlockPtr->GetPos().x, 8) &&
                     CheckHit(GetPos().y, GetRadius().y, 0, tempBlockPtr->GetPos().y, 8)) {
                     stagePtr_->GetPieceVectorPtr()->at(i)->SetState(Piece::State::IMMUTABLE);

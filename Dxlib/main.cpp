@@ -53,15 +53,25 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     Piece* piecePtr = new Piece{ {300,300},{5,5} };
     piecePtr->RegisterTab(true, 4, Piece::Dir::TOP);
-    piecePtr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -12,-110 }, Vector2{ 2,60 });
+    piecePtr->RegisterTab(true, 18, Piece::Dir::BOTTOM);
+    piecePtr->RegisterTab(true, 27, Piece::Dir::LEFT);
+    piecePtr->RegisterTab(true, 34, Piece::Dir::RIGHT);
+    piecePtr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -12,20 }, Vector2{ 60,2 });
+    piecePtr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -12,-70 }, Vector2{ 60,2 });
     stage.AddPiece(piecePtr);
 
     Piece* piece2Ptr = new Piece{ {500,300},{3,3} };
-    piece2Ptr->RegisterTab(true, 10, Piece::Dir::BOTTOM);
+    piece2Ptr->RegisterTab(false, 4, Piece::Dir::TOP);
+    piece2Ptr->RegisterTab(false, 10, Piece::Dir::BOTTOM);
+    piece2Ptr->RegisterTab(false, 15, Piece::Dir::LEFT);
+    piece2Ptr->RegisterTab(false, 26, Piece::Dir::RIGHT);
     stage.AddPiece(piece2Ptr);
 
     Piece* piece3Ptr = new Piece{ {780,400},{2,6} };
+    piece3Ptr->RegisterTab(false, 0, Piece::Dir::TOP);
+    piece3Ptr->RegisterTab(false, 9, Piece::Dir::BOTTOM);
     piece3Ptr->RegisterTab(true, 15, Piece::Dir::LEFT);
+    piece3Ptr->RegisterTab(true, 26, Piece::Dir::RIGHT);
     piece3Ptr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ 20,-15 }, Vector2{ 2,60 });
     stage.AddPiece(piece3Ptr);
 
