@@ -51,9 +51,6 @@
     <ClCompile Include="Piece.cpp">
       <Filter>app\block</Filter>
     </ClCompile>
-    <ClCompile Include="StageManager.cpp">
-      <Filter>app\block</Filter>
-    </ClCompile>
     <ClCompile Include="PieceBasicBlock.cpp">
       <Filter>app\block</Filter>
     </ClCompile>
@@ -90,9 +87,6 @@
       <Filter>ヘッダー ファイル\other</Filter>
     </ClInclude>
     <ClInclude Include="Piece.h">
-      <Filter>app\block</Filter>
-    </ClInclude>
-    <ClInclude Include="StageManager.h">
       <Filter>app\block</Filter>
     </ClInclude>
     <ClInclude Include="PieceBasicBlock.h">
