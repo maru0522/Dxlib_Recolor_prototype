@@ -74,6 +74,7 @@ void Player::Collision(Vector2& vel)
 {
     for (size_t i = 0; i < stagePtr_->GetPieceVectorPtr()->size(); i++) {
         if (stagePtr_->GetPieceVectorPtr()->at(i)->GetOperator()) continue;
+        if (stagePtr_->GetPieceVectorPtr()->at(i)->GetFixity() == false) continue;
 
         for (size_t j = 0; j < stagePtr_->GetPieceVectorPtr()->at(i)->GetBlocksPtr()->size(); j++)
         {
