@@ -13,7 +13,7 @@ public:
         PIECEENTRANCE,
         BASIC,
         PLATFORM,
-        OBJECT,
+        SPRING,
     };
 
     static constexpr float radiusBase_{ 16.f };

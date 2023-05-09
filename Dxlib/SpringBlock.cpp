@@ -3,7 +3,7 @@
 SpringBlock::SpringBlock(const Vector2& pos, const Vector2& offset, const Vector2& radius) :
     IBlock(pos, offset, radius)
 {
-    SetType(Type::OBJECT);
+    SetType(Type::SPRING);
 }
 
 void SpringBlock::Update(void)

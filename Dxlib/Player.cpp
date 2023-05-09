@@ -87,7 +87,7 @@ void Player::Collision(Vector2& vel)
             if (std::abs(tempBlockPtr->GetPos().x - GetPos().x) > IBlock::radiusBase_ * 6) continue;
             if (std::abs(tempBlockPtr->GetPos().y - GetPos().y) > IBlock::radiusBase_ * 6) continue;
 
-            // ブロックの種類が PIECEENTRANCEBLOCK である場合 && 該当Pieceが固定されてる時
+            // ブロックの種類が PIECEENTRANCEBLOCK である場合
             if (tempBlockPtr->GetType() == IBlock::Type::PIECEENTRANCE) {
                 // プレイヤーがブロックの中央に触れるか
                 if (CheckHit(GetPos().x, GetRadius().x, 0, tempBlockPtr->GetPos().x, 8) &&
@@ -97,6 +97,10 @@ void Player::Collision(Vector2& vel)
 
                 if (tempBlockPtr->GetEntranceOpen()) 
                     continue;
+            }
+
+            if (tempBlockPtr->GetType() == IBlock::Type::SPRING) {
+
             }
 
             // ブロックにめり込んだピクセル値
