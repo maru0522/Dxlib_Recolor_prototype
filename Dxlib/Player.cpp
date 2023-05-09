@@ -85,7 +85,7 @@ void Player::Collision(Vector2& vel)
             if (tempBlockPtr->GetType() == IBlock::Type::PIECEENTRANCE && stagePtr_->GetPieceVectorPtr()->at(i)->GetFixity()) {
                 if (CheckHit(GetPos().x, GetRadius().x, 0, tempBlockPtr->GetPos().x, 8) &&
                     CheckHit(GetPos().y, GetRadius().y, 0, tempBlockPtr->GetPos().y, 8)) {
-                    stagePtr_->GetPieceVectorPtr()->at(i)->SetState(Piece::State::IMMUTABLE);
+                    if(stagePtr_->GetPieceVectorPtr()->at(i)->GetState() == Piece::State::MOVABLE) stagePtr_->GetPieceVectorPtr()->at(i)->SetState(Piece::State::IMMUTABLE);
                 }
 
                 if (tempBlockPtr->GetEntranceOpen()) 

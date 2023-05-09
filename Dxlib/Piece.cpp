@@ -95,8 +95,8 @@ void Piece::RegisterTab(bool isTab, int indexBlockVector)
     tab.indexBlockVector_ = indexBlockVector;
     if (0<= indexBlockVector && indexBlockVector <= (int)radiusBlockCount_.x * 2) tab.dir_ = Dir::TOP;
     else if ((int)radiusBlockCount_.x * 2 + 1 <= indexBlockVector && indexBlockVector <= (int)radiusBlockCount_.x * 4 + 1) tab.dir_ = Dir::BOTTOM;
-    else if ((int)radiusBlockCount_.x * 4 + 2 <= indexBlockVector && indexBlockVector <= (int)radiusBlockCount_.x * 6 + 2) tab.dir_ = Dir::LEFT;
-    else if ((int)radiusBlockCount_.x * 6 + 3 <= indexBlockVector && indexBlockVector <= (int)radiusBlockCount_.x * 8 + 3) tab.dir_ = Dir::RIGHT;
+    else if ((int)radiusBlockCount_.x * 4 + 2 <= indexBlockVector && indexBlockVector <= (int)radiusBlockCount_.x * 4 + 2 + radiusBlockCount_.y * 2) tab.dir_ = Dir::LEFT;
+    else if ((int)radiusBlockCount_.x * 4 + 3 + radiusBlockCount_.y * 2 <= indexBlockVector && indexBlockVector <= (int)radiusBlockCount_.x * 4 + 3 + radiusBlockCount_.y * 4) tab.dir_ = Dir::RIGHT;
 
     tabs_.emplace_back(tab);
 

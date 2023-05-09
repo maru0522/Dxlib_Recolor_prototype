@@ -55,13 +55,14 @@ public:
     void RegisterBlock(IBlock* ptr,const Vector2& offset, const Vector2& radius);
     void RegisterTab(bool isTab, int indexBlockVector); // PieceEntranceBlockの追加関数
 
+    // 諸事情により特別に公開。使うな。
+    void UpdateTabs(void); // 全ブロック移動時tabs_情報更新関数
 private:
     void MovePiecePos(void);
 
     void ChangeTabsDir(int changeValue); // tabs_回転時情報更新用関数
     void RotateBlocks(int rotateValue); // 全ブロック回転時更新関数
 
-    void UpdateTabs(void); // 全ブロック移動時tabs_情報更新関数
     void WriteBlockPos(void);
 
     // 変数

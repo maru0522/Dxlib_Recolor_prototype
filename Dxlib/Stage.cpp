@@ -124,7 +124,7 @@ void Stage::ConfirmOperatorPiecePos(const Vector2& pos)
 {
     if (KEY::IsTrigger(KEY_INPUT_RETURN)) {
         if (isPossibleInPiece_ && pieceVector_[indexNoOperatorPiece_]->GetTabs()[indexInPieceOtherTab_].isConnected_ == false) {
-            if (pieceVector_[indexOperatorPiece_]->GetTabs()[indexInPieceMineTab_].isTab_ - pieceVector_[indexNoOperatorPiece_]->GetTabs()[indexInPieceOtherTab_].isTab_ != 0) {
+            if (pieceVector_[indexOperatorPiece_]->GetTabs()[indexInPieceMineTab_].isTab_ - pieceVector_[indexNoOperatorPiece_]->GetTabs()[indexInPieceOtherTab_].isTab_ != 0 && pieceVector_[indexNoOperatorPiece_]->GetFixity()) {
                 permissionTabsAccess_ = false;
 
                 // 1群
@@ -153,6 +153,7 @@ void Stage::ConfirmOperatorPiecePos(const Vector2& pos)
                 // 3群
                 // 該当Pieceの中心点等を変更したので、Update()を実行
                 pieceVector_[indexOperatorPiece_]->Update();
+                pieceVector_[indexOperatorPiece_]->UpdateTabs();
                 // 該当Pieceの接続tabのisEntranceOpenをtrueに変更 Update()内にEntranceをfalseにしてしまう関数が含まれているためこの位置
                 pieceVector_[indexOperatorPiece_]->GetBlocksPtr()->at(operatorTabs_[indexInPieceMineTab_].indexBlockVector_)->SetEntranceOpen(true);
                 // 該当PieceのTabsから接続状態の有無を変更 同上
