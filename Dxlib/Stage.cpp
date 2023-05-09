@@ -21,7 +21,7 @@ void Stage::Draw(void)
         pieceVector_[i]->Draw();
     }
 
-    DrawFormatString(0, 0, 0xffffff, isPossibleInPiece_ && pieceVector_[indexNoOperatorPiece_]->GetTabs()[indexInPieceOtherTab_].isConnected_ == false && pieceVector_[indexOperatorPiece_]->GetTabs()[indexInPieceMineTab_].isTab_ - pieceVector_[indexNoOperatorPiece_]->GetTabs()[indexInPieceOtherTab_].isTab_ != 0 ? "ready to InPiece" : "no ready to InPiece");
+    DrawFormatString(0, 0, 0xffffff, isPossibleInPiece_ && pieceVector_[indexNoOperatorPiece_]->GetTabs()[indexInPieceOtherTab_].isConnected_ == false && pieceVector_[indexOperatorPiece_]->GetTabs()[indexInPieceMineTab_].isTab_ - pieceVector_[indexNoOperatorPiece_]->GetTabs()[indexInPieceOtherTab_].isTab_ != 0 && pieceVector_[indexNoOperatorPiece_]->GetFixity() ? "ready to InPiece" : "no ready to InPiece");
     DrawFormatString(0, 20, 0xff0000, isReset_ ? "execute reset" : "do not permission to reset");
 }
 
