@@ -66,6 +66,9 @@
     <ClCompile Include="Piece.cpp">
       <Filter>app</Filter>
     </ClCompile>
+    <ClCompile Include="SpringBlock.cpp">
+      <Filter>app\block</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IBlock.h">
@@ -103,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="Piece.h">
       <Filter>app</Filter>
+    </ClInclude>
+    <ClInclude Include="SpringBlock.h">
+      <Filter>app\block</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
