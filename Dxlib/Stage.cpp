@@ -53,6 +53,7 @@ void Stage::OperatePiece(int index)
     {
         Piece::Tab_t* tabPtr{ &pieceVector_[index]->GetTabsRef()[i]};
         pieceVector_[tabPtr->indexOtherPiece_]->GetTabsRef()[tabPtr->indexOthertab_].isConnected_ = false;
+        pieceVector_[tabPtr->indexOtherPiece_]->GetBlocksPtr()->at(pieceVector_[tabPtr->indexOtherPiece_]->GetTabsRef()[tabPtr->indexOthertab_].indexBlockVector_)->SetEntranceOpen(false);
     }
 
     permissionTabsAccess_ = true;
