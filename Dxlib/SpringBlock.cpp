@@ -15,10 +15,40 @@ void SpringBlock::Draw(void)
     int posX{ static_cast<int>(GetPos().x) }, posY{ static_cast<int>(GetPos().y) };
     int radiusX{ static_cast<int>(GetRadius().x) }, radiusY{ static_cast<int>(GetRadius().y) };
 
-    DrawTriangle(
-        posX, posY + radiusY,
-        posX - radiusX, posY,
-        posX + radiusX, posY,
-        0x00ffff, true
-    );
+    switch (GetRotate() / 90)
+    {
+    case 0:
+        DrawTriangle(
+            posX, posY - radiusY, // でっぱり
+            posX - radiusX, posY + radiusY, // 左下
+            posX + radiusX, posY + radiusY, // 右下
+            0x00ffff, true
+        );
+        break;
+    case 1:
+        DrawTriangle(
+            posX + radiusX, posY, // でっぱり
+            posX - radiusX, posY - radiusY, // 左下
+            posX - radiusX, posY + radiusY, // 右下
+            0x00ffff, true
+        );
+        break;
+    case 2:
+        DrawTriangle(
+            posX, posY + radiusY, // でっぱり
+            posX - radiusX, posY - radiusY, // 左下
+            posX + radiusX, posY - radiusY, // 右下
+            0x00ffff, true
+        );
+        break;
+    case 3:
+        DrawTriangle(
+            posX - radiusX, posY, // でっぱり
+            posX + radiusX, posY - radiusY, // 左下
+            posX + radiusX, posY + radiusY, // 右下
+            0x00ffff, true
+        );
+        break;
+    }
+
 }

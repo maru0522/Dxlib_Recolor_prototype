@@ -73,17 +73,23 @@ void Player::Jump(Vector2& vel)
 void Player::Collision(Vector2& vel)
 {
     for (size_t i = 0; i < stagePtr_->GetPieceVectorPtr()->size(); i++) {
+        // 該当Pieceが操作されている場合スキップ
         if (stagePtr_->GetPieceVectorPtr()->at(i)->GetOperator()) continue;
+        // 該当Piece
         if (stagePtr_->GetPieceVectorPtr()->at(i)->GetFixity() == false) continue;
 
         for (size_t j = 0; j < stagePtr_->GetPieceVectorPtr()->at(i)->GetBlocksPtr()->size(); j++)
         {
+            // ポインタを確保してgetter関数呼び出し抑制
             IBlock* tempBlockPtr{ stagePtr_->GetPieceVectorPtr()->at(i)->GetBlocksPtr()->at(j).get() };
 
+            // X軸,Y軸で3ブロック範囲内ではない場合、スキップ
             if (std::abs(tempBlockPtr->GetPos().x - GetPos().x) > IBlock::radiusBase_ * 6) continue;
             if (std::abs(tempBlockPtr->GetPos().y - GetPos().y) > IBlock::radiusBase_ * 6) continue;
 
-            if (tempBlockPtr->GetType() == IBlock::Type::PIECEENTRANCE && stagePtr_->GetPieceVectorPtr()->at(i)->GetFixity()) {
+            // ブロックの種類が PIECEENTRANCEBLOCK である場合 && 該当Pieceが固定されてる時
+            if (tempBlockPtr->GetType() == IBlock::Type::PIECEENTRANCE) {
+                // プレイヤーがブロックの中央に触れるか
                 if (CheckHit(GetPos().x, GetRadius().x, 0, tempBlockPtr->GetPos().x, 8) &&
                     CheckHit(GetPos().y, GetRadius().y, 0, tempBlockPtr->GetPos().y, 8)) {
                     if(stagePtr_->GetPieceVectorPtr()->at(i)->GetState() == Piece::State::MOVABLE) stagePtr_->GetPieceVectorPtr()->at(i)->SetState(Piece::State::IMMUTABLE);
@@ -93,6 +99,7 @@ void Player::Collision(Vector2& vel)
                     continue;
             }
 
+            // ブロックにめり込んだピクセル値
             float surplus{};
 
             // y軸方向
