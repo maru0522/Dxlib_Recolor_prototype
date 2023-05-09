@@ -48,6 +48,13 @@ void Stage::OperatePiece(int index)
     pieceVector_[index]->SetOperator(true);
     pieceVector_[index]->SetFixity(false);
 
+    // ‘Šè‚ÌÚ‘±‰ğœ
+    for (size_t i = 0; i < pieceVector_[index]->GetTabs().size(); i++)
+    {
+        Piece::Tab_t* tabPtr{ &pieceVector_[index]->GetTabsRef()[i]};
+        pieceVector_[tabPtr->indexOtherPiece_]->GetTabsRef()[tabPtr->indexOthertab_].isConnected_ = false;
+    }
+
     permissionTabsAccess_ = true;
 }
 
@@ -138,6 +145,10 @@ void Stage::ConfirmOperatorPiecePos(const Vector2& pos)
                 pieceVector_[indexOperatorPiece_]->GetTabsRef()[indexInPieceMineTab_].isConnectExecuter_ = true;
                 // ŠY“–Piece‚ğ‚Í‚ß‚ñ‚¾‚Ì‚ÅŒÅ’è
                 pieceVector_[indexOperatorPiece_]->SetFixity(true);
+                // ŠY“–piece‚ÌÚ‘±tab‚ÉÚ‘±æ‚ÌPiece‚Ì—v‘f”‚ğ•Û‘¶‚·‚éi’H‚ê‚é‚æ‚¤‚Éj
+                pieceVector_[indexOperatorPiece_]->GetTabsRef()[indexInPieceMineTab_].indexOtherPiece_ = indexNoOperatorPiece_;
+                // ŠY“–piece‚ÌÚ‘±tab‚ÉÚ‘±æ‚Ìtab‚Ì—v‘f”‚ğ•Û‘¶‚·‚éi’H‚ê‚é‚æ‚¤‚Éj
+                pieceVector_[indexOperatorPiece_]->GetTabsRef()[indexInPieceMineTab_].indexOthertab_ = indexInPieceOtherTab_;
 
                 // 2ŒQ
                 // ‘¼Piece‚ÌÚ‘±tab‚ÌisEntranceOpen‚ğtrue‚É•ÏX

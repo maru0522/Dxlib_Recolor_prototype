@@ -43,6 +43,10 @@ public:
 
         // 該当PieceEntranceBlockは接続する側なのかされる側なのか
         bool isConnectExecuter_{ false };
+
+        // ピースを再操作時、接続されていたら自分以外に相手もconnectedをfalseにしないといけないので情報保存
+        size_t indexOtherPiece_{};
+        size_t indexOthertab_{};
     };
 
     // 関数
