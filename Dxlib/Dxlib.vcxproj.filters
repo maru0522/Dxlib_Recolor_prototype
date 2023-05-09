@@ -48,9 +48,6 @@
     <ClCompile Include="IBlock.cpp">
       <Filter>app\block</Filter>
     </ClCompile>
-    <ClCompile Include="Piece.cpp">
-      <Filter>app\block</Filter>
-    </ClCompile>
     <ClCompile Include="PieceBasicBlock.cpp">
       <Filter>app\block</Filter>
     </ClCompile>
@@ -65,6 +62,9 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Piece.cpp">
+      <Filter>app</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +86,6 @@
     <ClInclude Include="Input.h">
       <Filter>ヘッダー ファイル\other</Filter>
     </ClInclude>
-    <ClInclude Include="Piece.h">
-      <Filter>app\block</Filter>
-    </ClInclude>
     <ClInclude Include="PieceBasicBlock.h">
       <Filter>app\block</Filter>
     </ClInclude>
@@ -103,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Piece.h">
+      <Filter>app</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
