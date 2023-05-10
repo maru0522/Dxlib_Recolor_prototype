@@ -37,8 +37,13 @@ Piece::Piece(const Vector2& pos, const Vector2& radiusBlockCount) :
 
 void Piece::Update(void)
 {
-    for (auto& block : blockVector_) {
-        block->Update();
+    //for (auto& block : blockVector_) {
+    //    block->Update();
+    //}
+
+    for (size_t i = 0; i < blockVector_.size(); i++)
+    {
+        blockVector_[i]->Update();
     }
 
     if (isOperator_)
@@ -52,8 +57,13 @@ void Piece::Update(void)
 
 void Piece::Draw(void)
 {
-    for (auto& block : blockVector_) {
-        block->Draw();
+    //for (auto& block : blockVector_) {
+    //    block->Draw();
+    //}
+
+    for (size_t i = 0; i < blockVector_.size(); i++)
+    {
+        blockVector_[i]->Draw();
     }
 
     int color{ 0xff0000 };
