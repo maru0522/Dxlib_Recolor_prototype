@@ -85,7 +85,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     Player player{ &stage };
     player.SetPos(Vector2{ 200,460 });
-    player.SetIndexPiece(0);
 
     // ゲームループで使う変数の宣言
 

@@ -34,19 +34,16 @@ private:
     bool isJump_{ true };
 
     Stage* stagePtr_;
-    size_t indexPiecePlayerInside_{};
 
 public:
     // setterÅEgetter
     inline void SetPos(const Vector2& pos) { pos_ = pos; };
     inline void SetRadius(const Vector2& radius) { radius_ = radius; };
-    inline void SetIndexPiece(size_t index) { indexPiecePlayerInside_ = index; }
     inline void SetOffset(const Vector2& offset) { offsetForPieceCenter_ = offset; }
 
     inline const Vector2& GetPos(void) { return pos_; }
     inline const Vector2& GetRadius(void) { return radius_; }
     inline Vector2* GetPosPtr(void) { return &pos_; }
-    inline size_t GetIndexPiece(void) { return indexPiecePlayerInside_; }
     inline const Vector2& GetOffset(void) { return offsetForPieceCenter_; }
 
 };
