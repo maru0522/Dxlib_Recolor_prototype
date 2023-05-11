@@ -22,7 +22,7 @@ void SpringBlock::Draw(void)
             posX, posY - radiusY, // でっぱり
             posX - radiusX, posY + radiusY, // 左下
             posX + radiusX, posY + radiusY, // 右下
-            0x00ffff, true
+            0x00f000, true
         );
         break;
     case 1:
@@ -30,7 +30,7 @@ void SpringBlock::Draw(void)
             posX + radiusX, posY, // でっぱり
             posX - radiusX, posY - radiusY, // 左下
             posX - radiusX, posY + radiusY, // 右下
-            0x00ffff, true
+            0x000f00, true
         );
         break;
     case 2:
@@ -38,7 +38,7 @@ void SpringBlock::Draw(void)
             posX, posY + radiusY, // でっぱり
             posX - radiusX, posY - radiusY, // 左下
             posX + radiusX, posY - radiusY, // 右下
-            0x00ffff, true
+            0x0000f0, true
         );
         break;
     case 3:
@@ -46,7 +46,7 @@ void SpringBlock::Draw(void)
             posX - radiusX, posY, // でっぱり
             posX + radiusX, posY - radiusY, // 左下
             posX + radiusX, posY + radiusY, // 右下
-            0x00ffff, true
+            0x00000f, true
         );
         break;
     }
