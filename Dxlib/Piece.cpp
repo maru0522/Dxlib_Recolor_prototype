@@ -14,24 +14,36 @@ Piece::Piece(const Vector2& pos, const Vector2& radiusBlockCount) :
     // 0 ~ radiusBlockCount * 2 まで
     for (size_t t = 0; t < radiusBlockCount.x * 2 + 1; t++)
     {
-        blockVector_.emplace_back(new PieceBasicBlock{ Vector2{(pos.x - radiusBlockCount.x * IBlock::radiusBase_ * 2) + t * IBlock::radiusBase_ * 2, pos.y - radiusBlockCount.y * IBlock::radiusBase_ * 2 - offset}, Vector2{ -radiusBlockCount.x * IBlock::radiusBase_ * 2 + t * IBlock::radiusBase_ * 2, -radiusBlockCount.y * IBlock::radiusBase_ * 2 - offset}, Vector2{IBlock::radiusBase_,1} });
+        blockVector_.emplace_back(new PieceBasicBlock{
+            Vector2{(pos.x - radiusBlockCount.x * IBlock::radiusBase_ * 2) + t * IBlock::radiusBase_ * 2, pos.y + radiusBlockCount.y * IBlock::radiusBase_ * 2 + offset},
+            Vector2{ -radiusBlockCount.x * IBlock::radiusBase_ * 2 + t * IBlock::radiusBase_ * 2, +radiusBlockCount.y * IBlock::radiusBase_ * 2 + offset},
+            Vector2{IBlock::radiusBase_,1} });
     }
     // 底辺
     // radiusBlockCount * 2 + 1 ~ radiusBlockCount * 4 まで
     for (size_t b = 0; b < radiusBlockCount.x * 2 + 1; b++)
     {
-        blockVector_.emplace_back(new PieceBasicBlock{ Vector2{(pos.x - radiusBlockCount.x * IBlock::radiusBase_ * 2) + b * IBlock::radiusBase_ * 2, pos.y + radiusBlockCount.y * IBlock::radiusBase_ * 2 + offset}, Vector2{ -radiusBlockCount.x * IBlock::radiusBase_ * 2 + b * IBlock::radiusBase_ * 2, radiusBlockCount.y * IBlock::radiusBase_ * 2 + offset }, Vector2{IBlock::radiusBase_,1} });
+        blockVector_.emplace_back(new PieceBasicBlock{
+            Vector2{(pos.x - radiusBlockCount.x * IBlock::radiusBase_ * 2) + b * IBlock::radiusBase_ * 2, pos.y - radiusBlockCount.y * IBlock::radiusBase_ * 2 - offset},
+            Vector2{ -radiusBlockCount.x * IBlock::radiusBase_ * 2 + b * IBlock::radiusBase_ * 2, -radiusBlockCount.y * IBlock::radiusBase_ * 2 - offset },
+            Vector2{IBlock::radiusBase_,1} });
     }
     // 左辺
     // radiusBlockCount * 4 + 1 ~ radiusBlockCount * 6 まで
     for (size_t l = 0; l < radiusBlockCount.y * 2 + 1; l++)
     {
-        blockVector_.emplace_back(new PieceBasicBlock{ Vector2{ pos.x - radiusBlockCount.x * IBlock::radiusBase_ * 2 - offset, (pos.y - radiusBlockCount.y * IBlock::radiusBase_ * 2) + l * IBlock::radiusBase_ * 2}, Vector2{ -radiusBlockCount.x * IBlock::radiusBase_ * 2 - offset, -radiusBlockCount.y * IBlock::radiusBase_ * 2 + l * IBlock::radiusBase_ * 2}, Vector2{1,IBlock::radiusBase_} });
+        blockVector_.emplace_back(new PieceBasicBlock{
+            Vector2{ pos.x - radiusBlockCount.x * IBlock::radiusBase_ * 2 - offset, (pos.y + radiusBlockCount.y * IBlock::radiusBase_ * 2) - l * IBlock::radiusBase_ * 2},
+            Vector2{ -radiusBlockCount.x * IBlock::radiusBase_ * 2 - offset, +radiusBlockCount.y * IBlock::radiusBase_ * 2 - l * IBlock::radiusBase_ * 2},
+            Vector2{1,IBlock::radiusBase_} });
     }
     // 右辺
     for (size_t r = 0; r < radiusBlockCount.y * 2 + 1; r++)
     {
-        blockVector_.emplace_back(new PieceBasicBlock{ Vector2{ pos.x + radiusBlockCount.x * IBlock::radiusBase_ * 2 + offset, (pos.y - radiusBlockCount.y * IBlock::radiusBase_ * 2) + r * IBlock::radiusBase_ * 2}, Vector2{ +radiusBlockCount.x * IBlock::radiusBase_ * 2 + offset,  -radiusBlockCount.y * IBlock::radiusBase_ * 2 + r * IBlock::radiusBase_ * 2},Vector2{1,IBlock::radiusBase_} });
+        blockVector_.emplace_back(new PieceBasicBlock{
+            Vector2{ pos.x + radiusBlockCount.x * IBlock::radiusBase_ * 2 + offset, (pos.y + radiusBlockCount.y * IBlock::radiusBase_ * 2) - r * IBlock::radiusBase_ * 2},
+            Vector2{ +radiusBlockCount.x * IBlock::radiusBase_ * 2 + offset,  +radiusBlockCount.y * IBlock::radiusBase_ * 2 - r * IBlock::radiusBase_ * 2},
+            Vector2{1,IBlock::radiusBase_} });
     }
 }
 
@@ -103,7 +115,7 @@ void Piece::RegisterTab(bool isTab, int indexBlockVector)
     tab.isTab_ = isTab;
     tab.pos_ = blockVector_[indexBlockVector]->GetPos();
     tab.indexBlockVector_ = indexBlockVector;
-    if (0<= indexBlockVector && indexBlockVector <= (int)radiusBlockCount_.x * 2) tab.dir_ = Dir::TOP;
+    if (0 <= indexBlockVector && indexBlockVector <= (int)radiusBlockCount_.x * 2) tab.dir_ = Dir::TOP;
     else if ((int)radiusBlockCount_.x * 2 + 1 <= indexBlockVector && indexBlockVector <= (int)radiusBlockCount_.x * 4 + 1) tab.dir_ = Dir::BOTTOM;
     else if ((int)radiusBlockCount_.x * 4 + 2 <= indexBlockVector && indexBlockVector <= (int)radiusBlockCount_.x * 4 + 2 + radiusBlockCount_.y * 2) tab.dir_ = Dir::LEFT;
     else if ((int)radiusBlockCount_.x * 4 + 3 + radiusBlockCount_.y * 2 <= indexBlockVector && indexBlockVector <= (int)radiusBlockCount_.x * 4 + 3 + radiusBlockCount_.y * 4) tab.dir_ = Dir::RIGHT;
@@ -115,19 +127,19 @@ void Piece::RegisterTab(bool isTab, int indexBlockVector)
 
 void Piece::MovePiecePos(void)
 {
-        if (KEY::IsDown(KEY_INPUT_T)) {
-            // Pieceの中心点座標の移動
-            pos_.y -= 5;
-        }
-        if (KEY::IsDown(KEY_INPUT_G)) {
-            pos_.y += 5;
-        }
-        if (KEY::IsDown(KEY_INPUT_F)) {
-            pos_.x -= 5;
-        }
-        if (KEY::IsDown(KEY_INPUT_H)) {
-            pos_.x += 5;
-        }
+    if (KEY::IsDown(KEY_INPUT_T)) {
+        // Pieceの中心点座標の移動
+        pos_.y -= 5;
+    }
+    if (KEY::IsDown(KEY_INPUT_G)) {
+        pos_.y += 5;
+    }
+    if (KEY::IsDown(KEY_INPUT_F)) {
+        pos_.x -= 5;
+    }
+    if (KEY::IsDown(KEY_INPUT_H)) {
+        pos_.x += 5;
+    }
 }
 
 void Piece::ChangeTabsDir(int changeValue)
@@ -167,7 +179,6 @@ void Piece::RotateBlocks(int rotateValue)
         {
             // rotate変更。
             int rotate{ blockVector_[i]->GetRotate() };
-
             rotate + rotateValue >= 450 ?
                 blockVector_[i]->SetRotate(90) :
                 blockVector_[i]->SetRotate(rotate + 90);

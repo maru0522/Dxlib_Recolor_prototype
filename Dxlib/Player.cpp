@@ -109,14 +109,14 @@ void Player::Collision(Vector2& vel)
             // yŽ²•ûŒü
             if (CheckHit(GetPos().x, GetRadius().x, 0, tempBlockPtr->GetPos().x, tempBlockPtr->GetRadius().x)) {
                 if (CheckHit(GetPos().y, GetRadius().y, vel.y, tempBlockPtr->GetPos().y, tempBlockPtr->GetRadius().y, surplus)) {
-                    vel.y > 0 ? vel.y -= surplus : vel.y += surplus;
+                    vel.y < 0 ? vel.y -= surplus : vel.y += surplus;
                 }
             }
 
             // xŽ²•ûŒü
             if (CheckHit(GetPos().y, GetRadius().y, 0, tempBlockPtr->GetPos().y, tempBlockPtr->GetRadius().y)) {
                 if (CheckHit(GetPos().x, GetRadius().x, vel.x, tempBlockPtr->GetPos().x, tempBlockPtr->GetRadius().x, surplus)) {
-                    vel.x > 0 ? vel.x -= surplus : vel.x += surplus;
+                    vel.x < 0 ? vel.x -= surplus : vel.x += surplus;
                 }
             }
         }
