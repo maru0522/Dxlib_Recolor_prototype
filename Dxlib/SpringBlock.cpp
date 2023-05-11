@@ -15,6 +15,8 @@ void SpringBlock::Draw(void)
     int posX{ static_cast<int>(GetPos().x) }, posY{ static_cast<int>(GetPos().y) };
     int radiusX{ static_cast<int>(GetRadius().x) }, radiusY{ static_cast<int>(GetRadius().y) };
 
+    DrawFormatString(0, 100, GetColor(200, 0, 0), "%d", GetRotate());
+
     switch (GetRotate() / 90)
     {
     case 0:
@@ -30,7 +32,7 @@ void SpringBlock::Draw(void)
             posX + radiusX, posY, // Ç≈Ç¡ÇœÇË
             posX - radiusX, posY - radiusY, // ç∂â∫
             posX - radiusX, posY + radiusY, // âEâ∫
-            0x000f00, true
+            0xf00000, true
         );
         break;
     case 2:
@@ -46,7 +48,7 @@ void SpringBlock::Draw(void)
             posX - radiusX, posY, // Ç≈Ç¡ÇœÇË
             posX + radiusX, posY - radiusY, // ç∂â∫
             posX + radiusX, posY + radiusY, // âEâ∫
-            0x00000f, true
+            0xf0f0f0, true
         );
         break;
     }
