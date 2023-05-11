@@ -35,7 +35,7 @@ void Player::Move(void)
     // ジャンプ処理
     Jump(vel);
     // 重力
-    vel.y += gravity_;
+    vel.y -= gravity_;
 
     //vel = vel.normalize();
 
@@ -58,7 +58,7 @@ void Player::Jump(Vector2& vel)
     }
 
     // velにジャンプ量(y軸移動量)を加算
-    vel.y -= jumpValue;
+    vel.y += jumpValue;
     if (jumpValue > 0.f) {
         jumpValue -= fallValue_;
     }
@@ -109,14 +109,14 @@ void Player::Collision(Vector2& vel)
             // y軸方向
             if (CheckHit(GetPos().x, GetRadius().x, 0, tempBlockPtr->GetPos().x, tempBlockPtr->GetRadius().x)) {
                 if (CheckHit(GetPos().y, GetRadius().y, vel.y, tempBlockPtr->GetPos().y, tempBlockPtr->GetRadius().y, surplus)) {
-                    vel.y > 0 ? vel.y += surplus : vel.y -= surplus;
+                    vel.y > 0 ? vel.y -= surplus : vel.y += surplus;
                 }
             }
 
             // x軸方向
             if (CheckHit(GetPos().y, GetRadius().y, 0, tempBlockPtr->GetPos().y, tempBlockPtr->GetRadius().y)) {
                 if (CheckHit(GetPos().x, GetRadius().x, vel.x, tempBlockPtr->GetPos().x, tempBlockPtr->GetRadius().x, surplus)) {
-                    vel.x > 0 ? vel.x += surplus : vel.x -= surplus;
+                    vel.x > 0 ? vel.x -= surplus : vel.x += surplus;
                 }
             }
         }
