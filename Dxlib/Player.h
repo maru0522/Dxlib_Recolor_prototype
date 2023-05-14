@@ -34,6 +34,9 @@ private:
 
 	bool isJump_{ true };
 
+    // ‚¿‰^‚Ñ
+    bool isCarryWoodenBox_{};
+
 	Stage* stagePtr_;
 
 public:

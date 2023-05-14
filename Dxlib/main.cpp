@@ -6,6 +6,7 @@
 #include "BasicBlock.h"
 #include "Player.h"
 #include "SpringBlock.h"
+#include "WoodenBlock.h"
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "aaa: タイトル";
@@ -76,6 +77,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	piece2Ptr->RegisterBlock(new SpringBlock{ Vector2{},Vector2{} }, Vector2{ -80,-60 }, Vector2{ 8,8 });
 	piece2Ptr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -50,-10 }, Vector2{ 20,2 });
 	piece2Ptr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -10, 60 }, Vector2{ 60,2 });
+	piece2Ptr->RegisterBlock(new WoodenBlock{ Vector2{},Vector2{} }, Vector2{ 50,-30 }, Vector2{ 8,8 });
 	stage.AddPiece(piece2Ptr);
 
 	Piece* piece3Ptr = new Piece{ {900,400},{2,6} };

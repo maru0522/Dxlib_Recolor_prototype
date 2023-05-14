@@ -69,6 +69,9 @@
     <ClCompile Include="SpringBlock.cpp">
       <Filter>app\block</Filter>
     </ClCompile>
+    <ClCompile Include="WoodenBlock.cpp">
+      <Filter>app\block</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IBlock.h">
@@ -108,6 +111,9 @@
       <Filter>app</Filter>
     </ClInclude>
     <ClInclude Include="SpringBlock.h">
+      <Filter>app\block</Filter>
+    </ClInclude>
+    <ClInclude Include="WoodenBlock.h">
       <Filter>app\block</Filter>
     </ClInclude>
   </ItemGroup>
