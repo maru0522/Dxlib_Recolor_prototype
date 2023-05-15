@@ -35,8 +35,6 @@ private:
     Vector2 radius_;
     Vector2 offset_;
 
-    Vector2 lasor_{};
-
     int rotate_;
 
     // “–‚½‚è”»’è‚Ì—L–³
@@ -52,13 +50,11 @@ public:
 	inline void SetOffset(const Vector2& offset) { offset_ = offset; }
 	inline void SetRadius(const Vector2& radius) { radius_ = radius; }
 	inline void SetRotate(int rotate) { rotate_ = rotate; }
-	inline void SetLasor(const Vector2& lasor) { lasor_ = lasor; }
 
 	inline const Type& GetType(void) { return type_; }
 	inline const Vector2& GetPos(void) { return pos_; }
 	inline const Vector2& GetOffset(void) { return offset_; }
 	inline const Vector2& GetRadius(void) { return radius_; }
 	inline int GetRotate(void) { return rotate_; }
-    inline const Vector2& GetLasor(void) { return lasor_; }
 };
 

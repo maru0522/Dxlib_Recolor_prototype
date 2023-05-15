@@ -200,9 +200,9 @@ void Piece::RotateBlocks(int rotateValue)
             // offset
             blockVector_[i]->SetOffset(Vector2{ result - pos_ });
 
-            // lasor
-            Vector2 blasor{ blockVector_[i]->GetLasor() };
-            blockVector_[i]->SetLasor({ blasor.y,blasor.x });
+            //// lasor
+            //Vector2 blasor{ blockVector_[i]->GetLasor() };
+            //blockVector_[i]->SetLasor({ blasor.y,blasor.x });
         }
     }
     else {
