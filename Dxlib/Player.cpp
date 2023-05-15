@@ -31,10 +31,10 @@ void Player::Move(void)
 	vel.x += (KEY::IsDown(KEY_INPUT_D) - KEY::IsDown(KEY_INPUT_A)) * moveSpeed_;
 	//vel.y += (KEY::IsDown(KEY_INPUT_S) - KEY::IsDown(KEY_INPUT_W)) * moveSpeed_;
 
-    static float jumpValue{ 0.f };
+	static float jumpValue{ 0.f };
 	// y軸
 	// ジャンプ処理
-	Jump(vel,jumpValue);
+	Jump(vel, jumpValue);
 
 	//ばね処理
 	Spring(vel, nowSpringRot);
@@ -45,7 +45,7 @@ void Player::Move(void)
 	//vel = vel.normalize();
 
 	// 移動量補正
-	Collision(vel,jumpValue);
+	Collision(vel, jumpValue);
 
 	// 補正済の移動量をposに加算
 	Vector2 pos{ GetPos() + vel };
@@ -153,7 +153,7 @@ void Player::Jump(Vector2& vel, float& jumpValue)
 	jumpValue = (std::max)(jumpValue, 0.f);
 }
 
-void Player::Collision(Vector2& vel,float& jumpValue)
+void Player::Collision(Vector2& vel, float& jumpValue)
 {
 	for (size_t i = 0; i < stagePtr_->GetPieceVectorPtr()->size(); i++) {
 		// 該当Pieceが操作されている場合スキップ
@@ -184,12 +184,60 @@ void Player::Collision(Vector2& vel,float& jumpValue)
 
 			//ばねブロック処理
 			if (tempBlockPtr->GetType() == IBlock::Type::SPRING) {
-				if (CheckHit(GetPos().x, GetRadius().x, 0, tempBlockPtr->GetPos().x, 9) &&
-					CheckHit(GetPos().y, GetRadius().y, 0, tempBlockPtr->GetPos().y, 9)) {
+
+				int sizex = defaultHeight_ + 1;
+				int sizey = 1;
+
+				int sizeX = 0;
+				int sizeY = 0;
+
+				//90度ごとに
+				switch (tempBlockPtr->GetRotate() / 90)
+				{
+				case 0://上
+
+					sizex = 0;
+					sizeX = defaultHeight_;
+					sizey = defaultHeight_;
+					sizey = sizey * -1;
+					sizeY = 1;
+
+					break;
+				case 1://右
+
+					sizex = defaultHeight_;
+					sizeX = 1;
+					sizey = 0;
+					sizeY = defaultHeight_;
+
+					break;
+				case 2://下
+
+					sizex = 0;
+					sizeX = defaultHeight_;
+					sizey = defaultHeight_;
+					sizeY = 1;
+
+					break;
+				case 3://左
+
+					sizex = defaultHeight_;
+					sizey = sizey * -1;
+					sizeX = 1;
+					sizey = 0;
+					sizeY = defaultHeight_;
+
+					break;
+				}
+
+				if (CheckHit(GetPos().x, GetRadius().x, 0, tempBlockPtr->GetPos().x + sizex, sizeX) &&
+					CheckHit(GetPos().y, GetRadius().y, 0, tempBlockPtr->GetPos().y + sizey, sizeY)) {
 
 					nowSpringRot = tempBlockPtr->GetRotate();
 
 					isSpring_ = true;
+
+					//jumpValue = 0.f;
 				}
 			}
 
@@ -202,7 +250,8 @@ void Player::Collision(Vector2& vel,float& jumpValue)
 					//天井に当たった処理
 					if (GetPos().y - GetRadius().y + vel.y > tempBlockPtr->GetPos().y - tempBlockPtr->GetRadius().y) {
 						//この中でジャンプ量を0にすると天井にぶつかった瞬間落ちる
-                        jumpValue = 0.f;
+						jumpValue = 0.f;
+						nowVel = { 0,0 };
 					}
 
 					vel.y > 0 ? vel.y += surplus : vel.y -= surplus;
