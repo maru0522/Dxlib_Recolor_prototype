@@ -8,21 +8,6 @@ SpringBlock::SpringBlock(const Vector2& pos, const Vector2& offset, const Vector
 
 void SpringBlock::Update(void)
 {
-	switch (GetRotate() / 90)
-	{
-	case 0:
-
-		break;
-	case 1:
-
-		break;
-	case 2:
-
-		break;
-	case 3:
-
-		break;
-	}
 }
 
 void SpringBlock::Draw(void)

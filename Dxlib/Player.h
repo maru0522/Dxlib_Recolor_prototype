@@ -21,7 +21,8 @@ public:
 
 private:
 	void Move(void);
-	void Jump(Vector2& vel, bool spring);
+	void Jump(Vector2& vel);
+	void Spring(Vector2& vel, int rot);
 
 	void Collision(Vector2& vel);
 	bool CheckHit(float pos, float radius, float vel, float blockpos, float blockradius);
@@ -33,9 +34,14 @@ private:
 	Vector2 offsetForPieceCenter_{};
 
 	bool isJump_{ true };
+	bool isSpring_{ false };
 
 	Stage* stagePtr_;
 
+	//‚Î‚Ë‚ÉG‚ê‚½‚ÌŠp“x‚ğ“ü‚ê‚é•Ï”
+	int nowSpringRot = 0;
+	//‘ã“ü•Ï”
+	Vector2 nowVel = { 0, 0 };
 public:
 	// setterEgetter
 	inline void SetPos(const Vector2& pos) { pos_ = pos; };

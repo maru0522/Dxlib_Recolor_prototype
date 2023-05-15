@@ -33,7 +33,11 @@ void Player::Move(void)
 
 	// y軸
 	// ジャンプ処理
-	Jump(vel, false);
+	Jump(vel);
+
+	//ばね処理
+	Spring(vel, nowSpringRot);
+
 	// 重力
 	vel.y += gravity_;
 
@@ -47,7 +51,84 @@ void Player::Move(void)
 	SetPos(pos);
 }
 
-void Player::Jump(Vector2& vel, bool spring)
+//ばね処理
+void Player::Spring(Vector2& vel, int rot)
+{
+	//trueじゃなければ抜ける
+	if (!isSpring_ && nowVel.x == 0 && nowVel.y == 0)
+	{
+		nowSpringRot = 0;
+		return;
+	}
+
+	//回転角
+	int rot_ = rot;
+
+	if (isSpring_)
+	{
+		//90度ごとに
+		switch (rot_ / 90)
+		{
+		case 0:
+			nowVel.y = -springPower_;
+			break;
+		case 1:
+			nowVel.x = springPower_;
+			break;
+		case 2:
+			nowVel.y = springPower_;
+			break;
+		case 3:
+			nowVel.x = -springPower_;
+			break;
+		}
+
+		isSpring_ = false;
+	}
+	else
+	{
+		//90度ごとに
+		switch (rot_ / 90)
+		{
+		case 0:
+			nowVel.y += fallValue_;
+
+			if (nowVel.y > 0)
+			{
+				nowVel.y = 0;
+			}
+			break;
+		case 1:
+			nowVel.x -= fallValue_;
+
+			if (nowVel.x < 0)
+			{
+				nowVel.x = 0;
+			}
+			break;
+		case 2:
+			nowVel.y -= fallValue_;
+
+			if (nowVel.y < 0)
+			{
+				nowVel.y = 0;
+			}
+			break;
+		case 3:
+			nowVel.x += fallValue_;
+
+			if (nowVel.x > 0)
+			{
+				nowVel.x = 0;
+			}
+			break;
+		}
+	}
+
+	vel += nowVel;
+}
+
+void Player::Jump(Vector2& vel)
 {
 	static float jumpValue{ 0.f };
 
@@ -55,12 +136,6 @@ void Player::Jump(Vector2& vel, bool spring)
 	if (KEY::IsTrigger(KEY_INPUT_SPACE) && isJump_ == false) {
 		isJump_ = true;
 		jumpValue += jumpPower_;
-	}
-
-	if (spring && isJump_ == false)
-	{
-		isJump_ = true;
-		jumpValue += springPower_;
 	}
 
 	// velにジャンプ量(y軸移動量)を加算
@@ -110,11 +185,9 @@ void Player::Collision(Vector2& vel)
 				if (CheckHit(GetPos().x, GetRadius().x, 0, tempBlockPtr->GetPos().x, 9) &&
 					CheckHit(GetPos().y, GetRadius().y, 0, tempBlockPtr->GetPos().y, 9)) {
 
-					DrawFormatString(0, 60, GetColor(100, 100, 100), "true");
+					nowSpringRot = tempBlockPtr->GetRotate();
 
-					//if (isJump_ == false) {
-						Jump(vel, true);
-					//}
+					isSpring_ = true;
 				}
 			}
 
