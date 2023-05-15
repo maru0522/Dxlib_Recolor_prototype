@@ -202,8 +202,8 @@ void Player::Collision(Vector2& vel)
 				if (CheckHit(GetPos().y, GetRadius().y, vel.y, tempBlockPtr->GetPos().y, tempBlockPtr->GetRadius().y, surplus)) {
 					//天井に当たった処理
 					if (GetPos().y - GetRadius().y + vel.y > tempBlockPtr->GetPos().y - tempBlockPtr->GetRadius().y) {
-						DrawFormatString(0, 200, GetColor(200, 200, 200), "true");
-						isJump_ = false;
+						//この中でジャンプ量を0にすると天井にぶつかった瞬間落ちる
+
 					}
 
 					vel.y > 0 ? vel.y += surplus : vel.y -= surplus;
