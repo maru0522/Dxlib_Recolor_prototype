@@ -72,6 +72,12 @@
     <ClCompile Include="WoodenBlock.cpp">
       <Filter>app\block</Filter>
     </ClCompile>
+    <ClCompile Include="LasorUnit.cpp">
+      <Filter>app\block</Filter>
+    </ClCompile>
+    <ClCompile Include="GoalBlock.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IBlock.h">
@@ -115,6 +121,12 @@
     </ClInclude>
     <ClInclude Include="WoodenBlock.h">
       <Filter>app\block</Filter>
+    </ClInclude>
+    <ClInclude Include="LasorUnit.h">
+      <Filter>app\block</Filter>
+    </ClInclude>
+    <ClInclude Include="GoalBlock.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

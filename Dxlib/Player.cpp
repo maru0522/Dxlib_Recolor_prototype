@@ -121,6 +121,7 @@ void Player::Collision(Vector2& vel)
             // ローカル変数
             bool isWoodenSetPosLater{}; // 座標変換を後に行うかどうかの判定値
             Vector2 woodenBoxPos{}; // 座標変換を当たり判定の後に行う際の参照値
+            // 木箱
             if (tempBlockPtr->GetType() == IBlock::Type::WOODEN) {
                 if (CheckHit(GetPos().x, GetRadius().x, 0, tempBlockPtr->GetPos().x, tempBlockPtr->GetRadius().x + 3) &&
                     CheckHit(GetPos().y, GetRadius().y, 0, tempBlockPtr->GetPos().y, tempBlockPtr->GetRadius().x - 1)) {
@@ -154,6 +155,11 @@ void Player::Collision(Vector2& vel)
                 else {
                     isCarryWoodenBox_ = false;
                 }
+            }
+
+            // ゴール
+            if (tempBlockPtr->GetType() == IBlock::Type::GOAL) {
+                stagePtr_->SetIsGoal(true);
             }
 
             // ブロックにめり込んだピクセル値

@@ -128,8 +128,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BasicBlock.cpp" />
+    <ClCompile Include="GoalBlock.cpp" />
     <ClCompile Include="IBlock.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="LasorUnit.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Piece.cpp" />
     <ClCompile Include="PieceBasicBlock.cpp" />
@@ -145,8 +147,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicBlock.h" />
+    <ClInclude Include="GoalBlock.h" />
     <ClInclude Include="IBlock.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="LasorUnit.h" />
     <ClInclude Include="Piece.h" />
     <ClInclude Include="PieceBasicBlock.h" />
     <ClInclude Include="PieceEntranceBlock.h" />
