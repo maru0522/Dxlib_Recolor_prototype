@@ -31,9 +31,10 @@ void Player::Move(void)
 	vel.x += (KEY::IsDown(KEY_INPUT_D) - KEY::IsDown(KEY_INPUT_A)) * moveSpeed_;
 	//vel.y += (KEY::IsDown(KEY_INPUT_S) - KEY::IsDown(KEY_INPUT_W)) * moveSpeed_;
 
+    static float jumpValue{ 0.f };
 	// y軸
 	// ジャンプ処理
-	Jump(vel);
+	Jump(vel,jumpValue);
 
 	//ばね処理
 	Spring(vel, nowSpringRot);
@@ -44,7 +45,7 @@ void Player::Move(void)
 	//vel = vel.normalize();
 
 	// 移動量補正
-	Collision(vel);
+	Collision(vel,jumpValue);
 
 	// 補正済の移動量をposに加算
 	Vector2 pos{ GetPos() + vel };
@@ -131,10 +132,8 @@ void Player::Spring(Vector2& vel, int rot)
 	vel += nowVel;
 }
 
-void Player::Jump(Vector2& vel)
+void Player::Jump(Vector2& vel, float& jumpValue)
 {
-	static float jumpValue{ 0.f };
-
 	// トリガーでジャンプ
 	if (KEY::IsTrigger(KEY_INPUT_SPACE) && isJump_ == false) {
 		isJump_ = true;
@@ -154,7 +153,7 @@ void Player::Jump(Vector2& vel)
 	jumpValue = (std::max)(jumpValue, 0.f);
 }
 
-void Player::Collision(Vector2& vel)
+void Player::Collision(Vector2& vel,float& jumpValue)
 {
 	for (size_t i = 0; i < stagePtr_->GetPieceVectorPtr()->size(); i++) {
 		// 該当Pieceが操作されている場合スキップ
@@ -203,7 +202,7 @@ void Player::Collision(Vector2& vel)
 					//天井に当たった処理
 					if (GetPos().y - GetRadius().y + vel.y > tempBlockPtr->GetPos().y - tempBlockPtr->GetRadius().y) {
 						//この中でジャンプ量を0にすると天井にぶつかった瞬間落ちる
-
+                        jumpValue = 0.f;
 					}
 
 					vel.y > 0 ? vel.y += surplus : vel.y -= surplus;

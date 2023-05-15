@@ -21,10 +21,10 @@ public:
 
 private:
 	void Move(void);
-	void Jump(Vector2& vel);
+	void Jump(Vector2& vel,float& jumpValue);
 	void Spring(Vector2& vel, int rot);
 
-	void Collision(Vector2& vel);
+	void Collision(Vector2& vel,float& jumpValue);
 	bool CheckHit(float pos, float radius, float vel, float blockpos, float blockradius);
 	bool CheckHit(float pos, float radius, float vel, float blockpos, float blockradius, float& surplus);
 
