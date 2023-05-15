@@ -61,6 +61,9 @@ void Player::Spring(Vector2& vel, int rot)
 		return;
 	}
 
+	//ƒWƒƒƒ“ƒv–hŽ~
+	isJump_ = true;
+
 	//‰ñ“]Šp
 	int rot_ = rot;
 
@@ -73,13 +76,13 @@ void Player::Spring(Vector2& vel, int rot)
 			nowVel.y = -springPower_;
 			break;
 		case 1:
-			nowVel.x = springPower_;
+			nowVel.x = springPower_ / 2;
 			break;
 		case 2:
 			nowVel.y = springPower_;
 			break;
 		case 3:
-			nowVel.x = -springPower_;
+			nowVel.x = -springPower_ / 2;
 			break;
 		}
 
