@@ -124,7 +124,7 @@ void Player::Collision(Vector2& vel)
             // –Ø” 
             if (tempBlockPtr->GetType() == IBlock::Type::WOODEN) {
                 if (CheckHit(GetPos().x, GetRadius().x, 0, tempBlockPtr->GetPos().x, tempBlockPtr->GetRadius().x + 3) &&
-                    CheckHit(GetPos().y, GetRadius().y, 0, tempBlockPtr->GetPos().y, tempBlockPtr->GetRadius().x - 1)) {
+                    CheckHit(GetPos().y, GetRadius().y, 0, tempBlockPtr->GetPos().y, tempBlockPtr->GetRadius().y - 1)) {
                     if (KEY::IsTrigger(KEY_INPUT_E)) {
                         isCarryWoodenBox_ ?
                             isCarryWoodenBox_ = false :
