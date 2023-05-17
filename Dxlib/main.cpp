@@ -1,13 +1,6 @@
 #include "DxLib.h"
-#include <memory>
-#include "Input.h"
-#include "Piece.h"
-#include "Stage.h"
-#include "BasicBlock.h"
-#include "Player.h"
-#include "SpringBlock.h"
-#include "Laser.h"
-#include "PlatformBlock.h"
+#include "MBlock.h"
+#include "MPlayer.h"
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "aaa: タイトル";
@@ -46,72 +39,38 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	// 画像などのリソースデータの変数宣言と読み込み
-	//Piece piece{ Vector2{300,300}, Vector2{50,50} };
-	//piece.RegisterBlock(new IBlock{ Vector2{20,20} });
-	//piece.Register(new IBlock{ Vector2{-10,-10} });
-	//piece.Register(new IBlock{ Vector2{5,5} });
-	//piece.Register(new IBlock{ Vector2{50,50} });
 
-	Stage stage{};
-
-	Piece* piecePtr = new Piece{ {300,300},{5,5} };
-	piecePtr->RegisterTab(true, 4);
-	piecePtr->RegisterTab(true, 18);
-	piecePtr->RegisterTab(true, 27);
-	piecePtr->RegisterTab(true, 35);
-	piecePtr->RegisterTab(true, 43);
-	piecePtr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -12,20 }, Vector2{ 60,2 });
-	//piecePtr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -12,-70 }, Vector2{ 60,2 });
-	//ばねブロックに置き換え中
-	piecePtr->RegisterBlock(new Laser{ Vector2{},Vector2{} }, Vector2{ 150,20 }, Vector2{ 8,8 });
-	piecePtr->SetFixity(true);
-	piecePtr->SetState(Piece::State::ROOT);
-	stage.AddPiece(piecePtr);
-
-	Piece* piece2Ptr = new Piece{ {650,300},{3,3} };
-	piece2Ptr->RegisterTab(false, 4);
-	piece2Ptr->RegisterTab(false, 10);
-	piece2Ptr->RegisterTab(false, 14);
-	piece2Ptr->RegisterTab(false, 20);
-	piece2Ptr->RegisterTab(false, 26);
-	//piece2Ptr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -80,-60 }, Vector2{ 30,2 });
-	piece2Ptr->RegisterBlock(new SpringBlock{ Vector2{},Vector2{} }, Vector2{ -80,-60 }, Vector2{ 8,8 });
-	piece2Ptr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -50,-10 }, Vector2{ 20,2 });
-	piece2Ptr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -10, 60 }, Vector2{ 60,2 });
-	stage.AddPiece(piece2Ptr);
-
-	Piece* piece3Ptr = new Piece{ {900,400},{2,6} };
-	piece3Ptr->RegisterTab(false, 0);
-	piece3Ptr->RegisterTab(true, 9);
-	piece3Ptr->RegisterTab(false, 15);
-	piece3Ptr->RegisterTab(true, 26);
-	piece3Ptr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ 20,-15 }, Vector2{ 2,60 });
-	piece3Ptr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -20,35 }, Vector2{ 60,2 });
-	stage.AddPiece(piece3Ptr);
-
-	Player player{ &stage };
-	player.SetPos(Vector2{ 200,460 });
 
 	// ゲームループで使う変数の宣言
 
+	MPlayer* player = new MPlayer();
+	MBlock* block = new MBlock();
+	MBlock* block2 = new MBlock(Vector2{ 550,550 }, Vector2{ 50,50 }, dontMove);
+	block->Initialize();
+	block2->Initialize();
+
+	/*MBlock* map[10];
+	for (int i = 0; i < 10; i++)
+	{
+		map[i] = new MBlock;
+		map[i]->pos = {600,(i * 50) + 500};
+	}*/
 
 	// ゲームループ
 	while (true) {
-		Input::Keyboard::Update();
-
 		// 画面クリア
 		ClearDrawScreen();
 		//---------  ここからプログラムを記述  ----------//
 
 		// 更新処理
-		stage.Update();
-		player.Update();
-		//piece2.Update();
+		player->Update(block->pos,block->scale);
+		block->Update();
+		block2->Update();
 
 		// 描画処理
-		stage.Draw();
-		player.Draw();
-		//piece2.Draw();
+		player->Draw();
+		block->Draw();
+		block2->Draw();
 
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
@@ -130,6 +89,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			break;
 		}
 	}
+
+	delete player;
+	delete block;
+	delete block2;
+	//delete map;
+
 	// Dxライブラリ終了処理
 	DxLib_End();
 

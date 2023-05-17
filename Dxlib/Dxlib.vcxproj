@@ -127,11 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Vector2D.cpp" />
     <ClCompile Include="BasicBlock.cpp" />
     <ClCompile Include="IBlock.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Laser.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MBlock.cpp" />
+    <ClCompile Include="MPlayer.cpp" />
     <ClCompile Include="Piece.cpp" />
     <ClCompile Include="PieceBasicBlock.cpp" />
     <ClCompile Include="PieceEntranceBlock.cpp" />
@@ -145,10 +148,13 @@
     <ClCompile Include="Vector4.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Vector2D.h" />
     <ClInclude Include="BasicBlock.h" />
     <ClInclude Include="IBlock.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Laser.h" />
+    <ClInclude Include="MBlock.h" />
+    <ClInclude Include="MPlayer.h" />
     <ClInclude Include="Piece.h" />
     <ClInclude Include="PieceBasicBlock.h" />
     <ClInclude Include="PieceEntranceBlock.h" />

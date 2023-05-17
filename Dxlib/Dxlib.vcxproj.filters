@@ -75,6 +75,15 @@
     <ClCompile Include="Laser.cpp">
       <Filter>app\block</Filter>
     </ClCompile>
+    <ClCompile Include="MPlayer.cpp">
+      <Filter>リソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MBlock.cpp">
+      <Filter>リソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vector2D.cpp">
+      <Filter>リソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IBlock.h">
@@ -121,6 +130,15 @@
     </ClInclude>
     <ClInclude Include="Laser.h">
       <Filter>app\block</Filter>
+    </ClInclude>
+    <ClInclude Include="MPlayer.h">
+      <Filter>リソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MBlock.h">
+      <Filter>リソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vector2D.h">
+      <Filter>リソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
