@@ -6,6 +6,7 @@
 #include "BasicBlock.h"
 #include "Player.h"
 #include "SpringBlock.h"
+#include "Laser.h"
 #include "PlatformBlock.h"
 
 // ウィンドウのタイトルに表示する文字列
@@ -62,7 +63,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	piecePtr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -12,20 }, Vector2{ 60,2 });
 	//piecePtr->RegisterBlock(new BasicBlock{ Vector2{},Vector2{} }, Vector2{ -12,-70 }, Vector2{ 60,2 });
 	//ばねブロックに置き換え中
-	piecePtr->RegisterBlock(new PlatformBlock{ Vector2{},Vector2{} }, Vector2{ 150,20 }, Vector2{ 8,8 });
+	piecePtr->RegisterBlock(new Laser{ Vector2{},Vector2{} }, Vector2{ 150,20 }, Vector2{ 8,8 });
 	piecePtr->SetFixity(true);
 	piecePtr->SetState(Piece::State::ROOT);
 	stage.AddPiece(piecePtr);

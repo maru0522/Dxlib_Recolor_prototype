@@ -14,6 +14,7 @@ public:
 		BASIC,
 		PLATFORM,
 		SPRING,
+		LASER,
 	};
 
 	static constexpr float radiusBase_{ 16.f };

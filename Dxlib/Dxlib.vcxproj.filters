@@ -72,6 +72,9 @@
     <ClCompile Include="PlatformBlock.cpp">
       <Filter>app\block</Filter>
     </ClCompile>
+    <ClCompile Include="Laser.cpp">
+      <Filter>app\block</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IBlock.h">
@@ -114,6 +117,9 @@
       <Filter>app\block</Filter>
     </ClInclude>
     <ClInclude Include="PlatformBlock.h">
+      <Filter>app\block</Filter>
+    </ClInclude>
+    <ClInclude Include="Laser.h">
       <Filter>app\block</Filter>
     </ClInclude>
   </ItemGroup>

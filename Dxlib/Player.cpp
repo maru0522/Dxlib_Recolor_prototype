@@ -244,8 +244,26 @@ void Player::Collision(Vector2& vel, float& jumpValue)
 			// ブロックにめり込んだピクセル値
 			float surplus{};
 
+			//レーザー処理
+			if (tempBlockPtr->GetType() == IBlock::Type::LASER) {
+				// y軸方向
+				if (CheckHit(GetPos().x, GetRadius().x, 0, tempBlockPtr->GetPos().x, tempBlockPtr->GetRadius().x)) {
+					if (CheckHit(GetPos().y, GetRadius().y, vel.y, tempBlockPtr->GetPos().y, tempBlockPtr->GetRadius().y, surplus)) {
+						tempBlockPtr->SetRadius(tempBlockPtr->GetRadius() - Vector2{ 0, surplus });
+						//DrawFormatString(0, 250, GetColor(100, 100, 100), "art");
+					}
+				}
+
+				// x軸方向
+				if (CheckHit(GetPos().y, GetRadius().y, 0, tempBlockPtr->GetPos().y, tempBlockPtr->GetRadius().y)) {
+					if (CheckHit(GetPos().x, GetRadius().x, vel.x, tempBlockPtr->GetPos().x, tempBlockPtr->GetRadius().x, surplus)) {
+
+						//DrawFormatString(0, 250, GetColor(100, 100, 100), "art");
+					}
+				}
+			}
 			//下からすり抜け足場ブロック
-			if (tempBlockPtr->GetType() == IBlock::Type::PLATFORM) {
+			else if (tempBlockPtr->GetType() == IBlock::Type::PLATFORM) {
 				// y軸方向
 				if (!isJump_ && GetPos().y < tempBlockPtr->GetPos().y)
 				{
