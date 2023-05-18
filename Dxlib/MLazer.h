@@ -1,14 +1,15 @@
 #pragma once
 #include "Vector2.h"
 
-class MPlayer
+class MLazer
 {
 public:
-	MPlayer();
-	~MPlayer();
+	MLazer();
+	MLazer(Vector2 pos, Vector2 scale, int mode);
+	~MLazer();
 	void Initialize();
-	void Update(Vector2& pos, Vector2 scale);
-	void Update();
+	//void Update();
+	void Update(Vector2& pos);
 	void Draw();
 
 	void Gravity();
@@ -16,4 +17,6 @@ public:
 	//private:
 	Vector2 pos;
 	Vector2 scale;
+
+	int mode;
 };

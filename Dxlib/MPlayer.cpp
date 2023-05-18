@@ -17,18 +17,32 @@ void MPlayer::Initialize()
 	scale = Vector2{ 30,30 };
 }
 
-void MPlayer::Update(Vector2& pos, Vector2 scale)
+void MPlayer::Update()
 {
 	int spd = 2;
 
 	this->pos.x += (CheckHitKey(KEY_INPUT_D) - CheckHitKey(KEY_INPUT_A)) * spd;
-	this->pos.y += (CheckHitKey(KEY_INPUT_S) - CheckHitKey(KEY_INPUT_W)) * spd;
 
-	Vector2 nowpos = pos;
+	Gravity();
 
-	CheckHitBox(this->pos, this->scale, nowpos, scale);
+	if (CheckHitKey(KEY_INPUT_W))
+	{
+		this->pos.y -= 4;
+	}
+}
 
-	pos = nowpos;
+void MPlayer::Update(Vector2& pos, Vector2 scale)
+{
+	int spd = 5;
+
+	this->pos.x += (CheckHitKey(KEY_INPUT_D) - CheckHitKey(KEY_INPUT_A)) * spd;
+
+	Gravity();
+
+	if (CheckHitKey(KEY_INPUT_W))
+	{
+		this->pos.y -= 4;
+	}
 }
 
 void MPlayer::Draw()
@@ -42,38 +56,18 @@ void MPlayer::Draw()
 		true);
 }
 
-void MPlayer::CheckHitBox(Vector2 pos, Vector2 scale, Vector2& pos2, Vector2 scale2)
+void MPlayer::Gravity()
 {
-	int Left0 = pos.x - scale.x;
-	int Right0 = pos.x + scale.x;
-	int Bottom0 = pos.y + scale.y;
-	int Top0 = pos.y - scale.y;
+	float gravity = 1.5f;
 
-	int Left1 = pos2.x - scale2.x;
-	int Right1 = pos2.x + scale2.x;
-	int Bottom1 = pos2.y + scale2.y;
-	int Top1 = pos2.y - scale2.y;
+	pos.y += gravity;
 
-	while (
-		Left0 < Right1 &&
-		Right0 > Left1 &&
-		Top0 < Bottom1 &&
-		Bottom0 > Top1)
-	{
+	int width = 1280;
+	int height = 655;
 
-		pos2.x += (CheckHitKey(KEY_INPUT_D) - CheckHitKey(KEY_INPUT_A));
+	pos.x = max(pos.x, scale.x);
+	pos.x = min(pos.x, width - scale.x);
 
-		pos2.y += (CheckHitKey(KEY_INPUT_S) - CheckHitKey(KEY_INPUT_W));
-
-
-		Left0 = pos.x - scale.x;
-		Right0 = pos.x + scale.x;
-		Bottom0 = pos.y + scale.y;
-		Top0 = pos.y - scale.y;
-
-		Left1 = pos2.x - scale2.x;
-		Right1 = pos2.x + scale2.x;
-		Bottom1 = pos2.y + scale2.y;
-		Top1 = pos2.y - scale2.y;
-	}
+	pos.y = max(pos.y, scale.y);
+	pos.y = min(pos.y, height - scale.y);
 }

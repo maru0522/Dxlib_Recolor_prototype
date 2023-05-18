@@ -84,6 +84,15 @@
     <ClCompile Include="..\Vector2D.cpp">
       <Filter>リソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="MBlockManager.cpp">
+      <Filter>リソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MGame.cpp">
+      <Filter>リソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MLazer.cpp">
+      <Filter>リソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IBlock.h">
@@ -138,6 +147,15 @@
       <Filter>リソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="..\Vector2D.h">
+      <Filter>リソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MBlockManager.h">
+      <Filter>リソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MGame.h">
+      <Filter>リソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MLazer.h">
       <Filter>リソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>

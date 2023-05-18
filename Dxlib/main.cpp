@@ -1,6 +1,5 @@
 #include "DxLib.h"
-#include "MBlock.h"
-#include "MPlayer.h"
+#include "MGame.h"
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "aaa: タイトル";
@@ -43,18 +42,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// ゲームループで使う変数の宣言
 
-	MPlayer* player = new MPlayer();
-	MBlock* block = new MBlock();
-	MBlock* block2 = new MBlock(Vector2{ 550,550 }, Vector2{ 50,50 }, dontMove);
-	block->Initialize();
-	block2->Initialize();
-
-	/*MBlock* map[10];
-	for (int i = 0; i < 10; i++)
-	{
-		map[i] = new MBlock;
-		map[i]->pos = {600,(i * 50) + 500};
-	}*/
+	MGame* mGame = new MGame();
+	mGame->Initialize();
 
 	// ゲームループ
 	while (true) {
@@ -63,14 +52,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//---------  ここからプログラムを記述  ----------//
 
 		// 更新処理
-		player->Update(block->pos,block->scale);
-		block->Update();
-		block2->Update();
+		mGame->Update();
 
 		// 描画処理
-		player->Draw();
-		block->Draw();
-		block2->Draw();
+		mGame->Draw();
 
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
@@ -89,11 +74,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			break;
 		}
 	}
-
-	delete player;
-	delete block;
-	delete block2;
-	//delete map;
 
 	// Dxライブラリ終了処理
 	DxLib_End();

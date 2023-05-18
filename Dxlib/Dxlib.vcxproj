@@ -134,6 +134,9 @@
     <ClCompile Include="Laser.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MBlock.cpp" />
+    <ClCompile Include="MBlockManager.cpp" />
+    <ClCompile Include="MGame.cpp" />
+    <ClCompile Include="MLazer.cpp" />
     <ClCompile Include="MPlayer.cpp" />
     <ClCompile Include="Piece.cpp" />
     <ClCompile Include="PieceBasicBlock.cpp" />
@@ -154,6 +157,9 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Laser.h" />
     <ClInclude Include="MBlock.h" />
+    <ClInclude Include="MBlockManager.h" />
+    <ClInclude Include="MGame.h" />
+    <ClInclude Include="MLazer.h" />
     <ClInclude Include="MPlayer.h" />
     <ClInclude Include="Piece.h" />
     <ClInclude Include="PieceBasicBlock.h" />
